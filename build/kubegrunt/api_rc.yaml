@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: elastickube-api
+  namespace: kube-system
+  labels:
+    k8s-app: elastickube-api
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    k8s-app: elastickube-api
+    version: v1
+  template:
+    metadata:
+      labels:
+        k8s-app: elastickube-api
+        version: v1
+    spec:
+      containers:
+      - name: elastickube-api
+        image: elasticbox/elastickube
+        resources:
+          limits:
+            cpu: 100m
+            memory: 500Mi
+        volumeMounts:
+        - name: elastickube-code
+          mountPath: /opt/elastickube
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+      volumes:
+      - name: elastickube-code
+        hostPath:
+          path: /opt/elastickube

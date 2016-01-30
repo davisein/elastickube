@@ -12,10 +12,11 @@ else
   File.write(TOKEN_FILE, TOKEN)
 end
 
-ARGUMENTS = "-b 'ElasticKube Dev' -n #{ENV['USER']} -H '#{EBX_ADDRESS}' -R #{EBX_ADDRESS} -t #{TOKEN}"
+ARGUMENTS = "-b 'ElasticKube Dev' -n #{ENV['USER']} -H '#{EBX_ADDRESS}' -t #{TOKEN}"
 
-SSH_PUB_KEY = File.read(File.join(Dir.home, ".ssh", "id_rsa.pub"))
 PRODUCT_PATH = File.join(Dir.home, "Repositories", "elastickube")
+SSH_PUB_KEY = File.read(File.join(Dir.home, ".ssh", "id_rsa.pub"))
+RSYNCD_CONF = File.read(File.join("#{PRODUCT_PATH}", "build", "vagrant", "rsyncd.conf"))
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
@@ -49,34 +50,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Add the public key to the authorized hosts
   config.vm.provision :shell, inline: "echo '#{SSH_PUB_KEY}' >> /home/elasticbox/.ssh/authorized_keys"
 
-  # Create .ssh folder for elasticbox and root
-  config.vm.provision :shell, inline: "mkdir -p /home/elasticbox/.ssh"
-  config.vm.provision :shell, inline: "sudo mkdir -p /root/.ssh"
-
-  # Configure ssh for elasticbox and root
-  config.vm.provision :file, source: File.join(Dir.home, ".ssh", "config"), destination: "/tmp/config"
-  config.vm.provision :shell, inline: "cp /tmp/config /home/elasticbox/.ssh/config"
-  config.vm.provision :shell, inline: "sudo mv /tmp/config /root/.ssh/config"
-
-  # Create id_rsa for elasticbox and root
-  config.vm.provision :file, source: File.join(Dir.home, ".ssh", "id_rsa"), destination: "/tmp/id_rsa"
-  config.vm.provision :shell, inline: "cp /tmp/id_rsa /home/elasticbox/.ssh/id_rsa"
-  config.vm.provision :shell, inline: "sudo mv /tmp/id_rsa /root/.ssh/id_rsa"
-
-  # Create id_rsa.pub for elasticbox and root
-  config.vm.provision :file, source: File.join(Dir.home, ".ssh", "id_rsa.pub"), destination: "/tmp/id_rsa.pub"
-  config.vm.provision :shell, inline: "cp /tmp/id_rsa.pub /home/elasticbox/.ssh/id_rsa.pub"
-  config.vm.provision :shell, inline: "sudo mv /tmp/id_rsa.pub /root/.ssh/id_rsa.pub"
-
   # Configure Rsync daemon
-  config.vm.provision :file, source: "rsyncd.conf", destination: "/tmp/rsyncd.conf"
-  config.vm.provision :shell, inline: "sudo mv /tmp/rsyncd.conf /etc/rsyncd.conf"
+  config.vm.provision :shell, inline: "echo '#{RSYNCD_CONF}' | sudo tee /etc/rsyncd.conf > /dev/null"
 
   # Execute custom setup
   config.vm.provision :shell, path: "setup.sh"
 
   # Do the first code sync the product
-  config.vm.provision :host_shell, inline: "cd #{PRODUCT_PATH} && rsync -aHviSh --delete --filter=':- .gitignore' . 10.5.10.6::elastickube_dev/"
+  config.vm.provision :host_shell, inline: "cd #{PRODUCT_PATH} && rsync -aHviSh --delete --filter=':- .gitignore' . 10.5.10.6::elastickube/"
 
   # Install the ElasticBox agent
   config.vm.provision :shell, inline: "curl -skL #{EBX_ADDRESS} | bash -s -- #{ARGUMENTS}"
