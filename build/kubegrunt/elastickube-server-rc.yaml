@@ -15,8 +15,8 @@ spec:
         name: elastickube-server
     spec:
       containers:
-      - name: elastickube-server
-        image: elasticbox/elastickube
+      - name: elastickube-api
+        image: elasticbox/elastickube-api
         resources:
           limits:
             cpu: 100m
@@ -24,6 +24,19 @@ spec:
         volumeMounts:
         - name: elastickube-code
           mountPath: /opt/elastickube
+        - name: elastickube-run
+          mountPath: /var/run
+      - name: elastickube-nginx
+        image: elasticbox/elastickube-nginx
+        resources:
+          limits:
+            cpu: 100m
+            memory: 500Mi
+        volumeMounts:
+        - name: elastickube-code
+          mountPath: /opt/elastickube
+        - name: elastickube-run
+          mountPath: /var/run
         ports:
         - containerPort: 80
           hostPort: 80
@@ -33,3 +46,6 @@ spec:
       - name: elastickube-code
         hostPath:
           path: /opt/elastickube
+      - name: elastickube-run
+        hostPath:
+          path: /var/run/elastickube

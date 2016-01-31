@@ -1,22 +1,13 @@
-# Pull base image
 FROM ubuntu
 
-# Install Nginx
-RUN \
-  apt-get update && \
-  apt-get install -y nginx && \
-  echo "\ndaemon off;" >> /etc/nginx/nginx.conf && \
-  chown -R www-data:www-data /var/lib/nginx
+ENV DEBIAN_FRONTEND     noninteractive
+ENV ELASTICKUBE_PATH    /opt/elastickube
 
-# Define mountable directories
-VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
+WORKDIR ${ELASTICKUBE_PATH}
 
-# Define working directory
-WORKDIR /etc/nginx
+# Install pip
+RUN apt-get -y update && apt-get -y install python-pip curl
 
-# Define default command
-CMD ["nginx"]
+RUN pip install --no-compile tornado pyyaml pymongo
 
-# Expose ports
-EXPOSE 80
-EXPOSE 443
+CMD python ${ELASTICKUBE_PATH}/src/api/server.py

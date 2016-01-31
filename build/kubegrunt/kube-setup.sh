@@ -2,8 +2,9 @@
 
 KUBECTL="/opt/kubernetes/$(ls /opt/kubernetes | head -n 1)/bin/kubectl"
 
-# Rebuild image
-docker build --file=../../src/api/Dockerfile --tag=elasticbox/elastickube ../../src/api
+# Rebuild images
+docker build --file=../../src/api/Dockerfile --tag=elasticbox/elastickube-api ../../src/api
+docker build --file=../../src/nginx/Dockerfile --tag=elasticbox/elastickube-nginx ../../src/nginx
 
 # Ensure mongo controller is running
 if [[ -z $(${KUBECTL} get rc --namespace=kube-system | grep elastickube-mongo) ]]
