@@ -1,10 +1,10 @@
-
-from tornado.web import RequestHandler, asynchronous
+from tornado.web import RequestHandler
 from pymongo.errors import ConnectionFailure
+
+from v1.auth import AuthHandler
 
 class MainHandler(RequestHandler):
 
-    @asynchronous
     def get(self):
         try:
             if self.settings["client"].elastickube:
@@ -13,3 +13,8 @@ class MainHandler(RequestHandler):
             self.write("Connection to MongoDB failed: %s" % error)
 
         self.finish()
+
+ApiHandlers = [
+    (r"/api/v1", MainHandler),
+    (r"/api/v1/login", AuthHandler)
+]
