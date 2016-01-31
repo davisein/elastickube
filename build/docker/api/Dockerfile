@@ -6,8 +6,8 @@ ENV ELASTICKUBE_PATH    /opt/elastickube
 WORKDIR ${ELASTICKUBE_PATH}
 
 # Install pip
-RUN apt-get -y update && apt-get -y install python-pip curl
+RUN apt-get -y update && apt-get -y install python-pip python-dev curl
 
-RUN pip install --no-compile tornado pyyaml pymongo
+RUN pip install --no-compile tornado motor
 
 CMD python ${ELASTICKUBE_PATH}/src/api/server.py
