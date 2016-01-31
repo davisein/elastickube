@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         // Watches files for changes and runs tasks based on the changed files
         watch: {
             api: {
-                files: ['../../src/api/**/*', '!../../src/api/**/*.pyc', './**/*.yaml'],
+                files: ['../docker/**/*', './**/*.yaml', './**/*.sh'],
                 tasks: ['shell:rebuildApi']
             }
         }
