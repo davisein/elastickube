@@ -13,10 +13,16 @@ then
 fi
 
 # Ensure mongo service is running
-if [[ -n $(${KUBECTL} get svc --namespace=kube-system | grep elastickube-mongo) ]]
+if [[ -z $(${KUBECTL} get svc --namespace=kube-system | grep elastickube-mongo) ]]
+then
+    ${KUBECTL} create -f elastickube-mongo-svc.yaml
+fi
+
+# Delete server replication controller
+if [[ -n $(${KUBECTL} get rc --namespace=kube-system | grep elastickube-server) ]]
 then
     ${KUBECTL} delete rc elastickube-server --namespace=kube-system
 fi
 
-# Recreate replication controller
+# Create replication controller
 ${KUBECTL} create -f elastickube-server-rc.yaml
