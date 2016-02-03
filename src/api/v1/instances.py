@@ -1,12 +1,11 @@
-import json
-
-from tornado.web import RequestHandler, HTTPError
-from tornado.gen import coroutine, Return
+from v1.secure import SecureHandler
 
 
-class InstancesHandler(RequestHandler):
+class InstancesHandler(SecureHandler):
 
-    @coroutine
     def get(self):
-        self.write(json.dumps([]))
-        Return()
+        response = dict(
+            instances=[]
+        )
+
+        self.write(response)

@@ -1,12 +1,11 @@
-import json
-
-from tornado.web import RequestHandler, HTTPError
-from tornado.gen import coroutine, Return
+from v1.secure import SecureHandler
 
 
-class NamespacesHandler(RequestHandler):
+class NamespacesHandler(SecureHandler):
 
-    @coroutine
     def get(self):
-        self.write(json.dumps([]))
-        Return()
+        response = dict(
+            namespaces=self.user.get("namespaces", [])
+        )
+
+        self.write(response)
