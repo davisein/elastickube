@@ -1,4 +1,6 @@
 import os
+import sys
+import logging
 
 from tornado.web import Application
 from tornado.httpserver import HTTPServer
@@ -8,6 +10,7 @@ from motor.motor_tornado import MotorClient
 
 from v1 import ApiHandlers
 
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 if __name__ == "__main__":
     mongo_url = "mongodb://{0}:{1}/".format(
