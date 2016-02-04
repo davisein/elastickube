@@ -1,0 +1,50 @@
+@import "../../colors";
+
+.ek-header {
+    &__sections {
+        &__section {
+            border-radius: initial;
+            color: @white;
+            margin: 0;
+            text-transform: capitalize;
+
+            &--selected {
+                border-bottom: 5px solid @lightblue;
+                padding-top: 5px;
+                color: @lightblue;
+            }
+        }
+    }
+
+    &__location {
+        &__namespace {
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: capitalize;
+
+            .md-select-value {
+                border-bottom: 0;
+                span {
+                    min-height: initial;
+                    height: initial;
+                }
+
+                .md-select-icon {
+                    font-size: 14px;
+                    height: 12px;
+                    width: 14px;
+                }
+            }
+        }
+
+        &__namespace,
+        &__help,
+        &__more {
+            color: @white;
+
+            &__icon {
+                color: @white;
+            }
+        }
+    }
+}

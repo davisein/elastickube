@@ -1,7 +1,9 @@
 # Idea files
+*.iml
 .idea
 
 # build files
+/build/ui
 .vagrant
 
 # src files

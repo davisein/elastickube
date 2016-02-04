@@ -1,0 +1,23 @@
+<md-toolbar>
+    <div layout="row" layout-align="space-between">
+        <div class="ek-header__sections"
+             layout="row" layout-align="start">
+            <md-button class="ek-header__sections__section ek-header__sections__section--selected">Instances</md-button>
+            <md-button class="ek-header__sections__section">Templates</md-button>
+        </div>
+
+        <div class="ek-header__location" layout="row" layout-align="end center">
+            <md-select class="ek-header__location__namespace" ng-model="ctrl.namespace" aria-label="namespace">
+                <md-option value="engineering">engineering</md-option>
+            </md-select>
+
+            <md-button class="ek-header__location__help md-icon-button" aria-label="Help">
+                <md-icon class="ek-header__location__help__icon" md-svg-icon="{{::ctrl.helpIcon}}"></md-icon>
+            </md-button>
+
+            <md-button class="ek-header__location__more md-icon-button" aria-label="More">
+                <md-icon class="ek-header__location__more__icon" md-svg-icon="{{::ctrl.moreIcon}}"></md-icon>
+            </md-button>
+        </div>
+    </div>
+</md-toolbar>
