@@ -17,6 +17,8 @@ spec:
       containers:
         - image: mongo
           name: elastickube-mongo
+          args:
+          - --replSet=elastickube
           ports:
           - name: mongo
             containerPort: 27017
