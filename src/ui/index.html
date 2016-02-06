@@ -1,13 +1,30 @@
-<!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<HTML>
-<HEAD>
-    <TITLE>
-        ElasticKube
-    </TITLE>
-</HEAD>
-<BODY>
-<H1>Hello ElasticKube</H1>
-<P>Login using <A href="/api/v1/auth/google">Google</A></P>
-<P>Access <A href="/api/v1/namespaces">Namespaces</A></P>
-</BODY>
-</HTML>
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>ElasticKube</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<!--[if lt IE 10]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<!--<h1>Hello ElasticKube</h1>-->
+<!--<p>Login using <a href="/api/v1/auth/google">Google</a></p>-->
+<!--<p>Access <a href="/api/v1/namespaces">Namespaces</a></p>-->
+
+<div layout="column" layout-fill
+     ng-app="app"
+     ng-controller="AppRoutesController as app">
+    <ek-header></ek-header>
+
+    <md-content ng-viewport="content"></md-content>
+</div>
+
+</body>
+</html>
+
