@@ -15,7 +15,7 @@
     "start": "parallelshell 'npm run build' 'npm-watch'",
     "clean-dependencies": "npm install && npm prune",
     "build": "webpack --progress --colors --devtool=eval --watch",
-    "build:production": "NODE_ENV=production webpack -p --progress --colors"
+    "build:production": "NODE_ENV=production webpack -p --progress --colors --bail"
   },
   "dependencies": {
     "angular": "~1.4.9",
@@ -37,6 +37,7 @@
     "eslint": "^1.10.3",
     "eslint-loader": "^1.2.1",
     "expose-loader": "^0.7.1",
+    "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "html-loader": "^0.4.0",
     "html-webpack-plugin": "^2.8.1",
