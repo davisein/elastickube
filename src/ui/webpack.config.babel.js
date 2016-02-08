@@ -1,17 +1,18 @@
+/* eslint no-process-env:0 */
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
-import webpack from 'webpack'
-
+import webpack from 'webpack';
 
 const webpackConfig = {
 
     entry: {
         elastickube: path.resolve(__dirname, 'app/app.loader.js'),
-        vendor: ['angular', 'angular-animate', 'angular-aria', 'angular-material', 'angular-new-router', 'lodash']
+        vendor: [ 'angular', 'angular-animate', 'angular-aria', 'angular-material', 'ui-router', 'lodash' ]
     },
 
     resolve: {
         root: [
+            path.resolve(__dirname),
             path.resolve(path.join(__dirname, 'app'))
         ]
     },
@@ -34,13 +35,14 @@ const webpackConfig = {
         new HtmlWebpackPlugin({
             template: './index.html'
         }),
-        new webpack.optimize.CommonsChunkPlugin('vendor', ("production" === process.env.NODE_ENV) ? 'assets/js/[name]-[chunkhash].js' : 'assets/js/[name].js', Infinity)
+        new webpack.optimize.CommonsChunkPlugin('vendor',
+            process.env.NODE_ENV === 'production' ? 'assets/js/[name]-[chunkhash].js' : 'assets/js/[name].js', Infinity)
     ],
 
-    output:  {
+    output: {
         path: path.join(__dirname, process.env.BUILD_FOLDER || '../../build/ui'),
         publicPath: '/',
-        filename: ("production" === process.env.NODE_ENV) ? 'assets/js/[name]-[chunkhash].js' : 'assets/js/[name].js'
+        filename: process.env.NODE_ENV === 'production' ? 'assets/js/[name]-[chunkhash].js' : 'assets/js/[name].js'
     }
 };
 

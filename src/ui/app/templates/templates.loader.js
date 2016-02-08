@@ -1,1 +1,1 @@
-import 'components/templates/templates';
+import 'templates/templates.routes';

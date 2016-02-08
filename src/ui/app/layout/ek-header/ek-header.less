@@ -1,6 +1,10 @@
 @import "../../colors";
 
 .ek-header {
+    &__logo {
+        margin: 0 20px;
+    }
+
     &__sections {
         &__section {
             border-radius: initial;
@@ -9,9 +13,9 @@
             text-transform: capitalize;
 
             &--selected {
-                border-bottom: 5px solid @lightblue;
+                border-bottom: 5px solid @cyan400;
                 padding-top: 5px;
-                color: @lightblue;
+                color: @cyan400;
             }
         }
     }
