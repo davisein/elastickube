@@ -17,8 +17,8 @@ function Header() {
         compile,
         template
     };
-}
 
-function compile($element) {
-    $element.addClass('ek-header');
+    function compile($element) {
+        $element.addClass('ek-header');
+    }
 }
