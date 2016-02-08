@@ -1,8 +1,7 @@
 import { module } from 'instances/instances.module';
 import routerHelperName from 'blocks/router/router-helper';
 
-module
-    .run(appRun);
+module.run(appRun);
 
 appRun.$inject = [ routerHelperName ];
 

@@ -7,7 +7,7 @@ const webpackConfig = {
 
     entry: {
         elastickube: path.resolve(__dirname, 'app/app.loader.js'),
-        vendor: [ 'angular', 'angular-animate', 'angular-aria', 'angular-material', 'ui-router', 'lodash' ]
+        vendor: [ 'jquery', 'angular', 'angular-animate', 'angular-aria', 'angular-material', 'ui-router', 'lodash' ]
     },
 
     resolve: {
@@ -19,6 +19,7 @@ const webpackConfig = {
 
     module: {
         loaders: [
+            { test: require.resolve('jquery'), loader: 'expose?jQuery' },
             { test: /\.js$/, loader: 'babel?presets[]=es2015!eslint', exclude: /\/(node_modules)\// },
             { test: /\.less/, loader: 'style!css!less' },
             { test: /\.html/, loader: 'html', include: /\/(app)\//, exclude: /\/(components)\// },

@@ -2,8 +2,7 @@ import { module } from 'blocks/router/router.module';
 
 const name = 'routerHelper';
 
-module
-    .provider(name, routerHelperProvider);
+module.provider(name, routerHelperProvider);
 
 routerHelperProvider.$inject = [ '$locationProvider', '$stateProvider', '$urlRouterProvider' ];
 

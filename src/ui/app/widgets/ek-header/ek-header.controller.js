@@ -1,10 +1,10 @@
 import logo from 'images/kubernetes-logo.svg';
 import routerHelperName from 'blocks/router/router-helper';
-import { Icons as IconsName } from 'layout/layout.constants';
+import { Icons as IconsName } from 'widgets/widgets.constants';
 
-Header.$inject = [ '$rootScope', IconsName, routerHelperName ];
+EKHeaderController.$inject = [ '$rootScope', IconsName, routerHelperName ];
 
-function Header($rootScope, Icons, routerHelper) {
+function EKHeaderController($rootScope, Icons, routerHelper) {
     const self = this;
 
     self.logo = logo;
@@ -31,4 +31,4 @@ function Header($rootScope, Icons, routerHelper) {
     }
 }
 
-export default Header;
+export default EKHeaderController;

@@ -9,7 +9,6 @@ const module = angular.module(name, [
     coreModule,
     layoutModule,
     widgetsModule,
-
     routerModule
 ]);
 

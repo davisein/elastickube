@@ -1,8 +1,7 @@
 import { module } from 'templates/templates.module';
 import routerHelperName from 'blocks/router/router-helper';
 
-module
-    .run(appRun);
+module.run(appRun);
 
 appRun.$inject = [ routerHelperName ];
 
@@ -14,7 +13,7 @@ function getStates() {
     return [ {
         state: 'templates',
         config: {
-            template: '<div>templates</div>',
+            template: '<ek-templates></ek-templates>',
             url: '/templates',
             data: {
                 header: 2

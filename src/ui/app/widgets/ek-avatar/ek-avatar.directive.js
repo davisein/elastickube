@@ -1,30 +1,28 @@
 import './ek-avatar.less';
-import template from './ek-avatar.html';
 import DEFAULT_IMAGE from 'images/user-nophoto-lg.png';
 
 import { module } from 'widgets/widgets.module';
 
-module
-    .directive('ekAvatar', Avatar);
+module.directive('ekAvatar', ekAvatar);
 
-Avatar.$inject = [];
+ekAvatar.$inject = [];
 
-function Avatar() {
+function ekAvatar() {
     return {
         restrict: 'E',
-        replace: true,
 
         scope: {
             src: '='
         },
 
-        link,
-        template
+        link
     };
 
     function link($scope, $element) {
         $element.addClass('ek-avatar');
 
-        $scope.$watch('src', (src) => $scope.imageSrc = src || DEFAULT_IMAGE);
+        $scope.$watch('src', (src) => {
+            $element.css('background-image', `url(${src || DEFAULT_IMAGE})`);
+        });
     }
 }

@@ -1,7 +1,5 @@
 import 'angular';
-
-import 'app.config';
-import 'app.constants';
+import 'app.module';
 
 import 'core/core.loader';
 import 'layout/layout.loader';

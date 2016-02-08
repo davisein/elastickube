@@ -1,19 +1,18 @@
 import './ek-header.less';
 import template from './ek-header.html';
 
-import HeaderController from './ek-header.controller';
-import { module } from 'layout/layout.module';
+import EKHeaderController from './ek-header.controller';
+import { module } from 'widgets/widgets.module';
 
-module
-    .directive('ekHeader', Header);
+module.directive('ekHeader', ekHeader);
 
-Header.$inject = [];
+ekHeader.$inject = [];
 
-function Header() {
+function ekHeader() {
     return {
         restrict: 'E',
         controllerAs: 'ctrl',
-        controller: HeaderController,
+        controller: EKHeaderController,
         compile,
         template
     };
