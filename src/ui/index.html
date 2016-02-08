@@ -18,11 +18,10 @@
 <!--<p>Access <a href="/api/v1/namespaces">Namespaces</a></p>-->
 
 <div layout="column" layout-fill
-     ng-app="app"
-     ng-controller="AppRoutesController as app">
+     ng-app="app">
     <ek-header></ek-header>
 
-    <md-content ng-viewport="content"></md-content>
+    <md-content ui-view></md-content>
 </div>
 
 </body>
