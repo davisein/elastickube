@@ -14,7 +14,6 @@
     "parser": "babel-eslint",
     "globals": {
         "module": false,
-        "ReactDOM": false,
         "angular": false,
         "describe": false,
         "it": false,

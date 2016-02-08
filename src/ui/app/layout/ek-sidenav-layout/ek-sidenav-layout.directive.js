@@ -1,14 +1,14 @@
-import './ek-header-layout.less';
-import template from './ek-header-layout.html';
+import './ek-sidenav-layout.less';
+import template from './ek-sidenav-layout.html';
 
 import { module } from 'layout/layout.module';
 import MultiTrascludeServiceName from 'core/services/multi-transclude.service';
 
-module.directive('ekHeaderLayout', ekHeaderLayout);
+module.directive('ekSidenavLayout', ekSidenavLayout);
 
-ekHeaderLayout.$inject = [ MultiTrascludeServiceName ];
+ekSidenavLayout.$inject = [ MultiTrascludeServiceName ];
 
-function ekHeaderLayout(MultiTrascludeService) {
+function ekSidenavLayout(MultiTrascludeService) {
     return {
         restrict: 'E',
         transclude: true,
@@ -22,7 +22,7 @@ function ekHeaderLayout(MultiTrascludeService) {
     };
 
     function compile($element) {
-        $element.addClass('ek-header-layout');
+        $element.addClass('ek-sidenav-layout');
 
         return link;
     }

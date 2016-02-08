@@ -1,9 +1,11 @@
 import _ from 'lodash';
 import { module } from 'core/core.module';
 
-const name = 'multiTranscludeService';
+const serviceName = 'multiTranscludeService';
 
-module.service(name, multiTransclude);
+module.service(serviceName, multiTransclude);
+
+multiTransclude.$inject = [];
 
 function multiTransclude() {
     this.transclude = transclude;
@@ -32,15 +34,12 @@ function multiTransclude() {
     }
 
     function getAttribute(item, attributeName) {
-        let value;
         const attribute = item.attributes[ attributeName ];
 
         if (angular.isDefined(attribute)) {
-            value = attribute.value;
+            return attribute.value;
         }
-
-        return value;
     }
 }
 
-export default name;
+export default serviceName;

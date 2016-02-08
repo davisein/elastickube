@@ -1,3 +1,74 @@
-.ek-templates {
+@import "../../colors";
 
+.ek-templates {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
+    &__title {
+        width: 190px;
+    }
+
+    &__sort-by {
+        margin: 0 20px 0 0;
+        border-radius: 3px;
+        border: 1px solid @grey300;
+        height: 30px;
+        background-color: @grey100;
+        padding-left: 5px;
+
+        &, &:not([disabled]):focus {
+            .md-select-value {
+                border-bottom-width: 0;
+            }
+        }
+
+        .md-select-icon {
+            width: 14px;
+        }
+
+        .md-text {
+            text-transform: capitalize;
+        }
+    }
+
+    &__button {
+        min-width: 44px;
+        width: 44px;
+        min-height: 30px;
+        height: 30px;
+        margin: 0;
+        border-radius: 0;
+        border: 1px solid @grey300;
+        border-left: 0;
+        background-color: @grey100;
+
+        &:focus {
+            outline: none;
+        }
+
+        .material-icons {
+            color: @grey400;
+        }
+
+        &--first {
+            border-left: 1px solid @grey300;
+            border-bottom-left-radius: 3px;
+            border-top-left-radius: 3px;
+        }
+
+        &--last {
+            border-bottom-right-radius: 3px;
+            border-top-right-radius: 3px;
+        }
+
+        &--selected {
+            background-color: @grey200;
+            box-shadow: inset 0 1px 1px 0 rgba(0, 0, 0, 0.07);
+
+            .material-icons {
+                color: initial;
+            }
+        }
+    }
 }

@@ -13,7 +13,7 @@ function getStates() {
     return [ {
         state: 'admin',
         config: {
-            template: '<div>Admin</div>',
+            template: '<ek-admin></ek-admin>',
             url: '/admin',
             data: {
                 header: 3,

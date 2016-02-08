@@ -1,6 +1,41 @@
 <ek-header-layout>
-    <div transclude-to="header"></div>
-    <div transclude-to="body">
-        <ek-template></ek-template>
+    <div transclude-to="header" layout="row" layout-align="start center">
+        <h3 class="ek-templates__title">Templates</h3>
+        <ek-search-filter></ek-search-filter>
+
+        <div layout="row" layout-align="end center" flex>
+
+            <md-select class="ek-templates__sort-by" ng-model="ctrl.sortType" aria-label="sort type">
+                <md-option ng-repeat="opt in ctrl.sortTypes track by $index" ng-value="opt">{{:: opt }}</md-option>
+            </md-select>
+
+            <div layout="row" layout-align="center center">
+                <button class="ek-templates__button ek-templates__button--first"
+                        ng-class="{'ek-templates__button--selected' : ctrl.selectedView === 'list'}"
+                        ng-click="ctrl.selectView('list')"
+                        aria-label="view list">
+                    <md-icon md-svg-src="{{:: ACTION_VIEW_LIST_ICON }}"></md-icon>
+                </button>
+                <button class="ek-templates__button ek-templates__button--last"
+                        ng-class="{'ek-templates__button--selected' : ctrl.selectedView === 'grid'}"
+                        ng-click="ctrl.selectView('grid')"
+                        aria-label="view grid">
+                    <md-icon md-svg-src="{{:: ACTION_VIEW_MODULE_ICON }}"></md-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div transclude-to="body" layout="column">
+
+        <ek-sidenav-layout>
+            <div transclude-to="sidenav">menu</div>
+
+            <div transclude-to="body" ng-switch="ctrl.selectedView">
+                <span ng-switch-when="grid">grid</span>
+                <span ng-switch-default>list</span>
+            </div>
+        </ek-sidenav-layout>
+
     </div>
 </ek-header-layout>

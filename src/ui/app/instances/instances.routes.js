@@ -13,7 +13,7 @@ function getStates() {
     return [ {
         state: 'instances',
         config: {
-            template: '<div>Instances</div>',
+            template: '<ek-instances></ek-instances>',
             url: '/instances',
             data: {
                 header: 1

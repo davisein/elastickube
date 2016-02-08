@@ -1,15 +1,10 @@
-import logo from 'images/kubernetes-logo.svg';
 import routerHelperName from 'blocks/router/router-helper';
-import { Icons as IconsName } from 'widgets/widgets.constants';
 
-EKHeaderController.$inject = [ '$rootScope', IconsName, routerHelperName ];
+EKHeaderController.$inject = [ '$rootScope', routerHelperName ];
 
-function EKHeaderController($rootScope, Icons, routerHelper) {
+function EKHeaderController($rootScope, routerHelper) {
     const self = this;
 
-    self.logo = logo;
-    self.helpIcon = Icons.HELP;
-    self.moreIcon = Icons.MORE;
     self.namespace = 'engineering';
     self.goToSection = goToSection;
     self.sections = getSections();

@@ -1,6 +1,6 @@
 @import "../../colors";
 
-.ek-header-layout {
+.ek-sidenav-layout {
     display: block;
     position: absolute;
     height: 100%;
@@ -13,16 +13,11 @@
             position: relative;
         }
 
-        & > [transclude-id="header"] {
-            padding: 15px 20px;
+        & > [transclude-id="sidenav"] {
+            width: 210px;
+            padding: 20px;
             background-color: @white;
-            border-bottom: 1px solid @grey300;
-
-            h3 {
-                padding: 0;
-                margin: 0;
-                font-size: 18px;
-            }
+            border-right: 1px solid @grey300;
         }
     }
 }

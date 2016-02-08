@@ -3,7 +3,9 @@ import DEFAULT_IMAGE from 'images/user-nophoto-lg.png';
 
 import { module } from 'widgets/widgets.module';
 
+
 module.directive('ekAvatar', ekAvatar);
+
 
 ekAvatar.$inject = [];
 

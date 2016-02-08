@@ -1,30 +1,30 @@
-<md-toolbar layout="row">
-    <img class="ek-header__logo" ng-src="{{:: ctrl.logo }}">
+<div class="ek-header__logo" layout="row" layout-align="start center">
+    <img ng-src="{{:: KUBERNETES_LOGO }}">
+</div>
 
-    <div layout="row" layout-align="space-between" flex>
-        <div class="ek-header__sections"
-             layout="row" layout-align="start">
-            <md-button ng-repeat="section in ctrl.sections track by section.name"
-                       ng-click="ctrl.goToSection(section)"
-                       ng-class="{ 'ek-header__sections__section--selected': ctrl.selectedState === section.name }"
-                       class="ek-header__sections__section">{{:: section.name }}
-            </md-button>
-        </div>
-
-        <div class="ek-header__location" layout="row" layout-align="end center">
-            <md-select class="ek-header__location__namespace" ng-model="ctrl.namespace" aria-label="namespace">
-                <md-option value="engineering">engineering</md-option>
-            </md-select>
-
-            <md-button class="ek-header__location__help md-icon-button" aria-label="Help">
-                <md-icon class="ek-header__location__help__icon" md-svg-icon="{{::ctrl.helpIcon}}"></md-icon>
-            </md-button>
-
-            <md-button class="ek-header__location__more md-icon-button" aria-label="More">
-                <md-icon class="ek-header__location__more__icon" md-svg-icon="{{::ctrl.moreIcon}}"></md-icon>
-            </md-button>
-
-            <ek-avatar class="ek-large"></ek-avatar>
-        </div>
+<div layout="row" layout-align="space-between" flex>
+    <div class="ek-header__sections"
+         layout="row" layout-align="start">
+        <a ng-repeat="section in ctrl.sections track by section.name"
+           ng-click="ctrl.goToSection(section)"
+           ng-class="{ 'ek-header__sections__section--selected': ctrl.selectedState === section.name }"
+           class="ek-header__sections__section">{{:: section.name }}
+        </a>
     </div>
-</md-toolbar>
+
+    <div class="ek-header__location" layout="row" layout-align="end center">
+        <md-select class="ek-header__location__namespace" ng-model="ctrl.namespace" aria-label="namespace">
+            <md-option value="engineering">engineering</md-option>
+        </md-select>
+
+        <md-button class="ek-header__location__help md-icon-button" aria-label="Help">
+            <md-icon class="ek-header__location__help__icon" md-svg-src="{{:: ACTION_HELP_ICON }}"></md-icon>
+        </md-button>
+
+        <md-button class="ek-header__location__more md-icon-button" aria-label="More">
+            <md-icon class="ek-header__location__more__icon" md-svg-src="{{:: NAVIGATION_MORE_ICON }}"></md-icon>
+        </md-button>
+
+        <ek-avatar class="ek-header__location__avatar"></ek-avatar>
+    </div>
+</div>
