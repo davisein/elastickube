@@ -65,7 +65,7 @@ class Resources(object):
         raise Return(result)
 
     @coroutine
-    def watch(self, name=None, namespace='default'):
+    def watch(self, name=None, namespace='default', on_data=None):
         url_path = '/watch' + self.base_url_path
         params = dict(namespace=namespace)
 
@@ -78,8 +78,7 @@ class Resources(object):
             for k, v in self.selector.iteritems():
                 params['labelSelector'] = params['labelSelector'] + k + '=' + v
 
-        result = self.api.get(url_path, **params)
-        raise Return(result)
+        yield self.api.watch(url_path, on_data, **params)
 
     def filter(self, selector=None):
         if selector is not None:

@@ -2,7 +2,7 @@ import json
 import logging
 
 from tornado.gen import coroutine, Return
-from tornado.httpclient import AsyncHTTPClient, HTTPError
+from tornado.httpclient import AsyncHTTPClient, HTTPError, HTTPRequest
 from tornado.httputil import url_concat
 
 from api.kube_client import exceptions
@@ -114,10 +114,17 @@ class HTTPClient(object):
 
         raise Return(result)
 
+    @coroutine
+    def watch(self, url_path, on_data, **kwargs):
+        params = self.build_params(url_path, **kwargs)
+        url = url_concat(self.build_url(url_path, **kwargs), params)
+        request = HTTPRequest(url=url, method='GET', streaming_callback=on_data)
+        yield self._client.fetch(request)
+
 
 class Client(object):
 
-    def __init__(self, endpoint, username='', password='', version='v1'):
+    def __init__(self, endpoint, username=None, password=None, version='v1'):
         self.version = version
         self.http_client = HTTPClient(endpoint, username, password)
 
@@ -214,3 +221,17 @@ class Client(object):
 
         data = json.loads(response.body)
         raise Return(data)
+
+    @coroutine
+    def watch(self, url_path, on_data, **kwargs):
+        try:
+            yield self.http_client.watch(url_path, on_data, **kwargs)
+        except HTTPError as e:
+            message = self.format_error(e)
+
+            if e.code == 404:
+                raise exceptions.NotFoundException(message)
+            elif e.code == 599:
+                raise exceptions.WatchDisconnectedException(message)
+            else:
+                raise exceptions.KubernetesException(message, e.code)
