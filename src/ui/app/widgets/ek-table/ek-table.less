@@ -1,0 +1,106 @@
+.ek-table {
+    display: table;
+    border-collapse: collapse;
+    width: 100%;
+
+    &__header {
+        background-color: #f1f3f5;
+        display: table-header-group;
+        color: #89919c;
+        font-size: 12px;
+        font-weight: 500;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+
+        &__row {
+            white-space: nowrap;
+            display: table-row;
+            border-bottom: 1px solid #dde0e3;
+
+            & > * {
+                padding: 7px 20px;
+                line-height: 16px;
+                vertical-align: middle;
+                display: table-cell;
+                text-transform: capitalize;
+
+                &.sortable {
+
+                    &.active {
+                        &:after {
+                            content: "";
+                            width: 0;
+                            height: 0;
+                            border-left: 4px solid transparent;
+                            border-right: 4px solid transparent;
+                            border-top: 6px solid #989ca0;
+                            display: inline-block;
+                            line-height: 20px;
+                            position: relative;
+                            top: -1px;
+                            left: 6px;
+
+                            transform: scale(.9);
+                            transition: transform .3s ease;
+                        }
+
+                        &.reverse:after {
+                            transform: scale(.9) rotate(180deg);
+                        }
+                    }
+
+                    &:hover {
+                        background-color: #eaedf0;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+
+    &__body {
+        display: table-row-group;
+
+        & > * {
+            position: relative;
+            display: table-row;
+            height: 50px;
+            border-bottom: 1px solid #ebeced;
+
+            &:hover {
+                background-color: #f8f8f9;
+            }
+
+            & > * {
+                display: table-cell;
+                vertical-align: middle;
+                padding-left: 20px;
+                padding-right: 20px;
+
+                &.column-name {
+                    .collapsed {
+                        margin-left: 20px;
+                        margin-right: 8px;
+                        position: relative;
+
+                        &:before {
+                            content: "\e621";
+                            cursor: pointer;
+                            font-size: 10px;
+                            left: -20px;
+                            opacity: 0.6;
+                            position: absolute;
+                            top: 50%;
+                            transform: translateY(-5px);
+                            transition: transform .15s ease;
+                        }
+
+                        &.collapsable:before{
+                            transform: rotate(90deg) translateX(-5px);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -34,7 +34,7 @@ function multiTransclude() {
     }
 
     function getAttribute(item, attributeName) {
-        const attribute = item.attributes[ attributeName ];
+        const attribute = item.attributes[attributeName];
 
         if (angular.isDefined(attribute)) {
             return attribute.value;

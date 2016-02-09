@@ -1,9 +1,7 @@
 EKTemplateController.$inject = [];
 
 function EKTemplateController() {
-    this.name = 'Hello World';
-
-    console.log('aasdf');
+    this.name = 'Template';
 }
 
 export default EKTemplateController;

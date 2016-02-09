@@ -1,7 +1,6 @@
 import _ from 'lodash';
 
-
-EKSearchFilterController.$inject = [ '$scope' ];
+EKSearchFilterController.$inject = ['$scope'];
 
 function EKSearchFilterController($scope) {
     const self = this;
@@ -19,6 +18,5 @@ function EKSearchFilterController($scope) {
         return _.filter(input, (item) => item.name.toLowerCase().indexOf(text.toLowerCase()) > 0);
     }
 }
-
 
 export default EKSearchFilterController;

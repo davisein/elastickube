@@ -1,0 +1,19 @@
+<ek-table headers="ctrl.headers" header-click-listener="ctrl.sortyByCallback">
+    <div ng-repeat="instance in ctrl.sortedInstances">
+        <div>
+            {{ instance.name }}
+        </div>
+        <div>
+            {{ instance.state }}
+        </div>
+        <div>
+            {{ instance.serviceId }}
+        </div>
+        <div>
+            {{ instance.labels }}
+        </div>
+        <div>
+            {{ instance.updated }}
+        </div>
+    </div>
+</ek-table>
