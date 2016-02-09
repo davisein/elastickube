@@ -67,7 +67,6 @@ class HTTPClient(object):
         params = self.build_params(url_path, **kwargs)
         url = url_concat(self.build_url(url_path, **kwargs), params)
 
-        logging.error(url)
         result = yield self._client.fetch(url, method='GET')
         raise Return(result)
 
