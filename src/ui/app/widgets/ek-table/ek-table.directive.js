@@ -1,8 +1,7 @@
 import './ek-table.less';
-import template from './ek-table.html';
-import EKTableController from './ek-table.controller';
-
 import { module } from 'widgets/widgets.module';
+import controller from './ek-table.controller';
+import template from './ek-table.html';
 
 module.directive('ekTable', ekTable);
 
@@ -19,19 +18,20 @@ function ekTable() {
             headerClickListener: '&?'
         },
         controllerAs: 'ctrl',
-        controller: EKTableController,
+        controller,
         compile,
         template
     };
 
     function compile($element) {
         $element.addClass('ek-table');
-        return {
-            post: ($scope, iElement, iAttrs, controller) => {
-                if (angular.isFunction(controller.headerClickListener) && angular.isFunction(controller.headerClickListener())) {
-                    controller.headerClickListener = controller.headerClickListener();
-                }
-            }
-        };
+
+        return link;
+    }
+
+    function link($scope, iElement, iAttrs, $controller) {
+        if (angular.isFunction($controller.headerClickListener) && angular.isFunction($controller.headerClickListener())) {
+            $controller.headerClickListener = $controller.headerClickListener();
+        }
     }
 }

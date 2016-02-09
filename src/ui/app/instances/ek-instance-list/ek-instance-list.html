@@ -1,5 +1,5 @@
 <ek-table headers="ctrl.headers" header-click-listener="ctrl.sortyByCallback">
-    <div ng-repeat="instance in ctrl.sortedInstances">
+    <div ng-repeat="instance in ctrl.sortedInstances track by instance.id">
         <div>
             {{ instance.name }}
         </div>

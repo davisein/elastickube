@@ -1,6 +1,5 @@
-<ek-header-layout>
+<ek-header-layout title="templates">
     <div transclude-to="header" layout="row" layout-align="start center">
-        <h3 class="ek-templates__title">Templates</h3>
         <ek-search-filter></ek-search-filter>
 
         <div layout="row" layout-align="end center" flex>
@@ -9,20 +8,18 @@
                 <md-option ng-repeat="opt in ctrl.sortTypes track by $index" ng-value="opt">{{:: opt }}</md-option>
             </md-select>
 
-            <div layout="row" layout-align="center center">
-                <button class="ek-templates__button ek-templates__button--first"
-                        ng-class="{'ek-templates__button--selected' : ctrl.selectedView === 'list'}"
+            <ek-button-group>
+                <button ng-class="{'ek-button-group--selected' : ctrl.selectedView === 'list'}"
                         ng-click="ctrl.selectView('list')"
                         aria-label="view list">
                     <md-icon md-svg-src="{{:: ACTION_VIEW_LIST_ICON }}"></md-icon>
                 </button>
-                <button class="ek-templates__button ek-templates__button--last"
-                        ng-class="{'ek-templates__button--selected' : ctrl.selectedView === 'grid'}"
+                <button ng-class="{'ek-button-group--selected' : ctrl.selectedView === 'grid'}"
                         ng-click="ctrl.selectView('grid')"
                         aria-label="view grid">
                     <md-icon md-svg-src="{{:: ACTION_VIEW_MODULE_ICON }}"></md-icon>
                 </button>
-            </div>
+            </ek-button-group>
         </div>
     </div>
 

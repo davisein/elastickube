@@ -1,10 +1,9 @@
 <div class="ek-table__header">
     <div class="ek-table__header__row">
         <div ng-repeat="header in ctrl.headers"
-            ng-click="ctrl.headerClickListener(header)">
+             ng-click="ctrl.headerClickListener(header)">
             {{ header.title }}
         </div>
     </div>
 </div>
-<div class="ek-table__body" ng-transclude>
-</div>
+<div class="ek-table__body" ng-transclude></div>

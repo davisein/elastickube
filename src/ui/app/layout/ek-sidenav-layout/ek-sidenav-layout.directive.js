@@ -1,7 +1,6 @@
 import './ek-sidenav-layout.less';
-import template from './ek-sidenav-layout.html';
-
 import { module } from 'layout/layout.module';
+import template from './ek-sidenav-layout.html';
 import MultiTrascludeServiceName from 'core/services/multi-transclude.service';
 
 module.directive('ekSidenavLayout', ekSidenavLayout);
@@ -12,11 +11,6 @@ function ekSidenavLayout(MultiTrascludeService) {
     return {
         restrict: 'E',
         transclude: true,
-
-        scope: {
-            src: '='
-        },
-
         compile,
         template
     };

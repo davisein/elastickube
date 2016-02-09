@@ -1,7 +1,6 @@
 import './ek-header-layout.less';
-import template from './ek-header-layout.html';
-
 import { module } from 'layout/layout.module';
+import template from './ek-header-layout.html';
 import MultiTrascludeServiceName from 'core/services/multi-transclude.service';
 
 module.directive('ekHeaderLayout', ekHeaderLayout);
@@ -12,11 +11,6 @@ function ekHeaderLayout(MultiTrascludeService) {
     return {
         restrict: 'E',
         transclude: true,
-
-        scope: {
-            src: '='
-        },
-
         compile,
         template
     };
@@ -28,6 +22,7 @@ function ekHeaderLayout(MultiTrascludeService) {
     }
 
     function link($scope, $element, $attrs, controller, $transcludeFn) {
+        $scope.title = $attrs.title;
         MultiTrascludeService.transclude($element, $transcludeFn);
     }
 }

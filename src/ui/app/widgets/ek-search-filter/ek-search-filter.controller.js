@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 EKSearchFilterController.$inject = ['$scope'];
 
 function EKSearchFilterController($scope) {
@@ -11,7 +9,7 @@ function EKSearchFilterController($scope) {
     $scope.$watch('input', search);
 
     function search() {
-        $scope.output = _.size(self.text.trim()) > 0 ? filter($scope.input, self.text) : $scope.input;
+        self.output = _.size(self.text.trim()) > 0 ? filter(self.input, self.text) : self.input;
     }
 
     function filter(input, text) {

@@ -1,7 +1,3 @@
-import _ from 'lodash';
-
-EKTemplatesController.$inject = [];
-
 function EKTemplatesController() {
     const self = this;
 

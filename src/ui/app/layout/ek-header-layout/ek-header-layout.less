@@ -8,21 +8,25 @@
 
     & > [layout] {
         height: 100%;
+    }
 
-        & > [transclude-id] {
-            position: relative;
+    &__header {
+        position: relative;
+        padding: 15px 20px;
+        background-color: @white;
+        border-bottom: 1px solid @grey300;
+
+        &__title {
+            text-transform: capitalize;
+            width: 190px;
+            padding: 0;
+            margin: 0;
+            font-size: 18px;
+            line-height: 30px;
         }
+    }
 
-        & > [transclude-id="header"] {
-            padding: 15px 20px;
-            background-color: @white;
-            border-bottom: 1px solid @grey300;
-
-            h3 {
-                padding: 0;
-                margin: 0;
-                font-size: 18px;
-            }
-        }
+    &__body {
+        position: relative;
     }
 }

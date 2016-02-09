@@ -1,5 +1,3 @@
-EKTemplateController.$inject = [];
-
 function EKTemplateController() {
     this.name = 'Template';
 }

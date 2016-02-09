@@ -1,14 +1,33 @@
-<ek-header-layout>
-    <div transclude-to="header">
-        <h3>Instances</h3>
+<ek-header-layout title="instances">
+    <div transclude-to="header" layout="row" layout-align="start center">
+        <ek-search-filter></ek-search-filter>
+
+        <div layout="row" layout-align="end center" flex>
+            <ek-button-group>
+                <button ng-class="{'ek-button-group--selected' : ctrl.selectedView === 'list'}"
+                        ng-click="ctrl.selectView('list')"
+                        aria-label="view list">
+                    <md-icon md-svg-src="{{:: ACTION_VIEW_LIST_ICON }}"></md-icon>
+                </button>
+                <button ng-class="{'ek-button-group--selected' : ctrl.selectedView === 'grid'}"
+                        ng-click="ctrl.selectView('grid')"
+                        aria-label="view grid">
+                    <md-icon md-svg-src="{{:: ACTION_VIEW_MODULE_ICON }}"></md-icon>
+                </button>
+            </ek-button-group>
+        </div>
     </div>
 
     <div transclude-to="body">
 
         <ek-sidenav-layout>
             <div transclude-to="sidenav">menu</div>
-            <div transclude-to="body">
-                <ek-instance-list></ek-instance-list>
+
+            <div class="test" transclude-to="body" ng-switch="ctrl.selectedView">
+                <span ng-switch-when="grid">grid</span>
+                <md-content ng-switch-default>
+                    <ek-instance-list></ek-instance-list>
+                </md-content>
             </div>
         </ek-sidenav-layout>
 

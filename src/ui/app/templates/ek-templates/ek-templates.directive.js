@@ -1,10 +1,8 @@
 import './ek-templates.less';
-import template from './ek-templates.html';
-
-import _ from 'lodash';
-import EKTemplatesController from './ek-templates.controller';
-import constants from 'templates/templates.constants';
 import { module } from 'templates/templates.module';
+import constants from 'templates/templates.constants';
+import controller from './ek-templates.controller';
+import template from './ek-templates.html';
 
 module.directive('ekTemplates', ekTemplates);
 
@@ -13,11 +11,11 @@ ekTemplates.$inject = [];
 function ekTemplates() {
     return {
         restrict: 'E',
-        scope: true,
+        scope: {},
         controllerAs: 'ctrl',
-        controller: EKTemplatesController,
-        compile,
-        template
+        controller,
+        template,
+        compile
     };
 
     function compile($element) {

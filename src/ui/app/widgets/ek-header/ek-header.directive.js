@@ -1,10 +1,8 @@
 import './ek-header.less';
-import template from './ek-header.html';
-
-import _ from 'lodash';
-import constants from 'widgets/widgets.constants';
-import EKHeaderController from './ek-header.controller';
 import { module } from 'widgets/widgets.module';
+import constants from 'widgets/widgets.constants';
+import controller from './ek-header.controller';
+import template from './ek-header.html';
 
 module.directive('ekHeader', ekHeader);
 
@@ -15,7 +13,7 @@ function ekHeader() {
         restrict: 'E',
         scope: true,
         controllerAs: 'ctrl',
-        controller: EKHeaderController,
+        controller,
         compile,
         template
     };

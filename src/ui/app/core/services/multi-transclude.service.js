@@ -1,11 +1,8 @@
-import _ from 'lodash';
 import { module } from 'core/core.module';
 
 const serviceName = 'multiTranscludeService';
 
 module.service(serviceName, multiTransclude);
-
-multiTransclude.$inject = [];
 
 function multiTransclude() {
     this.transclude = transclude;

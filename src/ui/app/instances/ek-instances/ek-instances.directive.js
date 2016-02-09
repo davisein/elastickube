@@ -1,16 +1,17 @@
 import './ek-instances.less';
+import { module } from 'instances/instances.module';
+import controller from './ek-instances.controller';
+import constants from 'instances/instances.constants';
 import template from './ek-instances.html';
 
-import { module } from 'instances/instances.module';
-
 module.directive('ekInstances', ekInstances);
-
-ekInstances.$inject = [];
 
 function ekInstances() {
     return {
         restrict: 'E',
-        scope: true,
+        scope: {},
+        controllerAs: 'ctrl',
+        controller,
         compile,
         template
     };
@@ -19,5 +20,11 @@ function ekInstances() {
         $element
             .addClass('ek-instances')
             .attr('layout', 'column');
+
+        return link;
+    }
+
+    function link($scope) {
+        _.extend($scope, constants);
     }
 }

@@ -1,10 +1,8 @@
 import './ek-search-filter.less';
-import template from './ek-search-filter.html';
-
-import _ from 'lodash';
-import constants from 'widgets/widgets.constants';
-import EKSearchFilterController from './ek-search-filter.controller';
 import { module } from 'widgets/widgets.module';
+import constants from 'widgets/widgets.constants';
+import controller from './ek-search-filter.controller';
+import template from './ek-search-filter.html';
 
 module.directive('ekSearchFilter', ekSearchFilter);
 
@@ -13,15 +11,14 @@ ekSearchFilter.$inject = [];
 function ekSearchFilter() {
     return {
         restrict: 'E',
-
-        scope: {
+        scope: {},
+        bindToController: {
             input: '=',
             output: '=',
             searchField: '@'
         },
-
         controllerAs: 'ctrl',
-        controller: EKSearchFilterController,
+        controller,
         compile,
         template
     };
