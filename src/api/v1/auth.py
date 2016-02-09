@@ -1,12 +1,12 @@
-import jwt
 import logging
-
 from datetime import datetime, timedelta
-from tornado.auth import GoogleOAuth2Mixin, OAuth2Mixin
-from tornado.web import RequestHandler, HTTPError, asynchronous
-from tornado.gen import coroutine
 
-from v1.secure import ELASTICKUBE_TOKEN_HEADER
+import jwt
+from tornado.auth import GoogleOAuth2Mixin, OAuth2Mixin
+from tornado.gen import coroutine
+from tornado.web import RequestHandler, HTTPError, asynchronous
+
+from api.v1.secure import ELASTICKUBE_TOKEN_HEADER
 
 
 class AuthHandler(RequestHandler):
@@ -36,6 +36,7 @@ class AuthHandler(RequestHandler):
         yield self.settings["database"].Users.save(user)
         logging.info("User '%s' authenticated." % user["username"])
 
+
 class PasswordHandler(AuthHandler):
 
     @coroutine
@@ -50,7 +51,7 @@ class PasswordHandler(AuthHandler):
             logging.debug("Username '%s' not found." % username)
             raise HTTPError(401, "Invalid username or password.")
 
-        if  user["password"] == password:
+        if user["password"] == password:
             self.authenticate_user(user)
         else:
             logging.info("Invalid password for user '%'." % username)

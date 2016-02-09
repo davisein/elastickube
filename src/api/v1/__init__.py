@@ -1,9 +1,9 @@
 from tornado.web import RequestHandler
 from pymongo.errors import ConnectionFailure
 
-from v1.auth import PasswordHandler, GoogleOAuth2LoginHandler
-from v1.namespaces import NamespacesHandler
-from v1.instances import InstancesHandler
+from api.v1.auth import PasswordHandler, GoogleOAuth2LoginHandler
+from api.v1.namespaces import NamespacesHandler
+from api.v1.instances import InstancesHandler
 
 
 class MainHandler(RequestHandler):
@@ -16,6 +16,7 @@ class MainHandler(RequestHandler):
             self.write("Connection to MongoDB failed: %s" % error)
 
         self.finish()
+
 
 ApiHandlers = [
     (r"/api/v1", MainHandler),
