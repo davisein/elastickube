@@ -15,21 +15,32 @@ class InstancesHandler(WebSocketHandler, AuthenticationHandler):
         super(InstancesHandler, self).__init__(application, request, **kwargs)
 
         self.cursor = None
+        self.namespace = None
         self.connected = False
+        self.controllers = []
 
     @coroutine
-    def open(self,_):
-        logging.info("Initializing instances handler.")
+    def open(self, *args, **kwargs):
+        logging.info("Initializing instances handler for workspace {0}".format(args[0]))
 
         try:
             yield self.authenticate()
 
             kube = client.Client('10.5.10.6:8080')
+            self.namespace = args[0]
             self.connected = True
 
             while self.connected:
-                response = yield kube.pods.get(namespace='default')
-                self.write_message(json_encode(response))
+                response = yield kube.replication_controllers.get(namespace=self.namespace)
+
+                new_controllers = []
+                for controller in response:
+                    if controller['metadata']['uid'] not in self.controllers:
+                        new_controllers.append(controller)
+                        self.controllers.append(controller['metadata']['uid'])
+
+                self.write_message(json_encode(new_controllers))
+
                 yield sleep(1)
 
         except HTTPError:
