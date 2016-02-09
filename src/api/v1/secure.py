@@ -7,6 +7,7 @@ from tornado.web import RequestHandler, HTTPError
 
 ELASTICKUBE_TOKEN_HEADER = "ElasticKube-Token"
 
+
 class AuthenticationHandler():
 
     def __init__(self, application, request, **kwargs):

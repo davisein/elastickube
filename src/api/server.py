@@ -8,7 +8,7 @@ from tornado.ioloop import IOLoop
 from tornado.netutil import bind_unix_socket
 from motor.motor_tornado import MotorClient
 
-from v1 import ApiHandlers
+from api.v1 import ApiHandlers
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 

@@ -1,12 +1,12 @@
 import logging
-import pymongo
 
-from motor.motor_tornado import MotorClient
-
+from tornado.escape import json_encode
 from tornado.gen import coroutine, sleep
 from tornado.web import HTTPError
 from tornado.websocket import WebSocketHandler
-from v1.secure import AuthenticationHandler
+
+from api.kube_client import client
+from api.v1.secure import AuthenticationHandler
 
 
 class InstancesHandler(WebSocketHandler, AuthenticationHandler):
@@ -17,7 +17,6 @@ class InstancesHandler(WebSocketHandler, AuthenticationHandler):
         self.cursor = None
         self.connected = False
 
-
     @coroutine
     def open(self,_):
         logging.info("Initializing instances handler.")
@@ -25,23 +24,13 @@ class InstancesHandler(WebSocketHandler, AuthenticationHandler):
         try:
             yield self.authenticate()
 
-            oplog = MotorClient("mongodb://elastickube-mongo:27017").local["oplog.rs"]
-            self.cursor = oplog.find().limit(-1)
+            kube = client.Client('10.5.10.6:8080')
             self.connected = True
-            last_timestamp = None
 
             while self.connected:
-                if (yield self.cursor.fetch_next):
-                        doc = self.cursor.next_object()
-                        self.write_message(str(doc))
-                        last_timestamp = doc["ts"]
-
-                if self.cursor and not self.cursor.alive:
-                    yield sleep(1)
-
-                    logging.debug("Recreating cursor.")
-                    self.cursor = oplog.find({ 'ts': {'$gt': last_timestamp} }, tailable=True, await_data=True)
-                    self.cursor.add_option(8)
+                response = yield kube.pods.get(namespace='default')
+                self.write_message(json_encode(response))
+                yield sleep(1)
 
         except HTTPError:
             self.write_message("Authentication failed.")
@@ -62,10 +51,8 @@ class InstancesHandler(WebSocketHandler, AuthenticationHandler):
         logging.info("Closing InstancesHandler")
 
         try:
-
             if self.cursor and self.cursor.alive:
                 yield self.cursor.close()
-
         finally:
             self.cursor = None
             self.connected = False

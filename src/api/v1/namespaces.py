@@ -1,4 +1,4 @@
-from v1.secure import SecureHandler
+from api.v1.secure import SecureHandler
 
 
 class NamespacesHandler(SecureHandler):

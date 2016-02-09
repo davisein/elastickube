@@ -5,6 +5,8 @@
 # build files
 /build/ui
 .vagrant
+*.box
+*.iso
 
 # src files
 node_modules
