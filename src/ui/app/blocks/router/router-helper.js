@@ -4,12 +4,10 @@ const name = 'routerHelper';
 
 module.provider(name, routerHelperProvider);
 
-routerHelperProvider.$inject = [ '$locationProvider', '$stateProvider', '$urlRouterProvider' ];
+routerHelperProvider.$inject = [ '$stateProvider', '$urlRouterProvider' ];
 
-function routerHelperProvider($locationProvider, $stateProvider, $urlRouterProvider) {
+function routerHelperProvider($stateProvider, $urlRouterProvider) {
     this.$get = RouterHelper;
-
-    $locationProvider.html5Mode(true);
 
     RouterHelper.$inject = [ '$state' ];
 
