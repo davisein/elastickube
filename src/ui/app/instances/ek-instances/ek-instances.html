@@ -26,6 +26,8 @@
 
                 <ek-instance-state-selector instances="[]"
                                             ng-model="ctrl.selectedState"></ek-instance-state-selector>
+
+                <ek-owners-selector ng-model="ctrl.owners"></ek-owners-selector>
             </div>
 
             <div class="test" transclude-to="body" ng-switch="ctrl.selectedView">

@@ -8,7 +8,7 @@ function ekAvatar() {
     return {
         restrict: 'E',
         scope: {
-            src: '='
+            workspace: '='
         },
         compile,
         link
@@ -21,6 +21,8 @@ function ekAvatar() {
     }
 
     function link($scope, $element) {
-        $scope.$watch('src', (src) => $element.css('background-image', `url(${src || DEFAULT_IMAGE})`));
+        $scope.$watch('workspace', (wks) => {
+            $element.css('background-image', `url(${wks && wks.icon || DEFAULT_IMAGE})`);
+        });
     }
 }

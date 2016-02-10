@@ -1,0 +1,49 @@
+@import "../../colors";
+
+.ek-owners-selector {
+    &__header {
+        cursor: pointer;
+
+        &__dropdown {
+            width: 14px;
+            height: 14px;
+            margin-left: 0;
+            margin-right: 5px;
+            overflow: hidden;
+            position: relative;
+
+            .material-icons {
+                position: absolute;
+                top: -5px;
+                left: -5px;
+                transition: all 200ms linear;
+            }
+
+            &--closed {
+                .material-icons {
+                    transform: rotate(-90deg);
+                }
+            }
+        }
+
+        &__title {
+            text-transform: capitalize;
+        }
+    }
+
+    &__owners {
+        padding: 6px 0;
+
+        &__owner {
+            margin: 7px;
+            opacity: 0.4;
+            cursor: pointer;
+            filter: blur(20px) grayscale(100%);
+            transition: all 200ms linear;
+
+            &--selected {
+                opacity: 0.9;
+            }
+        }
+    }
+}
