@@ -19,13 +19,13 @@ if __name__ == "__main__":
     )
 
     settings = dict(
-        autoreload  = True,
-        database    = MotorClient(mongo_url).elastickube,
-        secret      = "ElasticKube",
-        google_oauth = dict(
-            key             = "726336950247-p6172q2aojfuntnp8e0rocg45c19ss4b.apps.googleusercontent.com",
-            secret          = "dmr77iW9Z6e9ZSJvFmuv541g",
-            redirect_uri    = "http://elastickube.internal.elasticbox.com/api/v1/auth/google"
+        autoreload=True,
+        database=MotorClient(mongo_url).elastickube,
+        secret="ElasticKube",
+        google_oauth=dict(
+            key="726336950247-p6172q2aojfuntnp8e0rocg45c19ss4b.apps.googleusercontent.com",
+            secret="dmr77iW9Z6e9ZSJvFmuv541g",
+            redirect_uri="http://elastickube.internal.elasticbox.com/api/v1/auth/google"
         )
     )
 
