@@ -5,6 +5,7 @@ EKOwnersSelectorController.$inject = ['$scope'];
 function EKOwnersSelectorController($scope) {
     const self = this;
 
+    self.model = self.model || [];
     self.open = true;
 
     // just for mock

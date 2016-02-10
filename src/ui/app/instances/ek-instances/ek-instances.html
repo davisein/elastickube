@@ -23,11 +23,8 @@
         <ek-sidenav-layout>
             <div transclude-to="sidenav">
                 <button class="ek-instances__new mb20">New</button>
-
-                <ek-instance-state-selector instances="[]"
-                                            ng-model="ctrl.selectedState"></ek-instance-state-selector>
-
-                <ek-owners-selector ng-model="ctrl.owners"></ek-owners-selector>
+                <ek-instance-filters input="ctrl.instances"
+                                     output="ctrl.filteredInstances"></ek-instance-filters>
             </div>
 
             <div class="test" transclude-to="body" ng-switch="ctrl.selectedView">

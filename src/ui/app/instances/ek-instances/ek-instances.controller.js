@@ -1,6 +1,7 @@
 function EKInstancesController() {
     this.selectedView = 'list';
-    this.owners = [];
+    this.instances = [];
+    this.filteredInstances = [];
 }
 
 EKInstancesController.prototype.selectView = selectView;
