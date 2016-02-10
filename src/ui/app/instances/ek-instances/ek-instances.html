@@ -21,7 +21,12 @@
     <div transclude-to="body">
 
         <ek-sidenav-layout>
-            <div transclude-to="sidenav">menu</div>
+            <div transclude-to="sidenav">
+                <button class="ek-instances__new mb20">New</button>
+
+                <ek-instance-state-selector instances="[]"
+                                            ng-model="ctrl.selectedState"></ek-instance-state-selector>
+            </div>
 
             <div class="test" transclude-to="body" ng-switch="ctrl.selectedView">
                 <span ng-switch-when="grid">grid</span>

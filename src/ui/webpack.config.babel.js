@@ -57,7 +57,8 @@ const webpackConfig = {
     plugins: [
         new HtmlWebpackPlugin({ template: './index.html' }),
         new ExtractTextPlugin(isProduction ? 'assets/css/[name]-[chunkhash].css' : 'assets/css/[name].css'),
-        new webpack.optimize.CommonsChunkPlugin('vendor', isProduction ? 'assets/js/[name]-[chunkhash].js' : 'assets/js/[name].js', Infinity)
+        new webpack.optimize.CommonsChunkPlugin('vendor',
+            isProduction ? 'assets/js/[name]-[chunkhash].js' : 'assets/js/[name].js', Infinity)
     ],
 
     output: {

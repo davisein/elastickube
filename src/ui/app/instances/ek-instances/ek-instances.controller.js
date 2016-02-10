@@ -1,12 +1,11 @@
 function EKInstancesController() {
-    const self = this;
+    this.selectedView = 'list';
+}
 
-    self.selectedView = 'list';
-    self.selectView = selectView;
+EKInstancesController.prototype.selectView = selectView;
 
-    function selectView(name) {
-        self.selectedView = name;
-    }
+function selectView(name) {
+    this.selectedView = name;
 }
 
 export default EKInstancesController;

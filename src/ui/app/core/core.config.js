@@ -2,11 +2,12 @@ import { module } from 'core/core.module';
 
 module.config(configure);
 
-configure.$inject = ['$animateProvider', '$locationProvider'];
+configure.$inject = ['$animateProvider', '$locationProvider', '$mdThemingProvider'];
 
-function configure($animateProvider, $locationProvider) {
+function configure($animateProvider, $locationProvider, $mdThemingProvider) {
     configureAnimation($animateProvider);
     configureRouter($locationProvider);
+    configureTheming($mdThemingProvider);
 }
 
 function configureAnimation($animateProvider) {
@@ -15,4 +16,10 @@ function configureAnimation($animateProvider) {
 
 function configureRouter($locationProvider) {
     $locationProvider.html5Mode(true);
+}
+
+function configureTheming($mdThemingProvider) {
+    $mdThemingProvider
+        .theme('default')
+        .primaryPalette('cyan');
 }
