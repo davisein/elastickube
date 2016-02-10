@@ -17,6 +17,7 @@ const webpackConfig = {
             'angular-material',
             'ui-router',
             'lodash',
+            'moment',
             'normalize.css/normalize.css',
             'roboto-fontface/css/roboto-fontface.css',
             'angular-material/angular-material.css' ]

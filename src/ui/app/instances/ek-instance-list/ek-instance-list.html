@@ -1,41 +1,19 @@
 <ek-table headers="ctrl.headers" header-click-listener="ctrl.sortyByCallback">
     <div class="ek-table__body__row" ng-repeat="instance in ctrl.sortedInstances track by instance.id">
         <div>
-            <div flex layout="row" layout-align="start center">
-                <div class="mr10">1</div>
-                <div>
-                    <p class="mt0 mb0">{{ instance.name }}</p>
-                    <p class="mt0 mb0">0.1.20 - Update available</p>
-                </div>
-            </div>
+            <ek-instance-name instance="instance"></ek-instance-name>
         </div>
         <div>
-            <div flex layout="row" layout-align="start center">
-                <i class="mr10 ek-instance-state ek-instance-state__online"></i>
-                <div>
-                    <p>{{ instance.state }}</p>
-                </div>
-            </div>
+            <ek-instance-state instance="instance"></ek-instance-state>
         </div>
         <div>
             <p>{{ instance.serviceId }}</p>
         </div>
         <div>
-            <div flex layout="row" layout-align="start center">
-                <div class="mr10">1</div>
-                <div>
-                    <p>{{ instance.labels }}</p>
-                </div>
-            </div>
+            <ek-instance-labels instance="instance"></ek-instance-labels>
         </div>
         <div>
-            <div flex layout="row" layout-align="start center">
-                <div class="mr10">1</div>
-                <div>
-                    <p class="mt0 mb0">{{ instance.updated }}</p>
-                    <p class="mt0 mb0">Reinstalled 3 days ago</p>
-                </div>
-            </div>
+            <ek-instance-modified instance="instance"></ek-instance-modified>
         </div>
     </div>
 </ek-table>

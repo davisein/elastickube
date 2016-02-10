@@ -1,11 +1,13 @@
-import ACTION_VIEW_LIST_ICON from 'material-design-icons/action/svg/production/ic_view_list_48px.svg';
-import ACTION_VIEW_MODULE_ICON from 'material-design-icons/action/svg/production/ic_view_module_48px.svg';
+import IC_VIEW_LIST_48PX_ICON from 'material-design-icons/action/svg/production/ic_view_list_48px.svg';
+import IC_VIEW_MODULE_48PX_ICON from 'material-design-icons/action/svg/production/ic_view_module_48px.svg';
+import IC_LABEL_48PX_ICON from 'material-design-icons/action/svg/design/ic_label_48px.svg';
 
 const constants = {
 
     // icons
-    ACTION_VIEW_LIST_ICON,
-    ACTION_VIEW_MODULE_ICON
+    IC_VIEW_LIST_48PX_ICON,
+    IC_VIEW_MODULE_48PX_ICON,
+    IC_LABEL_48PX_ICON
 };
 
 export default constants;
