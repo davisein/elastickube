@@ -1,19 +1,22 @@
+
+@import "../../colors";
+
 .ek-table {
     width: 100%;
     display: table;
     border-collapse: collapse;
 
     &__header {
-        background-color: #f1f3f5;
-        display: table-header-group;
+        background-color: #fafafa;
         color: #89919c;
+        display: table-header-group;
         font-size: 12px;
         font-weight: 500;
 
         &__row {
-            white-space: nowrap;
+            border-bottom: 1px solid @grey300;
             display: table-row;
-            border-bottom: 1px solid #dde0e3;
+            white-space: nowrap;
 
             & > * {
                 display: table-cell;
@@ -21,6 +24,37 @@
                 padding: 7px 20px;
                 text-transform: capitalize;
                 vertical-align: middle;
+
+                &.sortable {
+                    outline: none;
+                    &.active {
+                        &:after {
+                            border-left: 4px solid transparent;
+                            border-top: 6px solid #989ca0;
+                            border-right: 4px solid transparent;
+                            content: "";
+                            display: inline-block;
+                            height: 0;
+                            left: 6px;
+                            line-height: 20px;
+                            position: relative;
+                            top: -1px;
+                            width: 0;
+
+                            transform: scale(.9);
+                            transition: transform .3s ease;
+                        }
+
+                        &.reverse:after {
+                            transform: scale(.9) rotate(180deg);
+                        }
+                    }
+
+                    &:hover {
+                        background-color: #eaedf0;
+                        cursor: pointer;
+                    }
+                }
             }
         }
         
@@ -30,10 +64,10 @@
         display: table-row-group;
 
         &__row {
-            position: relative;
+            border-bottom: 1px solid #ebeced;
             display: table-row;
             height: 50px;
-            border-bottom: 1px solid #ebeced;
+            position: relative;
 
             &:hover {
                 background-color: #f8f8f9;
@@ -41,9 +75,9 @@
 
             & > * {
                 display: table-cell;
-                vertical-align: middle;
                 padding-left: 20px;
                 padding-right: 20px;
+                vertical-align: middle;
             }
         }
     }
