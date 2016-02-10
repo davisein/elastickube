@@ -1,20 +1,17 @@
 import './ek-template.less';
+
 import { module } from 'templates/templates.module';
 import controller from './ek-template.controller';
 import template from './ek-template.html';
 
-module.directive('ekTemplate', ekTemplate);
+module.directive('ekTemplate', () => ({
+    restrict: 'E',
+    controllerAs: 'ctrl',
+    controller,
+    template,
+    compile
+}));
 
-function ekTemplate() {
-    return {
-        restrict: 'E',
-        controllerAs: 'ctrl',
-        controller,
-        template,
-        compile
-    };
-}
-
-function compile($element) {
-    $element.addClass('ek-template');
+function compile(tElement) {
+    tElement.addClass('ek-template');
 }

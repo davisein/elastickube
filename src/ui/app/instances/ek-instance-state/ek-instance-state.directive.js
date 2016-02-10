@@ -1,23 +1,18 @@
 import './ek-instance-state.less';
 
 import { module } from 'instances/instances.module';
-
 import template from './ek-instance-state.html';
 
-module.directive('ekInstanceState', ekInstanceState);
+module.directive('ekInstanceState', () => ({
+    restrict: 'E',
+    scope: {
+        instance: '='
+    },
+    controllerAs: 'ctrl',
+    compile,
+    template
+}));
 
-function ekInstanceState() {
-    return {
-        restrict: 'E',
-        scope: {
-            instance: '='
-        },
-        controllerAs: 'ctrl',
-        compile,
-        template
-    };
-
-    function compile($element) {
-        $element.addClass('ek-instance-state');
-    }
+function compile(tElement) {
+    tElement.addClass('ek-instance-state');
 }

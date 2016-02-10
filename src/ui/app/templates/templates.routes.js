@@ -3,21 +3,19 @@ import routerHelperName from 'blocks/router/router-helper';
 
 module.run(appRun);
 
-appRun.$inject = [ routerHelperName ];
+const states = [{
+    state: 'templates',
+    config: {
+        template: '<ek-templates></ek-templates>',
+        url: '/templates',
+        data: {
+            header: 2
+        }
+    }
+}];
+
+appRun.$inject = [routerHelperName];
 
 function appRun(routerHelper) {
-    routerHelper.configureStates(getStates());
-}
-
-function getStates() {
-    return [ {
-        state: 'templates',
-        config: {
-            template: '<ek-templates></ek-templates>',
-            url: '/templates',
-            data: {
-                header: 2
-            }
-        }
-    } ];
+    routerHelper.configureStates(states);
 }

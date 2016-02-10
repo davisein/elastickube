@@ -23,7 +23,7 @@ function getInstanceState(instance) {
 }
 
 function filterByOwner(instances, owners) {
-    return _.filter(instances, (x) => _.includes(owners, x.owner));
+    return _.isEmpty(owners) ? instances : _.filter(instances, (x) => _.includes(owners, x.owner));
 }
 
 export default EKInstanceFiltersController;

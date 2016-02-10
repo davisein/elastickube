@@ -11,10 +11,10 @@ function EKSearchFilterController($scope) {
     function search() {
         self.output = _.size(self.text.trim()) > 0 ? filter(self.input, self.text) : self.input;
     }
+}
 
-    function filter(input, text) {
-        return _.filter(input, (item) => item.name.toLowerCase().indexOf(text.toLowerCase()) > 0);
-    }
+function filter(input, text) {
+    return _.filter(input, (item) => item.name.toLowerCase().indexOf(text.toLowerCase()) > 0);
 }
 
 export default EKSearchFilterController;

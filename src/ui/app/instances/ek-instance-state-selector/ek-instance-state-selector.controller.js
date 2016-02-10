@@ -1,10 +1,4 @@
-const STATES = {
-    all: 0,
-    online: 0,
-    unavailable: 0,
-    processing: 0,
-    terminated: 0
-};
+import STATES from './ek-instance-state-selector.states';
 
 EKInstanceStateSelectorController.$inject = ['$scope'];
 
@@ -12,14 +6,13 @@ function EKInstanceStateSelectorController($scope) {
     const self = this;
 
     self.model = _.first(_.keys(STATES));
+    self.selectState = selectState;
 
     $scope.$watchCollection('ctrl.instances', (x) => self.states = countStates(x, angular.copy(STATES)));
-}
 
-EKInstanceStateSelectorController.prototype.selectState = selectState;
-
-function selectState(state) {
-    this.model = state;
+    function selectState(state) {
+        self.model = state;
+    }
 }
 
 function countStates(instances, states) {

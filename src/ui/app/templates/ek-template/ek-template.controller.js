@@ -1,5 +1,7 @@
 function EKTemplateController() {
-    this.name = 'Template';
+    const self = this;
+
+    self.name = 'Template';
 }
 
 export default EKTemplateController;

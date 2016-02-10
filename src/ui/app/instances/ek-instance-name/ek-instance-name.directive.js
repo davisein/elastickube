@@ -1,23 +1,18 @@
 import './ek-instance-name.less';
 
 import { module } from 'instances/instances.module';
-
 import template from './ek-instance-name.html';
 
-module.directive('ekInstanceName', ekInstanceName);
+module.directive('ekInstanceName', () => ({
+    restrict: 'E',
+    scope: {
+        instance: '='
+    },
+    controllerAs: 'ctrl',
+    compile,
+    template
+}));
 
-function ekInstanceName() {
-    return {
-        restrict: 'E',
-        scope: {
-            instance: '='
-        },
-        controllerAs: 'ctrl',
-        compile,
-        template
-    };
-
-    function compile($element) {
-        $element.addClass('ek-instance-name');
-    }
+function compile(tElement) {
+    tElement.addClass('ek-instance-name');
 }

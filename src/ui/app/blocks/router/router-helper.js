@@ -4,12 +4,12 @@ const name = 'routerHelper';
 
 module.provider(name, routerHelperProvider);
 
-routerHelperProvider.$inject = [ '$stateProvider', '$urlRouterProvider' ];
+routerHelperProvider.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 function routerHelperProvider($stateProvider, $urlRouterProvider) {
     this.$get = RouterHelper;
 
-    RouterHelper.$inject = [ '$state' ];
+    RouterHelper.$inject = ['$state'];
 
     function RouterHelper($state) {
         let hasOtherwise = false;

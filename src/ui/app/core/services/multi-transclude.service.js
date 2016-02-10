@@ -5,14 +5,12 @@ const serviceName = 'multiTranscludeService';
 module.service(serviceName, multiTranscludeService);
 
 function multiTranscludeService() {
-    const proto = multiTranscludeService.prototype;
+    const self = this;
 
-    proto.transclude = transclude;
-}
+    self.transclude = transclude;
 
-function transclude($element, $transcludeFn) {
-    $transcludeFn((clone) => {
-        _.chain(clone)
+    function transclude($element, $transcludeFn) {
+        $transcludeFn((clone) => _.chain(clone)
             .filter(x => x.nodeType === 1)
             .each((cloneEl) => {
                 const destinationId = getAttribute(cloneEl, 'transclude-to');
@@ -29,8 +27,8 @@ function transclude($element, $transcludeFn) {
                     cloneEl.remove();
                 }
             })
-            .value();
-    });
+            .value());
+    }
 }
 
 function getAttribute(item, attributeName) {

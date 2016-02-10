@@ -1,21 +1,5 @@
 import mockInstances from './ek-instances-list.mock';
-
-const headers = [{
-    title: 'Name',
-    sortableField: 'name'
-}, {
-    title: 'State',
-    sortableField: 'state',
-    order: 'asc'
-}, {
-    title: 'Service ID',
-    sortableField: 'serviceId'
-}, {
-    title: 'Labels'
-}, {
-    title: 'Modified',
-    sortableField: 'updated'
-}];
+import headers from './ek-instance-list.headers';
 
 EKInstanceListController.$inject = ['$scope'];
 
@@ -25,7 +9,7 @@ function EKInstanceListController($scope) {
     self.headers = headers;
     self.instances = mockInstances;
     self.sortBy = self.headers[0];
-    self.sortyByCallback = sortByCallback;
+    self.sortByCallback = sortByCallback;
 
     $scope.$watchCollection('ctrl.instances', (x) => self.sortedInstances = sortInstances(x, self.sortBy));
 
@@ -39,14 +23,14 @@ function EKInstanceListController($scope) {
 
         self.sortedInstances = sortInstances(self.sortedInstances, self.sortBy);
     }
+}
 
-    function sortInstances(instances, criteria) {
-        if (angular.isDefined(criteria.sortableField)) {
-            return _.orderBy(instances, (x) => x[criteria.sortableField], criteria.reverse ? 'desc' : 'asc');
-        }
-
-        return instances;
+function sortInstances(instances, criteria) {
+    if (angular.isDefined(criteria.sortableField)) {
+        return _.orderBy(instances, (x) => x[criteria.sortableField], criteria.reverse ? 'desc' : 'asc');
     }
+
+    return instances;
 }
 
 export default EKInstanceListController;

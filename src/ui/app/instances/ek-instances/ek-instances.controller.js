@@ -1,13 +1,14 @@
 function EKInstancesController() {
-    this.selectedView = 'list';
-    this.instances = [];
-    this.filteredInstances = [];
-}
+    const self = this;
 
-EKInstancesController.prototype.selectView = selectView;
+    self.selectedView = 'list';
+    self.instances = [];
+    self.filteredInstances = [];
+    self.selectView = selectView;
 
-function selectView(name) {
-    this.selectedView = name;
+    function selectView(name) {
+        self.selectedView = name;
+    }
 }
 
 export default EKInstancesController;

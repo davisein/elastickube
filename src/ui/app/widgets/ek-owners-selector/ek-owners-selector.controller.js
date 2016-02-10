@@ -7,30 +7,29 @@ function EKOwnersSelectorController($scope) {
 
     self.model = self.model || [];
     self.open = true;
+    self.toggleOpen = toggleOpen;
+    self.isOwnerSelected = isOwnerSelected;
+    self.toggleSelectedOwner = toggleSelectedOwner;
 
     // just for mock
     self.instances = mockInstances;
 
     $scope.$watchCollection('ctrl.instances', (x) => self.owners = getOwners(x));
-}
 
-EKOwnersSelectorController.prototype.toggleOpen = toggleOpen;
-EKOwnersSelectorController.prototype.isOwnerSelected = isOwnerSelected;
-EKOwnersSelectorController.prototype.toggleSelectedOwner = toggleSelectedOwner;
+    function toggleOpen() {
+        self.open = !self.open;
+    }
 
-function toggleOpen() {
-    this.open = !this.open;
-}
+    function isOwnerSelected(owner) {
+        return _.includes(self.model, owner.id);
+    }
 
-function isOwnerSelected(owner) {
-    return _.includes(this.model, owner.id);
-}
-
-function toggleSelectedOwner(owner) {
-    if (this.isOwnerSelected(owner)) {
-        this.model = _.without(this.model, owner.id);
-    } else {
-        this.model = this.model.concat(owner.id);
+    function toggleSelectedOwner(owner) {
+        if (self.isOwnerSelected(owner)) {
+            self.model = _.without(self.model, owner.id);
+        } else {
+            self.model = self.model.concat(owner.id);
+        }
     }
 }
 
