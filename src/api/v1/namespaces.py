@@ -1,7 +1,7 @@
-from api.v1.secure import SecureHandler
+from api.v1.secure import SecureRequestHandler
 
 
-class NamespacesHandler(SecureHandler):
+class NamespacesHandler(SecureRequestHandler):
 
     def get(self):
         response = dict(
