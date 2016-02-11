@@ -1,4 +1,5 @@
 import routerHelperName from 'blocks/router/router-helper';
+import mockWorkspaces from 'mocks/workspaces';
 
 EKHeaderController.$inject = ['$rootScope', routerHelperName];
 
@@ -7,6 +8,7 @@ function EKHeaderController($rootScope, routerHelper) {
 
     self.namespace = 'engineering';
     self.sections = getSections(routerHelper);
+    self.workspace = _.find(mockWorkspaces, { id: 'alberto' });
     self.goToSection = goToSection;
 
     $rootScope.$on('$stateChangeSuccess', (event, toState) => self.selectedState = toState.name);
