@@ -65,7 +65,7 @@ const webpackConfig = {
 
     plugins: [
         new webpack.OldWatchingPlugin(),
-        new HtmlWebpackPlugin({ template: './index.html' }),
+        new HtmlWebpackPlugin({ template: './index.html', favicon: './favicon.png' }),
         new ExtractTextPlugin(isProduction ? 'assets/css/[name]-[chunkhash].css' : 'assets/css/[name].css'),
         new webpack.optimize.CommonsChunkPlugin('vendor',
             isProduction ? 'assets/js/[name]-[chunkhash].js' : 'assets/js/[name].js', Infinity)
