@@ -32,9 +32,9 @@
             </div>
 
             <div class="ek-templates__body" transclude-to="body" ng-switch="ctrl.selectedView">
-                <span ng-switch-when="grid">
-                    <div ng-repeat="template in ctrl.sortedTemplates">{{ template.name }}</div>
-                </span>
+                <ek-template-grid ng-switch-when="grid"
+                                  templates="ctrl.sortedTemplates"></ek-template-grid>
+
                 <span ng-switch-default>
                     <div ng-repeat="template in ctrl.finalTemplates">{{ template.name }}</div>
                 </span>

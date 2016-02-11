@@ -30,9 +30,7 @@
 
             <div class="ek-instances__body" transclude-to="body" ng-switch="ctrl.selectedView">
                 <span ng-switch-when="grid">grid</span>
-                <md-content ng-switch-default>
-                    <ek-instance-list instances="ctrl.finalInstances"></ek-instance-list>
-                </md-content>
+                <ek-instance-list ng-switch-default instances="ctrl.finalInstances"></ek-instance-list>
             </div>
         </ek-sidenav-layout>
 
