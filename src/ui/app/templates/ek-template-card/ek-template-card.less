@@ -4,7 +4,8 @@
     width: 194px;
     height: 290px;
     background-color: @white;
-    border: 1px solid @grey300;
+    border: 1px solid #E2E2E2;
+    border-radius: 2px;
 
     &__info {
         padding: 0 15px;
@@ -26,13 +27,19 @@
 
         &__description {
             margin-top: 5px;
-            color: @grey400;
+            color: #777;
+            font-size: 11px;
         }
     }
 
     &__owner {
-        border-top: 1px solid @grey300;
+        border-top: 1px solid #E8E8E8;
         padding: 0 15px;
         height: 40px;
+        font-size: 11px;
+        .ek-avatar {
+            width: 16px;
+            height: 16px;
+        }
     }
 }
