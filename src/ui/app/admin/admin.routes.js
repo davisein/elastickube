@@ -9,7 +9,6 @@ const states = [{
         template: '<ek-admin></ek-admin>',
         url: '/admin',
         data: {
-            header: 3,
             roles: ['admin']
         }
     }
