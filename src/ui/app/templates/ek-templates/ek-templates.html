@@ -34,10 +34,7 @@
             <div class="ek-templates__body" transclude-to="body" ng-switch="ctrl.selectedView">
                 <ek-template-grid ng-switch-when="grid"
                                   templates="ctrl.sortedTemplates"></ek-template-grid>
-
-                <span ng-switch-default>
-                    <div ng-repeat="template in ctrl.finalTemplates">{{ template.name }}</div>
-                </span>
+                <ek-template-list ng-switch-default templates="ctrl.finalTemplates"></ek-template-list>
             </div>
         </ek-sidenav-layout>
     </div>

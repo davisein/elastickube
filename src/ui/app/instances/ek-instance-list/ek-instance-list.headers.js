@@ -3,13 +3,13 @@ const headers = [{
     sortableField: 'name'
 }, {
     title: 'State',
-    sortableField: 'state',
-    order: 'asc'
+    sortableField: 'state'
 }, {
     title: 'Service ID',
     sortableField: 'serviceId'
 }, {
-    title: 'Labels'
+    title: 'Labels',
+    sortableField: 'labels.length'
 }, {
     title: 'Modified',
     sortableField: 'updated'
