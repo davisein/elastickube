@@ -8,22 +8,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<!--[if lt IE 11]>
+<!--[if lt IE 9]>
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
     your browser</a> to improve your experience.</p>
 <![endif]-->
-
-<!--<h1>Hello ElasticKube</h1>-->
-<!--<p>Login using <a href="/api/v1/auth/google">Google</a></p>-->
-<!--<p>Access <a href="/api/v1/namespaces">Namespaces</a></p>-->
 
 <div layout="column" layout-fill
      ng-app="app">
     <ek-header></ek-header>
 
-    <md-content ui-view flex></md-content>
+    <md-content ui-view flex>
+        <p>Login using <a href="/api/v1/auth/google">Google</a></p>
+        <p>Access <a href="/api/v1/namespaces">Namespaces</a></p>
+    </md-content>
 </div>
 
 </body>
 </html>
-

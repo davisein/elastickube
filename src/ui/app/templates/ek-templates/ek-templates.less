@@ -5,6 +5,29 @@
     height: 100%;
     width: 100%;
 
+    &__new {
+        width: 114px;
+        height: 30px;
+        background-color: @cyan400;
+        color: @white;
+        border-radius: 3px;
+        font-size: 11px;
+        font-weight: 500;
+        border-width: 0;
+        text-transform: uppercase;
+    }
+
+    &__body {
+        display: block;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+
+        md-content {
+            height: 100%;
+        }
+    }
+
     &__sort-by {
         margin: 0 20px 0 0;
         border-radius: 3px;

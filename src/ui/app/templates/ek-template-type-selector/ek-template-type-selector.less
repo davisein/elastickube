@@ -1,0 +1,34 @@
+@import "../../colors";
+
+.ek-template-type-selector {
+
+    &__type {
+        height: 24px;
+        cursor: pointer;
+        position: relative;
+        padding: 0 10px;
+
+        &:hover {
+            font-weight: 500;
+        }
+
+        &__name {
+            text-transform: capitalize;
+        }
+
+        &--selected {
+            color: @cyan400;
+            font-weight: 500;
+
+            &:before {
+                content: ' ';
+                position: absolute;
+                left: -20px;
+                top: 0;
+                height: 24px;
+                width: 3px;
+                background-color: @cyan400;
+            }
+        }
+    }
+}

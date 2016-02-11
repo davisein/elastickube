@@ -28,7 +28,7 @@
                                      output="ctrl.filteredInstances"></ek-instance-filters>
             </div>
 
-            <div class="test" transclude-to="body" ng-switch="ctrl.selectedView">
+            <div class="ek-instances__body" transclude-to="body" ng-switch="ctrl.selectedView">
                 <span ng-switch-when="grid">grid</span>
                 <md-content ng-switch-default>
                     <ek-instance-list instances="ctrl.finalInstances"></ek-instance-list>
