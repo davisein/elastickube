@@ -34,6 +34,7 @@ function getOwners(shareables) {
     return _.chain(shareables)
         .map((x) => _.find(mockWorkspaces, { id: x.owner }))
         .uniq()
+        .sortBy('id')
         .value();
 }
 

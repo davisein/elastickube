@@ -1,6 +1,7 @@
 /* eslint no-process-env:0 */
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import autoprefixer from 'autoprefixer';
 import path from 'path';
 import webpack from 'webpack';
 
@@ -20,7 +21,7 @@ const webpackConfig = {
             'moment',
             'normalize.css/normalize.css',
             'roboto-fontface/css/roboto-fontface.css',
-            'angular-material/angular-material.css' ]
+            'angular-material/angular-material.css']
     },
 
     resolve: {
@@ -34,8 +35,8 @@ const webpackConfig = {
         loaders: [
             { test: require.resolve('jquery'), loader: 'expose?jQuery' },
             { test: /\.js$/, exclude: /\/(node_modules)\//, loader: 'babel?presets[]=es2015!eslint' },
-            { test: /\.css/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader') },
-            { test: /\.less/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader') },
+            { test: /\.css/, loader: ExtractTextPlugin.extract('style', 'css') },
+            { test: /\.less/, loader: ExtractTextPlugin.extract('style', 'css!postcss!less') },
             { test: /\.html/, exclude: /\/(components)\//, loader: 'html', include: /\/(app)\// },
             {
                 test: /\.html$/,
@@ -55,6 +56,13 @@ const webpackConfig = {
         ]
     },
 
+    postcss: () => ({
+        defaults: [
+            autoprefixer({
+                browsers: ['last 2 versions', 'ie >= 10']
+            })]
+    }),
+
     plugins: [
         new HtmlWebpackPlugin({ template: './index.html' }),
         new ExtractTextPlugin(isProduction ? 'assets/css/[name]-[chunkhash].css' : 'assets/css/[name].css'),
@@ -67,9 +75,11 @@ const webpackConfig = {
         publicPath: '/',
         filename: isProduction ? 'assets/js/[name]-[chunkhash].js' : 'assets/js/[name].js'
     },
+
     stats: {
         children: false
     },
+
     eslint: {
         failOnWarning: isProduction
     }
