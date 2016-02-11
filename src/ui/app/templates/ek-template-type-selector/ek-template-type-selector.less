@@ -3,22 +3,23 @@
 .ek-template-type-selector {
 
     &__type {
-        height: 24px;
+        height: 30px;
         cursor: pointer;
         position: relative;
         padding: 0 10px;
 
-        &:hover {
-            font-weight: 500;
-        }
-
         &__name {
             text-transform: capitalize;
+        }
+        &__counter {
+            font-size: 11px;
+            color: #777;
+            font-weight: normal;
         }
 
         &--selected {
             color: @cyan400;
-            font-weight: 500;
+            font-weight: bold;
 
             &:before {
                 content: ' ';
@@ -26,7 +27,7 @@
                 left: -20px;
                 top: 0;
                 height: 24px;
-                width: 3px;
+                width: 4px;
                 background-color: @cyan400;
             }
         }
