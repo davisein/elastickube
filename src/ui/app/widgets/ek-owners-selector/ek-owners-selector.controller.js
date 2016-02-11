@@ -11,7 +11,10 @@ function EKOwnersSelectorController($scope) {
     self.isOwnerSelected = isOwnerSelected;
     self.toggleSelectedOwner = toggleSelectedOwner;
 
-    $scope.$watchCollection('ctrl.shareables', (x) => self.owners = getOwners(x));
+    $scope.$watchCollection('ctrl.shareables', (x) => {
+        self.owners = getOwners(x);
+        self.model = _.filter(self.model, (y) => !!_.find(self.owners, { id: y }));
+    });
 
     function toggleOpen() {
         self.open = !self.open;
