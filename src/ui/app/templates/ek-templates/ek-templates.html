@@ -31,10 +31,18 @@
                                      output="ctrl.filteredTemplates"></ek-template-filters>
             </div>
 
-            <div class="ek-templates__body" transclude-to="body" ng-switch="ctrl.selectedView">
-                <ek-template-grid ng-switch-when="grid"
-                                  templates="ctrl.sortedTemplates"></ek-template-grid>
-                <ek-template-list ng-switch-default templates="ctrl.finalTemplates"></ek-template-list>
+            <div class="ek-templates__body" transclude-to="body">
+                <div class="ek-templates__body__not-found-message"
+                     layout="column" layout-align="center center"
+                     ng-if="ctrl.showEmpty">No template found.
+                </div>
+
+                <div ng-if="!ctrl.showEmpty" ng-switch="ctrl.selectedView">
+                    <ek-template-grid ng-switch-when="grid"
+                                      templates="ctrl.sortedTemplates"></ek-template-grid>
+                    <ek-template-list ng-switch-default
+                                      templates="ctrl.finalTemplates"></ek-template-list>
+                </div>
             </div>
         </ek-sidenav-layout>
     </div>
