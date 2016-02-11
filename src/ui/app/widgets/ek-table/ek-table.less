@@ -24,35 +24,9 @@
                 text-transform: capitalize;
                 vertical-align: middle;
 
-                &.sortable {
-                    outline: none;
-                    &.active {
-                        &:after {
-                            border-left: 4px solid transparent;
-                            border-top: 6px solid #989ca0;
-                            border-right: 4px solid transparent;
-                            content: "";
-                            display: inline-block;
-                            height: 0;
-                            left: 6px;
-                            line-height: 20px;
-                            position: relative;
-                            top: -1px;
-                            width: 0;
-
-                            transform: scale(.9);
-                            transition: transform .3s ease;
-                        }
-
-                        &.reverse:after {
-                            transform: scale(.9) rotate(180deg);
-                        }
-                    }
-
-                    &:hover {
-                        background-color: #eaedf0;
-                        cursor: pointer;
-                    }
+                &:hover {
+                    background-color: #eaedf0;
+                    cursor: pointer;
                 }
             }
         }
