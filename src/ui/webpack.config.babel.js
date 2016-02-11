@@ -1,13 +1,26 @@
 /* eslint no-process-env:0 */
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import path from 'path';
 import webpack from 'webpack';
 
+const isProduction = process.env.NODE_ENV === 'production';
 const webpackConfig = {
 
     entry: {
         elastickube: path.resolve(__dirname, 'app/app.loader.js'),
-        vendor: [ 'angular', 'angular-animate', 'angular-aria', 'angular-material', 'ui-router', 'lodash' ]
+        vendor: [
+            'jquery',
+            'angular',
+            'angular-animate',
+            'angular-aria',
+            'angular-material',
+            'ui-router',
+            'lodash',
+            'moment',
+            'normalize.css/normalize.css',
+            'roboto-fontface/css/roboto-fontface.css',
+            'angular-material/angular-material.css' ]
     },
 
     resolve: {
@@ -19,30 +32,46 @@ const webpackConfig = {
 
     module: {
         loaders: [
-            { test: /\.js$/, loader: 'babel?presets[]=es2015!eslint', exclude: /\/(node_modules)\// },
-            { test: /\.less/, loader: 'style!css!less' },
-            { test: /\.html/, loader: 'html', include: /\/(app)\//, exclude: /\/(components)\// },
+            { test: require.resolve('jquery'), loader: 'expose?jQuery' },
+            { test: /\.js$/, exclude: /\/(node_modules)\//, loader: 'babel?presets[]=es2015!eslint' },
+            { test: /\.css/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader') },
+            { test: /\.less/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!less-loader') },
+            { test: /\.html/, exclude: /\/(components)\//, loader: 'html', include: /\/(app)\// },
             {
                 test: /\.html$/,
                 include: /\/(components)\//,
                 loader: `ngtemplate?relativeTo=${path.resolve(__dirname, '/app/')}/&prefix=./!html`
             },
-            { test: /\.(jpe?g|png|gif|svg)$/i, loader: 'file?name=assets/images/[name]-[hash].[ext]!img' }
+            {
+                test: /\.(jpe?g|png|gif|svg)$/i,
+                exclude: /\/(fonts)\//,
+                loader: 'file?name=assets/images/[name]-[hash].[ext]!img'
+            },
+            {
+                test: /\.(eot|woff2?|ttf|svg)$/i,
+                include: /\/(fonts)\//,
+                loader: 'file?name=assets/fonts/[name]-[hash].[ext]'
+            }
         ]
     },
 
     plugins: [
-        new HtmlWebpackPlugin({
-            template: './index.html'
-        }),
+        new HtmlWebpackPlugin({ template: './index.html' }),
+        new ExtractTextPlugin(isProduction ? 'assets/css/[name]-[chunkhash].css' : 'assets/css/[name].css'),
         new webpack.optimize.CommonsChunkPlugin('vendor',
-            process.env.NODE_ENV === 'production' ? 'assets/js/[name]-[chunkhash].js' : 'assets/js/[name].js', Infinity)
+            isProduction ? 'assets/js/[name]-[chunkhash].js' : 'assets/js/[name].js', Infinity)
     ],
 
     output: {
         path: path.join(__dirname, process.env.BUILD_FOLDER || '../../build/ui'),
         publicPath: '/',
-        filename: process.env.NODE_ENV === 'production' ? 'assets/js/[name]-[chunkhash].js' : 'assets/js/[name].js'
+        filename: isProduction ? 'assets/js/[name]-[chunkhash].js' : 'assets/js/[name].js'
+    },
+    stats: {
+        children: false
+    },
+    eslint: {
+        failOnWarning: isProduction
     }
 };
 

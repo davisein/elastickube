@@ -1,0 +1,40 @@
+<ek-header-layout title="instances">
+    <div transclude-to="header" layout="row" layout-align="start center">
+        <ek-search-filter input="ctrl.filteredInstances"
+                          output="ctrl.finalInstances"></ek-search-filter>
+
+        <div layout="row" layout-align="end center" flex>
+            <ek-button-group>
+                <button ng-class="{'ek-button-group--selected' : ctrl.selectedView === 'list'}"
+                        ng-click="ctrl.selectView('list')"
+                        aria-label="view list">
+                    <md-icon md-svg-src="{{:: icons.IC_VIEW_LIST_48PX }}"></md-icon>
+                </button>
+                <button ng-class="{'ek-button-group--selected' : ctrl.selectedView === 'grid'}"
+                        ng-click="ctrl.selectView('grid')"
+                        aria-label="view grid">
+                    <md-icon md-svg-src="{{:: icons.IC_VIEW_MODULE_48PX }}"></md-icon>
+                </button>
+            </ek-button-group>
+        </div>
+    </div>
+
+    <div transclude-to="body">
+
+        <ek-sidenav-layout>
+            <div transclude-to="sidenav">
+                <button class="ek-instances__new mb20">New</button>
+                <ek-instance-filters input="ctrl.instances"
+                                     output="ctrl.filteredInstances"></ek-instance-filters>
+            </div>
+
+            <div class="test" transclude-to="body" ng-switch="ctrl.selectedView">
+                <span ng-switch-when="grid">grid</span>
+                <md-content ng-switch-default>
+                    <ek-instance-list instances="ctrl.finalInstances"></ek-instance-list>
+                </md-content>
+            </div>
+        </ek-sidenav-layout>
+
+    </div>
+</ek-header-layout>

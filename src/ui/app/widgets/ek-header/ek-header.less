@@ -1,0 +1,75 @@
+@import "../../colors";
+
+.ek-header {
+    display: flex;
+    height: 60px;
+    background-color: @indigo500;
+
+    &__logo {
+        width: 210px;
+        padding-left: 20px;
+
+        img {
+            height: 30px;
+        }
+    }
+
+    &__sections {
+        &__section {
+            border-radius: initial;
+            color: @white;
+            padding: 23px 0;
+            margin-right: 34px;
+            text-transform: capitalize;
+            font-weight: 500;
+            line-height: 14px;
+            cursor: pointer;
+
+            &--selected {
+                border-bottom: 5px solid @cyan400;
+                padding-bottom: 18px;
+                color: @cyan400;
+            }
+        }
+    }
+
+    &__location {
+        padding: 0 20px;
+
+        &__namespace {
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: capitalize;
+
+            .md-select-value {
+                border-bottom: 0;
+                span {
+                    min-height: initial;
+                    height: initial;
+                }
+
+                .md-select-icon {
+                    font-size: 11px;
+                    height: 13px;
+                    width: 13px;
+                }
+            }
+        }
+
+        &__namespace,
+        &__help,
+        &__more {
+            color: @white;
+
+            &__icon {
+                color: @white;
+            }
+        }
+
+        &__avatar {
+            margin-left: 10px;
+            height: 32px;
+            width: 32px;
+        }
+    }
+}

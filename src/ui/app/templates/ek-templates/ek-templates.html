@@ -1,0 +1,39 @@
+<ek-header-layout title="templates">
+    <div transclude-to="header" layout="row" layout-align="start center">
+        <ek-search-filter></ek-search-filter>
+
+        <div layout="row" layout-align="end center" flex>
+
+            <md-select class="ek-templates__sort-by" ng-model="ctrl.sortType" aria-label="sort type">
+                <md-option ng-repeat="opt in ctrl.sortTypes track by $index" ng-value="opt">{{:: opt }}</md-option>
+            </md-select>
+
+            <ek-button-group>
+                <button ng-class="{'ek-button-group--selected' : ctrl.selectedView === 'list'}"
+                        ng-click="ctrl.selectView('list')"
+                        aria-label="view list">
+                    <md-icon md-svg-src="{{:: icons.IC_VIEW_LIST_48PX }}"></md-icon>
+                </button>
+                <button ng-class="{'ek-button-group--selected' : ctrl.selectedView === 'grid'}"
+                        ng-click="ctrl.selectView('grid')"
+                        aria-label="view grid">
+                    <md-icon md-svg-src="{{:: icons.IC_VIEW_MODULE_48PX }}"></md-icon>
+                </button>
+            </ek-button-group>
+        </div>
+    </div>
+
+    <div transclude-to="body" layout="column">
+        <ek-sidenav-layout>
+            <div transclude-to="sidenav">menu</div>
+
+            <div transclude-to="body" ng-switch="ctrl.selectedView">
+                <p>Login using <a href="/api/v1/auth/google" target="_self">Google</a></p>
+                <p>Access <a href="/api/v1/namespaces" target="_self">Namespaces</a></p>
+
+                <span ng-switch-when="grid">grid</span>
+                <span ng-switch-default>list</span>
+            </div>
+        </ek-sidenav-layout>
+    </div>
+</ek-header-layout>

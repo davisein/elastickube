@@ -1,4 +1,4 @@
-import 'layout/layout.constants';
-import 'layout/ek-header/ek-header.directive';
+import 'layout/layout.module';
 
-import 'widgets/widgets.loader';
+import 'layout/ek-header-layout/ek-header-layout.directive';
+import 'layout/ek-sidenav-layout/ek-sidenav-layout.directive';

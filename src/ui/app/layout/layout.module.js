@@ -1,9 +1,9 @@
-import { name as widgetsModule } from 'widgets/widgets.module';
+import { name as coreModule } from 'core/core.module';
 
 const name = 'app.layout';
 
 const module = angular.module(name, [
-    widgetsModule
+    coreModule
 ]);
 
 export { name, module };
