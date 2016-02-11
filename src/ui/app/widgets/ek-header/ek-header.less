@@ -36,16 +36,22 @@
     &__location {
         padding: 0 20px;
 
+        .md-button.md-icon-button {
+            margin: 0;
+        }
+
         &__namespace {
             font-size: 13px;
             font-weight: 500;
             text-transform: capitalize;
+            margin-right: 10px;
 
             .md-select-value {
                 border-bottom: 0;
                 span {
                     min-height: initial;
                     height: initial;
+                    color: @white;
                 }
 
                 .md-select-icon {
@@ -63,6 +69,14 @@
 
             &__icon {
                 color: @white;
+            }
+        }
+
+        &__help {
+            margin: 0;
+            &__icon {
+                width: 20px;
+                height: 20px;
             }
         }
 
