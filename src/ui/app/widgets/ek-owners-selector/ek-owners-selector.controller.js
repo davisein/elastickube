@@ -1,4 +1,4 @@
-import { instances as mockInstances, workspaces as mockWorkspaces } from './ek-owners-selector.mock';
+import mockWorkspaces from 'mocks/workspaces';
 
 EKOwnersSelectorController.$inject = ['$scope'];
 
@@ -11,10 +11,7 @@ function EKOwnersSelectorController($scope) {
     self.isOwnerSelected = isOwnerSelected;
     self.toggleSelectedOwner = toggleSelectedOwner;
 
-    // just for mock
-    self.instances = mockInstances;
-
-    $scope.$watchCollection('ctrl.instances', (x) => self.owners = getOwners(x));
+    $scope.$watchCollection('ctrl.shareables', (x) => self.owners = getOwners(x));
 
     function toggleOpen() {
         self.open = !self.open;
@@ -33,8 +30,8 @@ function EKOwnersSelectorController($scope) {
     }
 }
 
-function getOwners(instances) {
-    return _.chain(instances)
+function getOwners(shareables) {
+    return _.chain(shareables)
         .map((x) => _.find(mockWorkspaces, { id: x.owner }))
         .uniq()
         .value();

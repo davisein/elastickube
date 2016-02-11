@@ -1,6 +1,7 @@
 <ek-header-layout title="instances">
     <div transclude-to="header" layout="row" layout-align="start center">
-        <ek-search-filter></ek-search-filter>
+        <ek-search-filter input="ctrl.filteredInstances"
+                          output="ctrl.finalInstances"></ek-search-filter>
 
         <div layout="row" layout-align="end center" flex>
             <ek-button-group>
@@ -30,7 +31,7 @@
             <div class="test" transclude-to="body" ng-switch="ctrl.selectedView">
                 <span ng-switch-when="grid">grid</span>
                 <md-content ng-switch-default>
-                    <ek-instance-list></ek-instance-list>
+                    <ek-instance-list instances="ctrl.finalInstances"></ek-instance-list>
                 </md-content>
             </div>
         </ek-sidenav-layout>

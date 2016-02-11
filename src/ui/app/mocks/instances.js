@@ -1,24 +1,24 @@
-import WORDPRESS_ICON from './icons-mocks/docker.png';
-import HAPROXY_ICON from './icons-mocks/services.png';
-import KIBANA_ICON from './icons-mocks/kibana.png';
-import MY_SQL_ICON from './icons-mocks/mysql.png';
-import NODEJS_ICON from './icons-mocks/nodejs.png';
-import NGINX_ICON from './icons-mocks/nginx.png';
+import WORDPRESS_ICON from './images/docker.png';
+import HAPROXY_ICON from './images/services.png';
+import KIBANA_ICON from './images/kibana.png';
+import MY_SQL_ICON from './images/mysql.png';
+import NODEJS_ICON from './images/nodejs.png';
+import NGINX_ICON from './images/nginx.png';
 
 const instances = [{
     name: 'blog-prod-us-a',
     state: 'online',
     serviceId: 'ek-106hk',
     labels: ['blog', 'prod', 'usa'],
-    owner: 'Matt Nickles',
+    owner: 'matt',
     updated: new Date('2-1-2016'),
     icon: WORDPRESS_ICON
 }, {
     name: 'kibana-prod',
-    state: 'shutdown',
+    state: 'unavailable',
     serviceId: 'ek-dv66d',
     labels: ['kibana', 'prod'],
-    owner: 'Alberto Arias Maestro',
+    owner: 'alberto',
     updated: new Date('2-3-2016'),
     icon: KIBANA_ICON
 }, {
@@ -26,7 +26,7 @@ const instances = [{
     state: 'online',
     serviceId: 'ek-a323f',
     labels: ['database', 'prod', 'mysql'],
-    owner: 'Alberto Arias Maestro',
+    owner: 'diego',
     updated: new Date(),
     icon: MY_SQL_ICON
 }, {
@@ -34,7 +34,7 @@ const instances = [{
     state: 'online',
     serviceId: 'ek-li2a9',
     labels: ['bastion'],
-    owner: 'Alberto Arias Maestro',
+    owner: 'paulino',
     updated: new Date(),
     icon: NGINX_ICON
 }, {
@@ -42,7 +42,7 @@ const instances = [{
     state: 'online',
     serviceId: 'ek-gr43d',
     labels: ['services', 'prod'],
-    owner: 'Alberto Arias Maestro',
+    owner: 'alberto',
     updated: new Date('2-5-2016'),
     icon: NODEJS_ICON
 }, {
@@ -50,7 +50,7 @@ const instances = [{
     state: 'online',
     serviceId: 'ek-ot32e',
     labels: ['website'],
-    owner: 'Diego Sanjuan Martinez',
+    owner: 'manuel',
     updated: new Date(),
     icon: HAPROXY_ICON
 }];

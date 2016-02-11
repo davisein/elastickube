@@ -1,7 +1,7 @@
 import './ek-avatar.less';
 
 import { module } from 'widgets/widgets.module';
-import DEFAULT_IMAGE from 'images/user-nophoto-lg.png';
+import DEFAULT_IMAGE from 'images/user-nophoto.svg';
 
 module.directive('ekAvatar', () => ({
     restrict: 'E',

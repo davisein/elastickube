@@ -1,4 +1,3 @@
-import mockInstances from './ek-instances-list.mock';
 import headers from './ek-instance-list.headers';
 
 EKInstanceListController.$inject = ['$scope'];
@@ -7,7 +6,6 @@ function EKInstanceListController($scope) {
     const self = this;
 
     self.headers = headers;
-    self.instances = mockInstances;
     self.sortBy = self.headers[0];
     self.sortByCallback = sortByCallback;
 
