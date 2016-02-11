@@ -138,7 +138,7 @@
         "eol-last": 2,
         "func-names": 0,
         "func-style": 0,
-        "indent": 1,
+        "indent": [1, 4, { "SwitchCase": 1 }],
         "key-spacing": [2, { "beforeColon": false, "afterColon": true }],
         "lines-around-comment": [2, { "beforeBlockComment": true, "beforeLineComment": true }],
         "linebreak-style": 0,

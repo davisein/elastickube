@@ -4,9 +4,9 @@
                           output="ctrl.finalTemplates"></ek-search-filter>
 
         <div layout="row" layout-align="end center" flex>
-            <md-select class="ek-templates__sort-by" ng-model="ctrl.sortType" aria-label="sort type">
-                <md-option ng-repeat="opt in ctrl.sortTypes track by $index" ng-value="opt">{{:: opt }}</md-option>
-            </md-select>
+            <ek-templates-sorter ng-show="ctrl.selectedView === 'grid'"
+                                 input="ctrl.finalTemplates"
+                                 output="ctrl.sortedTemplates"></ek-templates-sorter>
 
             <ek-button-group>
                 <button ng-class="{'ek-button-group--selected' : ctrl.selectedView === 'list'}"
@@ -32,7 +32,9 @@
             </div>
 
             <div class="ek-templates__body" transclude-to="body" ng-switch="ctrl.selectedView">
-                <span ng-switch-when="grid">grid</span>
+                <ek-template-grid ng-switch-when="grid"
+                                  templates="ctrl.sortedTemplates"></ek-template-grid>
+
                 <span ng-switch-default>
                     <div ng-repeat="template in ctrl.finalTemplates">{{ template.name }}</div>
                 </span>
