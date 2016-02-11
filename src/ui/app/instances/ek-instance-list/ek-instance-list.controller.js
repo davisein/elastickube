@@ -11,21 +11,14 @@ function EKInstanceListController($scope) {
 
     $scope.$watchCollection('ctrl.instances', (x) => self.sortedInstances = sortInstances(x, self.sortBy));
 
-    function sortByCallback(column) {
-        if (self.sortBy === column && angular.isDefined(self.sortBy.sortableField)) {
-            self.sortBy.reverse = !self.sortBy.reverse;
-        } else {
-            self.sortBy = column;
-            self.sortBy.reverse = false;
-        }
-
-        self.sortedInstances = sortInstances(self.sortedInstances, self.sortBy);
+    function sortByCallback(column, sortOrder) {
+        self.sortedInstances = sortInstances(self.sortedInstances, column, sortOrder);
     }
 }
 
-function sortInstances(instances, criteria) {
-    if (angular.isDefined(criteria.sortableField)) {
-        return _.orderBy(instances, (x) => x[criteria.sortableField], criteria.reverse ? 'desc' : 'asc');
+function sortInstances(instances, column, sortOrder) {
+    if (angular.isDefined(column.sortableField)) {
+        return _.orderBy(instances, (x) => _.get(x, column.sortableField), sortOrder);
     }
 
     return instances;

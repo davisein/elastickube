@@ -9,7 +9,7 @@
         background-color: #fafafa;
         color: #89919c;
         display: table-header-group;
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 500;
 
         &__row {
@@ -17,16 +17,29 @@
             display: table-row;
             white-space: nowrap;
 
-            & > * {
+            &__cell {
                 display: table-cell;
                 line-height: 16px;
-                padding: 7px 20px;
+                padding: 8px 20px 6px;
                 text-transform: capitalize;
                 vertical-align: middle;
 
                 &:hover {
                     background-color: #eaedf0;
                     cursor: pointer;
+                }
+
+                &__icon {
+                    color: #89919c;
+                    height: 17px;
+                    width: 17px;
+
+                    transform: translate3d(0,-1px,0) rotate(-360deg);
+                    transition: transform .3s ease;
+
+                    &--sorted-desc {
+                        transform: translate3d(0,-1px,0) rotate(-180deg);
+                    }
                 }
             }
         }
@@ -39,14 +52,14 @@
         &__row {
             border-bottom: 1px solid #ebeced;
             display: table-row;
-            height: 50px;
+            height: 51px;
             position: relative;
 
             &:hover {
                 background-color: #f8f8f9;
             }
 
-            & > * {
+            &__cell {
                 display: table-cell;
                 padding-left: 20px;
                 padding-right: 20px;

@@ -64,6 +64,7 @@ const webpackConfig = {
     }),
 
     plugins: [
+        new webpack.OldWatchingPlugin(),
         new HtmlWebpackPlugin({ template: './index.html' }),
         new ExtractTextPlugin(isProduction ? 'assets/css/[name]-[chunkhash].css' : 'assets/css/[name].css'),
         new webpack.optimize.CommonsChunkPlugin('vendor',

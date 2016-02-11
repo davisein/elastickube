@@ -1,6 +1,8 @@
 import './ek-table.less';
 
 import { module } from 'widgets/widgets.module';
+import constants from 'widgets/widgets.constants';
+import controller from './ek-table.controller';
 import template from './ek-table.html';
 
 module.directive('ekTable', () => ({
@@ -9,11 +11,12 @@ module.directive('ekTable', () => ({
     scope: {},
     bindToController: {
         headers: '=',
-        tableItems: '=',
+        initialSelection: '=',
+        initialOrder: '@',
         headerClickListener: '&?'
     },
+    controller,
     controllerAs: 'ctrl',
-    controller: angular.noop,
     compile,
     template
 }));
@@ -22,6 +25,9 @@ function compile(tElement) {
     tElement.addClass('ek-table');
 
     return ($scope, iElement, iAttrs, $controller) => {
+        _.extend($scope, constants);
+        $controller.currentSelection = $controller.initialSelection;
+        $controller.sortOrder = $controller.initialOrder;
         if (angular.isFunction($controller.headerClickListener)
             && angular.isFunction($controller.headerClickListener())) {
             $controller.headerClickListener = $controller.headerClickListener();
