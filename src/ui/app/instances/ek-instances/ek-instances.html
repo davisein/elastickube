@@ -29,9 +29,15 @@
                                      output="ctrl.filteredInstances"></ek-instance-filters>
             </div>
 
-            <div class="ek-instances__body" transclude-to="body" ng-switch="ctrl.selectedView">
-                <span ng-switch-when="grid">grid</span>
-                <ek-instance-list ng-switch-default instances="ctrl.finalInstances"></ek-instance-list>
+            <div class="ek-instances__body" transclude-to="body">
+                <div class="ek-instances__body__not-found-message"
+                     layout="column" layout-align="center center"
+                     ng-if="ctrl.showEmpty">No instance found.</div>
+
+                <div ng-if="!ctrl.showEmpty" ng-switch="ctrl.selectedView">
+                    <span ng-switch-when="grid">grid</span>
+                    <ek-instance-list ng-switch-default instances="ctrl.finalInstances"></ek-instance-list>
+                </div>
             </div>
         </ek-sidenav-layout>
 
