@@ -1,6 +1,6 @@
-import { module } from 'core/core.module';
-
-module.config(configure);
+angular
+    .module('app.core')
+    .config(configure);
 
 configure.$inject = ['$animateProvider', '$locationProvider', '$mdThemingProvider'];
 

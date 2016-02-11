@@ -5,7 +5,7 @@ EKOwnersSelectorController.$inject = ['$scope'];
 function EKOwnersSelectorController($scope) {
     const self = this;
 
-    self.model = self.model || [];
+    self.selectedOwners = self.selectedOwners || [];
     self.open = true;
     self.toggleOpen = toggleOpen;
     self.isOwnerSelected = isOwnerSelected;
@@ -13,7 +13,7 @@ function EKOwnersSelectorController($scope) {
 
     $scope.$watchCollection('ctrl.shareables', (x) => {
         self.owners = getOwners(x);
-        self.model = _.filter(self.model, (y) => !!_.find(self.owners, { id: y }));
+        self.selectedOwners = _.filter(self.selectedOwners, (y) => !!_.find(self.owners, { id: y }));
     });
 
     function toggleOpen() {
@@ -21,14 +21,14 @@ function EKOwnersSelectorController($scope) {
     }
 
     function isOwnerSelected(owner) {
-        return _.includes(self.model, owner.id);
+        return _.includes(self.selectedOwners, owner.id);
     }
 
     function toggleSelectedOwner(owner) {
         if (self.isOwnerSelected(owner)) {
-            self.model = _.without(self.model, owner.id);
+            self.selectedOwners = _.without(self.selectedOwners, owner.id);
         } else {
-            self.model = self.model.concat(owner.id);
+            self.selectedOwners = self.selectedOwners.concat(owner.id);
         }
     }
 }

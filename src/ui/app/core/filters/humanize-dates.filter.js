@@ -1,9 +1,10 @@
-import { module } from 'core/core.module';
 import moment from 'moment';
 
-module.filter('ekHumanizeDate', () => ekHumanizeDate);
+angular
+    .module('app.core')
+    .filter('ekHumanizeDate', () => ekHumanizeDateFilter);
 
-function ekHumanizeDate(input) {
+function ekHumanizeDateFilter(input) {
     let formattedDuration;
 
     if (input) {

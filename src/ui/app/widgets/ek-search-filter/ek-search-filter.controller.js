@@ -6,15 +6,17 @@ function EKSearchFilterController($scope) {
     self.text = '';
     self.search = search;
 
-    $scope.$watchCollection('ctrl.input', search);
+    $scope.$watchCollection('ctrl.collectionToBeFiltered', search);
 
     function search() {
-        self.output = _.size(self.text.trim()) > 0 ? filter(self.input, self.text) : self.input;
+        self.filteredCollection = _.size(self.text.trim()) > 0
+            ? filter(self.collectionToBeFiltered, self.text)
+            : self.collectionToBeFiltered;
     }
 }
 
-function filter(input, text) {
-    return _.filter(input, (x) => x.name.toLowerCase().indexOf(text.toLowerCase()) !== -1);
+function filter(collectionToBeFiltered, text) {
+    return _.filter(collectionToBeFiltered, (x) => x.name.toLowerCase().indexOf(text.toLowerCase()) !== -1);
 }
 
 export default EKSearchFilterController;

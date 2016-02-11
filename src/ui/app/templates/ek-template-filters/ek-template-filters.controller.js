@@ -5,21 +5,21 @@ function EKTemplateFiltersController($scope) {
 
     self.templatesFilteredByType = [];
     self.selectedType = 'all';
-    self.owners = [];
-    self.output = [];
+    self.selectedOwners = [];
+    self.filteredTemplates = [];
 
-    $scope.$watch('ctrl.selectedType', (x) => self.templatesFilteredByType = filterByType(self.input, x));
-    $scope.$watchCollection('ctrl.input', (x) => self.templatesFilteredByType = filterByType(x, self.selectedType));
-    $scope.$watchCollection('ctrl.templatesFilteredByType', (x) => self.output = filterByOwner(x, self.owners));
-    $scope.$watchCollection('ctrl.owners', (x) => self.output = filterByOwner(self.templatesFilteredByType, x));
+    $scope.$watch('ctrl.selectedType', (x) => self.templatesFilteredByType = filterByType(self.templatesToFilter, x));
+    $scope.$watchCollection('ctrl.templatesToFilter', (x) => self.templatesFilteredByType = filterByType(x, self.selectedType));
+    $scope.$watchCollection('ctrl.templatesFilteredByType', (x) => self.filteredTemplates = filterByOwner(x, self.selectedOwners));
+    $scope.$watchCollection('ctrl.selectedOwners', (x) => self.filteredTemplates = filterByOwner(self.templatesFilteredByType, x));
 }
 
 function filterByType(templates, type) {
     return _.filter(templates, (x) => type === 'all' || type === x.type);
 }
 
-function filterByOwner(templates, owners) {
-    return _.isEmpty(owners) ? templates : _.filter(templates, (x) => _.includes(owners, x.owner));
+function filterByOwner(templates, selectedOwners) {
+    return _.isEmpty(selectedOwners) ? templates : _.filter(templates, (x) => _.includes(selectedOwners, x.owner));
 }
 
 export default EKTemplateFiltersController;

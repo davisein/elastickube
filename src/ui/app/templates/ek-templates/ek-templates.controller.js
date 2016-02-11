@@ -6,20 +6,20 @@ function EKTemplatesController($scope) {
     const self = this;
 
     self.templates = mockTemplates;
-    self.filteredTemplates = [];
-    self.finalTemplates = [];
-    self.sortedTemplates = [];
+    self.templatesFilteredByOwnerAndType = [];
+    self.templatesFilteredBySearch = [];
+    self.templatesSortedByType = [];
     self.selectedView = 'list';
     self.showEmpty = true;
     self.selectView = selectView;
 
-    $scope.$watch('ctrl.finalTemplates', checkIsEmpty);
-    $scope.$watch('ctrl.sortedTemplates', checkIsEmpty);
+    $scope.$watch('ctrl.templatesFilteredBySearch', checkIsEmpty);
+    $scope.$watch('ctrl.templatesSortedByType', checkIsEmpty);
 
     function checkIsEmpty() {
         self.showEmpty = self.selectedView === 'list'
-            ? _.isEmpty(self.finalTemplates)
-            : _.isEmpty(self.sortedTemplates);
+            ? _.isEmpty(self.templatesFilteredBySearch)
+            : _.isEmpty(self.templatesSortedByType);
     }
 
     function selectView(name) {

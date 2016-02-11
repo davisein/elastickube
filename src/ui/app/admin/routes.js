@@ -1,7 +1,6 @@
-import { module } from 'admin/admin.module';
-import routerHelperName from 'blocks/router/router-helper';
-
-module.run(appRun);
+angular
+    .module('app.admin')
+    .run(adminRoutes);
 
 const states = [{
     state: 'admin',
@@ -14,8 +13,8 @@ const states = [{
     }
 }];
 
-appRun.$inject = [routerHelperName];
+adminRoutes.$inject = ['routerHelper'];
 
-function appRun(routerHelper) {
+function adminRoutes(routerHelper) {
     routerHelper.configureStates(states);
 }

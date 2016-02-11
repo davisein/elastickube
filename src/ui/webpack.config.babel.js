@@ -9,7 +9,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const webpackConfig = {
 
     entry: {
-        elastickube: path.resolve(__dirname, 'app/app.loader.js'),
+        elastickube: path.resolve(__dirname, 'app/loader.js'),
         vendor: [
             'jquery',
             'angular',

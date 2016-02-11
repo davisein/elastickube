@@ -1,15 +1,15 @@
 import './ek-avatar.less';
-
-import { module } from 'widgets/widgets.module';
 import DEFAULT_IMAGE from 'images/user-nophoto.svg';
 
-module.directive('ekAvatar', () => ({
-    restrict: 'E',
-    scope: {
-        workspace: '='
-    },
-    compile
-}));
+angular
+    .module('app.widgets')
+    .directive('ekAvatar', () => ({
+        restrict: 'E',
+        scope: {
+            workspace: '='
+        },
+        compile
+    }));
 
 function compile(tElement) {
     tElement.addClass('ek-avatar');

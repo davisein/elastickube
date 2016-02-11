@@ -17,13 +17,13 @@ function EKTemplateTypeSelectorController($scope) {
     const self = this;
 
     self.types = types;
-    self.model = _.first(self.types);
+    self.selectedType = _.first(self.types);
     self.selectType = selectType;
 
     $scope.$watchCollection('ctrl.templates', (x) => self.typeValues = countTypes(x));
 
     function selectType(state) {
-        self.model = state;
+        self.selectedType = state;
     }
 }
 

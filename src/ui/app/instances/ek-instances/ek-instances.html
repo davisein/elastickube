@@ -1,7 +1,8 @@
 <ek-header-layout title="instances">
+
     <div transclude-to="header" layout="row" layout-align="start center">
-        <ek-search-filter input="ctrl.filteredInstances"
-                          output="ctrl.finalInstances"></ek-search-filter>
+        <ek-search-filter collection-to-be-filtered="ctrl.instancesFilteredByOwnerAndStatus"
+                          filtered-collection="ctrl.instancesFilteredBySearch"></ek-search-filter>
 
         <div layout="row" layout-align="end center" flex>
             <ek-button-group>
@@ -21,25 +22,26 @@
     </div>
 
     <div transclude-to="body">
-
         <ek-sidenav-layout>
             <div transclude-to="sidenav">
                 <button class="ek-instances__new mb20">New</button>
-                <ek-instance-filters input="ctrl.instances"
-                                     output="ctrl.filteredInstances"></ek-instance-filters>
+                <ek-instance-filters instances-to-filter="ctrl.instances"
+                                     filtered-instances="ctrl.instancesFilteredByOwnerAndStatus"></ek-instance-filters>
             </div>
 
             <div class="ek-instances__body" transclude-to="body">
                 <div class="ek-instances__body__not-found-message"
                      layout="column" layout-align="center center"
-                     ng-if="ctrl.showEmpty">No instance found</div>
+                     ng-if="ctrl.showEmpty">No instance found
+                </div>
 
                 <div ng-if="!ctrl.showEmpty" ng-switch="ctrl.selectedView">
                     <span ng-switch-when="grid">grid</span>
-                    <ek-instance-list ng-switch-default instances="ctrl.finalInstances"></ek-instance-list>
+                    <ek-instance-list ng-switch-default
+                                      instances="ctrl.instancesFilteredBySearch"></ek-instance-list>
                 </div>
             </div>
         </ek-sidenav-layout>
-
     </div>
+
 </ek-header-layout>

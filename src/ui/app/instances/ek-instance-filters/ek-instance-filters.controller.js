@@ -5,21 +5,21 @@ function EKInstanceFiltersController($scope) {
 
     self.instancesFilteredByState = [];
     self.selectedState = 'all';
-    self.owners = [];
-    self.output = [];
+    self.selectedOwners = [];
+    self.filteredInstances = [];
 
-    $scope.$watch('ctrl.selectedState', (x) => self.instancesFilteredByState = filterByState(self.input, x));
-    $scope.$watchCollection('ctrl.input', (x) => self.instancesFilteredByState = filterByState(x, self.selectedState));
-    $scope.$watchCollection('ctrl.instancesFilteredByState', (x) => self.output = filterByOwner(x, self.owners));
-    $scope.$watchCollection('ctrl.owners', (x) => self.output = filterByOwner(self.instancesFilteredByState, x));
+    $scope.$watch('ctrl.selectedState', (x) => self.instancesFilteredByState = filterByState(self.instancesToFilter, x));
+    $scope.$watchCollection('ctrl.instancesToFilter', (x) => self.instancesFilteredByState = filterByState(x, self.selectedState));
+    $scope.$watchCollection('ctrl.instancesFilteredByState', (x) => self.filteredInstances = filterByOwner(x, self.selectedOwners));
+    $scope.$watchCollection('ctrl.selectedOwners', (x) => self.filteredInstances = filterByOwner(self.instancesFilteredByState, x));
 }
 
 function filterByState(instances, state) {
     return _.filter(instances, (x) => state === 'all' || state === x.state);
 }
 
-function filterByOwner(instances, owners) {
-    return _.isEmpty(owners) ? instances : _.filter(instances, (x) => _.includes(owners, x.owner));
+function filterByOwner(instances, selectedOwners) {
+    return _.isEmpty(selectedOwners) ? instances : _.filter(instances, (x) => _.includes(selectedOwners, x.owner));
 }
 
 export default EKInstanceFiltersController;

@@ -1,7 +1,6 @@
-import { module } from 'templates/templates.module';
-import routerHelperName from 'blocks/router/router-helper';
-
-module.run(appRun);
+angular
+    .module('app.templates')
+    .run(templatesRoutes);
 
 const states = [{
     state: 'templates',
@@ -14,8 +13,8 @@ const states = [{
     }
 }];
 
-appRun.$inject = [routerHelperName];
+templatesRoutes.$inject = ['routerHelper'];
 
-function appRun(routerHelper) {
+function templatesRoutes(routerHelper) {
     routerHelper.configureStates(states);
 }

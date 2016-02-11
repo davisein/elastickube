@@ -1,12 +1,12 @@
 <ek-header-layout title="templates">
     <div transclude-to="header" layout="row" layout-align="start center">
-        <ek-search-filter input="ctrl.filteredTemplates"
-                          output="ctrl.finalTemplates"></ek-search-filter>
+        <ek-search-filter collection-to-be-filtered="ctrl.templatesFilteredByOwnerAndType"
+                          filtered-collection="ctrl.templatesFilteredBySearch"></ek-search-filter>
 
         <div layout="row" layout-align="end center" flex>
             <ek-templates-sorter ng-show="ctrl.selectedView === 'grid'"
-                                 input="ctrl.finalTemplates"
-                                 output="ctrl.sortedTemplates"></ek-templates-sorter>
+                                 collection-to-sort="ctrl.templatesFilteredBySearch"
+                                 sorted-collection="ctrl.templatesSortedByType"></ek-templates-sorter>
 
             <ek-button-group>
                 <button ng-class="{'ek-button-group--selected' : ctrl.selectedView === 'list'}"
@@ -27,8 +27,8 @@
         <ek-sidenav-layout>
             <div transclude-to="sidenav">
                 <button class="ek-templates__new mb20">New</button>
-                <ek-template-filters input="ctrl.templates"
-                                     output="ctrl.filteredTemplates"></ek-template-filters>
+                <ek-template-filters templates-to-filter="ctrl.templates"
+                                     filtered-templates="ctrl.templatesFilteredByOwnerAndType"></ek-template-filters>
             </div>
 
             <div class="ek-templates__body" transclude-to="body">
@@ -39,9 +39,9 @@
 
                 <div ng-if="!ctrl.showEmpty" ng-switch="ctrl.selectedView">
                     <ek-template-grid ng-switch-when="grid"
-                                      templates="ctrl.sortedTemplates"></ek-template-grid>
+                                      templates="ctrl.templatesSortedByType"></ek-template-grid>
                     <ek-template-list ng-switch-default
-                                      templates="ctrl.finalTemplates"></ek-template-list>
+                                      templates="ctrl.templatesFilteredBySearch"></ek-template-list>
                 </div>
             </div>
         </ek-sidenav-layout>

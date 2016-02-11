@@ -8,11 +8,11 @@ function EKInstancesController($scope) {
     self.instances = mockInstances;
     self.selectedView = 'list';
     self.showEmpty = true;
-    self.filteredInstances = [];
-    self.finalInstances = [];
+    self.instancesFilteredByOwnerAndStatus = [];
+    self.instancesFilteredBySearch = [];
     self.selectView = selectView;
 
-    $scope.$watchCollection('ctrl.finalInstances', (x) => self.showEmpty = _.isEmpty(x));
+    $scope.$watchCollection('ctrl.instancesFilteredBySearch', (x) => self.showEmpty = _.isEmpty(x));
 
     function selectView(name) {
         self.selectedView = name;
