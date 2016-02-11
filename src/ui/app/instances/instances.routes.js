@@ -17,5 +17,5 @@ const states = [{
 appRun.$inject = [routerHelperName];
 
 function appRun(routerHelper) {
-    routerHelper.configureStates(states);
+    routerHelper.configureStates(states, '/instances');
 }
