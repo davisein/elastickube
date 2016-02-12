@@ -8,31 +8,31 @@ function EKTemplatesSorterController($scope) {
     self.sortTypes = ['name', 'most recent', 'owner'];
     self.sortType = _.first(self.sortTypes);
 
-    $scope.$watch('ctrl.sortType', (x) => self.output = sortByType(self.input, x));
-    $scope.$watchCollection('ctrl.input', (x) => self.output = sortByType(x, self.sortType));
+    $scope.$watch('ctrl.sortType', (x) => self.sortedCollection = sortByType(self.collectionToSort, x));
+    $scope.$watchCollection('ctrl.collectionToSort', (x) => self.sortedCollection = sortByType(x, self.sortType));
 }
 
-function sortByType(input, type) {
-    switch (type) {
+function sortByType(collectionToSort, sortType) {
+    switch (sortType) {
         case 'name':
-            return sortByName(input);
+            return sortByName(collectionToSort);
         case 'owner':
-            return sortByOwner(input);
+            return sortByOwner(collectionToSort);
         default:
-            return sortByMostRecent(input);
+            return sortByMostRecent(collectionToSort);
     }
 }
 
-function sortByName(input) {
-    return _.orderBy(input, 'name');
+function sortByName(collectionToSort) {
+    return _.orderBy(collectionToSort, 'name');
 }
 
-function sortByMostRecent(input) {
-    return _.orderBy(input, 'created');
+function sortByMostRecent(collectionToSort) {
+    return _.orderBy(collectionToSort, 'created');
 }
 
-function sortByOwner(input) {
-    return _.sortBy(input, (x) => _.find(mockWorkspaces, { id: x.owner }).name);
+function sortByOwner(collectionToSort) {
+    return _.sortBy(collectionToSort, (x) => _.find(mockWorkspaces, { id: x.owner }).name);
 }
 
 export default EKTemplatesSorterController;

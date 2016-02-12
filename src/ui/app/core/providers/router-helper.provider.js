@@ -1,8 +1,6 @@
-import { module } from 'blocks/router/router.module';
-
-const name = 'routerHelper';
-
-module.provider(name, routerHelperProvider);
+angular
+    .module('app.core')
+    .provider('routerHelper', routerHelperProvider);
 
 routerHelperProvider.$inject = ['$stateProvider', '$urlRouterProvider'];
 
@@ -15,9 +13,9 @@ function routerHelperProvider($stateProvider, $urlRouterProvider) {
         let hasOtherwise = false;
 
         return {
+            changeToState,
             configureStates,
-            getStates,
-            go
+            getStates
         };
 
         function configureStates(states, otherwisePath) {
@@ -35,10 +33,8 @@ function routerHelperProvider($stateProvider, $urlRouterProvider) {
             return $state.get();
         }
 
-        function go(state) {
+        function changeToState(state) {
             $state.go(state);
         }
     }
 }
-
-export default name;

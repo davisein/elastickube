@@ -1,7 +1,6 @@
-import routerHelperName from 'blocks/router/router-helper';
 import mockWorkspaces from 'mocks/workspaces';
 
-EKHeaderController.$inject = ['$rootScope', routerHelperName];
+EKHeaderController.$inject = ['$rootScope', 'routerHelper'];
 
 function EKHeaderController($rootScope, routerHelper) {
     const self = this;
@@ -14,7 +13,7 @@ function EKHeaderController($rootScope, routerHelper) {
     $rootScope.$on('$stateChangeSuccess', (event, toState) => self.selectedState = toState.name);
 
     function goToSection(section) {
-        routerHelper.go(section.name);
+        routerHelper.changeToState(section.name);
     }
 }
 

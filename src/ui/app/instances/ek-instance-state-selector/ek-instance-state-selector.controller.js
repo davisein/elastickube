@@ -4,13 +4,13 @@ function EKInstanceStateSelectorController($scope) {
     const self = this;
 
     self.states = ['all', 'online', 'unavailable', 'processing', 'terminated'];
-    self.model = _.first(self.states);
+    self.selectedState = _.first(self.states);
     self.selectState = selectState;
 
     $scope.$watchCollection('ctrl.instances', (x) => self.stateValues = countStates(x));
 
     function selectState(state) {
-        self.model = state;
+        self.selectedState = state;
     }
 }
 

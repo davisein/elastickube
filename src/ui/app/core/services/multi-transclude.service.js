@@ -1,8 +1,6 @@
-import { module } from 'core/core.module';
-
-const serviceName = 'multiTranscludeService';
-
-module.service(serviceName, multiTranscludeService);
+angular
+    .module('app.core')
+    .service('multiTransclude', multiTranscludeService);
 
 function multiTranscludeService() {
     const self = this;
@@ -38,5 +36,3 @@ function getAttribute(item, attributeName) {
         return attribute.value;
     }
 }
-
-export default serviceName;

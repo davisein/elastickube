@@ -1,18 +1,18 @@
 import './ek-instances.less';
-
-import { module } from 'instances/instances.module';
+import constants from '../constants';
 import controller from './ek-instances.controller';
-import constants from 'instances/instances.constants';
 import template from './ek-instances.html';
 
-module.directive('ekInstances', () => ({
-    restrict: 'E',
-    scope: {},
-    controllerAs: 'ctrl',
-    controller,
-    compile,
-    template
-}));
+angular
+    .module('app.instances')
+    .directive('ekInstances', () => ({
+        restrict: 'E',
+        scope: {},
+        controllerAs: 'ctrl',
+        controller,
+        compile,
+        template
+    }));
 
 function compile(tElement) {
     tElement

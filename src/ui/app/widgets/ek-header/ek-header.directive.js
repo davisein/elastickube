@@ -1,18 +1,18 @@
 import './ek-header.less';
-
-import { module } from 'widgets/widgets.module';
-import constants from 'widgets/widgets.constants';
+import constants from '../constants';
 import controller from './ek-header.controller';
 import template from './ek-header.html';
 
-module.directive('ekHeader', () => ({
-    restrict: 'E',
-    scope: true,
-    controllerAs: 'ctrl',
-    controller,
-    compile,
-    template
-}));
+angular
+    .module('app.widgets')
+    .directive('ekHeader', () => ({
+        restrict: 'E',
+        scope: true,
+        controllerAs: 'ctrl',
+        controller,
+        compile,
+        template
+    }));
 
 function compile(tElement) {
     tElement
