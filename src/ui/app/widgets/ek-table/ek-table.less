@@ -6,14 +6,14 @@
     border-collapse: collapse;
 
     &__header {
-        background-color: #fafafa;
-        color: #777;
+        background-color: @grey200;
+        color: @grey900;
         display: table-header-group;
         font-size: 13px;
         font-weight: 500;
 
         &__row {
-            border-bottom: 1px solid #E8E8E8;
+            border-bottom: 1px solid @grey500;
             display: table-row;
             white-space: nowrap;
 
@@ -25,12 +25,12 @@
                 vertical-align: middle;
 
                 &:hover {
-                    background-color: #F1F1F1;
+                    background-color: @grey300;
                     cursor: pointer;
                 }
 
                 &__icon {
-                    color: #777;
+                    color: @grey900;
                     height: 17px;
                     width: 17px;
 
@@ -50,13 +50,13 @@
         display: table-row-group;
 
         &__row {
-            border-bottom: 1px solid #EFEFEF;
+            border-bottom: 1px solid @grey400;
             display: table-row;
             height: 51px;
             position: relative;
 
             &:hover {
-                background-color: #FAFAFA;
+                background-color: @grey100;
             }
 
             &__cell {
