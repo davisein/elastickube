@@ -2,20 +2,15 @@ angular
     .module('app.core')
     .config(configure);
 
-configure.$inject = ['$animateProvider', '$locationProvider', '$mdThemingProvider'];
+configure.$inject = ['$animateProvider', '$mdThemingProvider'];
 
-function configure($animateProvider, $locationProvider, $mdThemingProvider) {
+function configure($animateProvider, $mdThemingProvider) {
     configureAnimation($animateProvider);
-    configureRouter($locationProvider);
     configureTheming($mdThemingProvider);
 }
 
 function configureAnimation($animateProvider) {
     $animateProvider.classNameFilter(/\banimate\b/);
-}
-
-function configureRouter($locationProvider) {
-    $locationProvider.html5Mode(true);
 }
 
 function configureTheming($mdThemingProvider) {

@@ -2,13 +2,14 @@
     <img ng-src="{{:: images.KUBERNETES_LOGO }}">
 </div>
 
-<div layout="row" layout-align="space-between" flex>
+<div ng-if="ctrl.isLoggedIn()"
+     layout="row" layout-align="space-between" flex>
     <div class="ek-header__sections"
          layout="row" layout-align="start">
         <a ng-repeat="section in ctrl.sections track by section.name"
            ng-click="ctrl.goToSection(section)"
            ng-class="{ 'ek-header__sections__section--selected': ctrl.selectedState === section.name }"
-           class="ek-header__sections__section">{{:: section.name }}
+           class="ek-header__sections__section">{{:: section.data.header.name }}
         </a>
     </div>
 
@@ -25,6 +26,8 @@
             <md-icon class="ek-header__location__more__icon" md-svg-src="{{:: icons.IC_MORE_VERT_48PX }}"></md-icon>
         </md-button>
 
-        <ek-avatar class="ek-header__location__avatar" workspace="ctrl.workspace"></ek-avatar>
+        <ek-avatar class="ek-header__location__avatar"
+                   ng-click="ctrl.logout()"
+                   workspace="ctrl.workspace"></ek-avatar>
     </div>
 </div>

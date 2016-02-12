@@ -1,33 +1,34 @@
 angular
-    .module('app.core')
+    .module('blocks.router')
     .provider('routerHelper', routerHelperProvider);
 
 routerHelperProvider.$inject = ['$stateProvider', '$urlRouterProvider'];
 
 function routerHelperProvider($stateProvider, $urlRouterProvider) {
-    this.$get = RouterHelper;
+    const self = this;
+    let hasOtherwise = false;
+
+    self.$get = RouterHelper;
+    self.configureStates = configureStates;
+
+    function configureStates(states, otherwisePath) {
+        states.forEach(function(state) {
+            $stateProvider.state(state.state, state.config);
+        });
+
+        if (otherwisePath && !hasOtherwise) {
+            hasOtherwise = true;
+            $urlRouterProvider.otherwise(otherwisePath);
+        }
+    }
 
     RouterHelper.$inject = ['$state'];
 
     function RouterHelper($state) {
-        let hasOtherwise = false;
-
         return {
             changeToState,
-            configureStates,
             getStates
         };
-
-        function configureStates(states, otherwisePath) {
-            states.forEach(function(state) {
-                $stateProvider.state(state.state, state.config);
-            });
-
-            if (otherwisePath && !hasOtherwise) {
-                hasOtherwise = true;
-                $urlRouterProvider.otherwise(otherwisePath);
-            }
-        }
 
         function getStates() {
             return $state.get();

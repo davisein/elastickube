@@ -1,6 +1,8 @@
+import profiles from 'blocks/security/profiles';
+
 angular
     .module('app.admin')
-    .run(adminRoutes);
+    .config(adminRoutes);
 
 const states = [{
     state: 'admin',
@@ -8,12 +10,16 @@ const states = [{
         template: '<ek-admin></ek-admin>',
         url: '/admin',
         data: {
-            roles: ['admin']
+            header: {
+                name: 'admin',
+                position: 3
+            },
+            access: profiles.ADMIN
         }
     }
 }];
 
-adminRoutes.$inject = ['routerHelper'];
+adminRoutes.$inject = ['routerHelperProvider'];
 
 function adminRoutes(routerHelper) {
     routerHelper.configureStates(states);
