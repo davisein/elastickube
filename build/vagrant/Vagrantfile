@@ -45,8 +45,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.customize ['guestproperty', 'set', :id, '/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold', '10000']
   end
 
-  config.vbguest.iso_path = "/home/elasticbox/VBoxGuestAdditions.iso"
-
   # Add the public key to the authorized hosts
   config.vm.provision :shell, inline: "echo '#{SSH_PUB_KEY}' >> /home/elasticbox/.ssh/authorized_keys"
 
