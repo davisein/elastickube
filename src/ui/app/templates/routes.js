@@ -1,19 +1,22 @@
 angular
     .module('app.templates')
-    .run(templatesRoutes);
+    .config(templatesRoutes);
 
 const states = [{
-    state: 'templates',
+    state: 'private.templates',
     config: {
         template: '<ek-templates></ek-templates>',
         url: '/templates',
         data: {
-            header: 2
+            header: {
+                name: 'templates',
+                position: 2
+            }
         }
     }
 }];
 
-templatesRoutes.$inject = ['routerHelper'];
+templatesRoutes.$inject = ['routerHelperProvider'];
 
 function templatesRoutes(routerHelper) {
     routerHelper.configureStates(states);

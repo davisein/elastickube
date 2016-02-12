@@ -1,19 +1,22 @@
 angular
     .module('app.instances')
-    .run(instancesRoutes);
+    .config(instancesRoutes);
 
 const states = [{
-    state: 'instances',
+    state: 'private.instances',
     config: {
         template: '<ek-instances></ek-instances>',
         url: '/instances',
         data: {
-            header: 1
+            header: {
+                name: 'instances',
+                position: 1
+            }
         }
     }
 }];
 
-instancesRoutes.$inject = ['routerHelper'];
+instancesRoutes.$inject = ['routerHelperProvider'];
 
 function instancesRoutes(routerHelper) {
     routerHelper.configureStates(states, '/instances');
