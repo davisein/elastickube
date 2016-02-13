@@ -1,0 +1,7 @@
+const instanceActions = {
+    RECEIVE_INSTANCE: 'RECEIVE_INSTANCES',
+    PRELOAD_INSTANCES: 'PRELOAD_INSTANCES',
+    INSTANCES_PRELOADED: 'INSTANCES_PRELOADED'
+};
+
+export default instanceActions;

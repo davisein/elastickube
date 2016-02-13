@@ -17,6 +17,7 @@ const webpackConfig = {
             'angular-aria',
             'angular-material',
             'angular-cookies',
+            'flux',
             'ui-router',
             'lodash',
             'moment',
@@ -35,7 +36,7 @@ const webpackConfig = {
     module: {
         loaders: [
             { test: require.resolve('jquery'), loader: 'expose?jQuery' },
-            { test: /\.js$/, exclude: /\/(node_modules)\//, loader: 'ng-annotate!babel?presets[]=es2015!eslint' },
+            { test: /\.js$/, exclude: /\/(node_modules)\//, loader: 'ng-annotate!babel!eslint' },
             { test: /\.css/, loader: ExtractTextPlugin.extract('style', 'css') },
             { test: /\.less/, loader: ExtractTextPlugin.extract('style', 'css!postcss!less') },
             { test: /\.html/, exclude: /\/(components)\//, loader: 'html', include: /\/(app)\// },
