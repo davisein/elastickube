@@ -5,16 +5,16 @@ angular
     .config(authRoutes);
 
 const states = [{
-    state: 'public',
+    state: 'anon',
     config: {
         abstract: true,
         template: '<ui-view></ui-view>',
         data: {
-            access: profiles.PUBLIC
+            access: profiles.ANONYMOUS
         }
     }
 }, {
-    state: 'public.login',
+    state: 'anon.login',
     config: {
         template: '<ek-login></ek-login>',
         url: '/login'

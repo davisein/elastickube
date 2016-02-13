@@ -6,7 +6,7 @@ const states = [{
     state: 'private.templates',
     config: {
         template: '<ek-templates></ek-templates>',
-        url: '/templates',
+        url: '/:namespace/templates',
         data: {
             header: {
                 name: 'templates',

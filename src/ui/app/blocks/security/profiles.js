@@ -1,5 +1,5 @@
 const profiles = {
-    PUBLIC: 'PUBLIC',
+    ANONYMOUS: 'ANONYMOUS',
     PRIVATE: 'PRIVATE',
     ADMIN: 'ADMIN'
 };
