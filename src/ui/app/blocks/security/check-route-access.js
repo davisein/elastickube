@@ -17,7 +17,7 @@ function checkRouteAccess($rootScope, auth, routerHelper) {
 
                     routerHelper.changeToState('private.instances', { namespace: defaultNamespace });
                 } else {
-                    routerHelper.changeToState('anon.login');
+                    routerHelper.changeToState('anonymous.login');
                 }
             }
         }

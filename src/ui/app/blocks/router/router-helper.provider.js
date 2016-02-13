@@ -34,8 +34,8 @@ function routerHelperProvider($stateProvider, $urlRouterProvider) {
             return $state.get();
         }
 
-        function changeToState(state, params) {
-            $state.go(state, params);
+        function changeToState(state, stateParams, options) {
+            $state.go(state, stateParams, options);
         }
     }
 }

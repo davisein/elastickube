@@ -25,7 +25,7 @@ function authProvider() {
 
         function logout() {
             $cookies.remove(ELASTICKUBE_TOKEN);
-            routerHelper.changeToState('anon.login');
+            routerHelper.changeToState('anonymous.login');
         }
 
         function isAdmin() {
