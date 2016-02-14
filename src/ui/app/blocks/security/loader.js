@@ -1,5 +1,6 @@
 import 'angular-cookies';
 import 'blocks/router/loader';
+import 'blocks/session/loader';
 
 import './module';
 import './routes';

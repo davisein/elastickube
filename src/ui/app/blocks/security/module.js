@@ -1,4 +1,5 @@
 angular.module('blocks.security', [
     'ngCookies',
-    'blocks.router'
+    'blocks.router',
+    'blocks.session'
 ]);
