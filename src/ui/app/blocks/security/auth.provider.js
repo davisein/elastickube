@@ -25,7 +25,7 @@ function authProvider() {
 
         function logout() {
             $cookies.remove(ELASTICKUBE_TOKEN);
-            routerHelper.changeToState('public.login');
+            routerHelper.changeToState('anonymous.login');
         }
 
         function isAdmin() {
@@ -39,7 +39,7 @@ function authProvider() {
                 case profiles.PRIVATE:
                     return isLoggedIn();
                 default:
-                    return true;
+                    return !isLoggedIn();
             }
         }
     }

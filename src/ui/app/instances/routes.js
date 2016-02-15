@@ -6,7 +6,7 @@ const states = [{
     state: 'private.instances',
     config: {
         template: '<ek-instances></ek-instances>',
-        url: '/instances',
+        url: '/:namespace/instances',
         data: {
             header: {
                 name: 'instances',
@@ -19,5 +19,7 @@ const states = [{
 instancesRoutes.$inject = ['routerHelperProvider'];
 
 function instancesRoutes(routerHelper) {
-    routerHelper.configureStates(states, '/instances');
+    const defaultNamespace = 'engineering';
+
+    routerHelper.configureStates(states, `${defaultNamespace}/instances`);
 }

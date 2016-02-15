@@ -15,7 +15,9 @@ function EKHeaderController($rootScope, auth, routerHelper) {
     $rootScope.$on('$stateChangeSuccess', (event, toState) => self.selectedState = toState.name);
 
     function goToSection(section) {
-        routerHelper.changeToState(section.name);
+        const defaultNamespace = 'engineering';
+
+        routerHelper.changeToState(section.name, { namespace: defaultNamespace });
     }
 }
 
