@@ -8,16 +8,23 @@
         height: 30px;
         margin: 0;
         border-radius: 0;
-        border: 1px solid @grey700;
+        border: 1px solid @grey400;
         border-left: 0;
-        background-color: @grey200;
+        background-color: @grey100;
+
+        &:hover {
+            border-color: @grey450;
+            &:first-child {
+                border-color: @grey450;
+            }
+        }
 
         .material-icons {
-            color: @grey800;
+            color: @grey500;
         }
 
         &:first-child {
-            border-left: 1px solid @grey700;
+            border-left: 1px solid @grey400;
             border-bottom-left-radius: 2px;
             border-top-left-radius: 2px;
         }
@@ -28,8 +35,11 @@
         }
 
         &.ek-button-group--selected {
-            background-color: @grey400;
+            background-color: @grey200;
             box-shadow: inset 0 1px 1px 0 rgba(0, 0, 0, 0.07);
+            &:hover {
+                border-color: @grey400;
+            }
 
             .material-icons {
                 color: initial;

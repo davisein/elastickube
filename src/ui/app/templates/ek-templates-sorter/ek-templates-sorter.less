@@ -4,12 +4,16 @@
     md-select {
         margin: 0 20px 0 0;
         border-radius: 2px;
-        border: 1px solid @grey700;
+        border: 1px solid @grey400;
         height: 30px;
-        background-color: @grey200;
+        background-color: @grey100;
         padding-left: 15px;
         padding-right: 10px;
         text-transform: capitalize;
+
+        &:hover {
+            border-color: @grey450;
+        }
 
         &, &:not([disabled]):focus {
             .md-select-value {
