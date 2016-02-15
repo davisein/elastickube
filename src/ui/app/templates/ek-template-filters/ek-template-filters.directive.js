@@ -1,24 +1,24 @@
 import './ek-template-filters.less';
-import controller from './ek-template-filters.controller';
+
+import Directive from 'directive';
+import Controller from './ek-template-filters.controller';
 import template from './ek-template-filters.html';
 
-angular
-    .module('app.templates')
-    .directive('ekTemplateFilters', () => ({
-        restrict: 'E',
-        scope: {},
-        bindToController: {
+class TemplateFiltersDirective extends Directive {
+    constructor() {
+        super({ Controller, template });
+
+        this.bindToController = {
             templatesToFilter: '=',
             filteredTemplates: '='
-        },
-        controllerAs: 'ctrl',
-        controller,
-        compile,
-        template
-    }));
+        };
+    }
 
-function compile(tElement) {
-    tElement
-        .addClass('ek-template-filters')
-        .attr('layout', 'column');
+    compile(tElement) {
+        tElement
+            .addClass('ek-template-filters')
+            .attr('layout', 'column');
+    }
 }
+
+export default TemplateFiltersDirective;

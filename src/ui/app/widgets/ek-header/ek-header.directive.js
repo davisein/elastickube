@@ -1,15 +1,14 @@
 import './ek-header.less';
-import constants from '../constants';
+import Directive from 'directive';
 import Controller from './ek-header.controller';
+import constants from '../constants';
 import template from './ek-header.html';
 
-class HeaderDirective {
+class HeaderDirective extends Directive {
     constructor() {
-        this.restrict = 'E';
+        super({ Controller, template });
+
         this.scope = true;
-        this.controllerAs = 'ctrl';
-        this.controller = Controller;
-        this.template = template;
     }
 
     compile(tElement) {

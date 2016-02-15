@@ -1,21 +1,19 @@
 import './ek-table.less';
-import constants from '../constants';
+import Directive from 'directive';
 import Controller from './ek-table.controller';
+import constants from '../constants';
 import template from './ek-table.html';
 
-class TableDirective {
+class TableDirective extends Directive {
     constructor() {
-        this.restrict = 'E';
+        super({ Controller, template });
+
         this.transclude = true;
-        this.scope = {};
         this.bindToController = {
             headers: '=',
             initialSelection: '=',
             initialOrder: '@'
         };
-        this.controllerAs = 'ctrl';
-        this.controller = Controller;
-        this.template = template;
     }
 
     compile(tElement) {

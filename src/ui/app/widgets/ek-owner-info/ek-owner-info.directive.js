@@ -1,17 +1,15 @@
 import './ek-owner-info.less';
+import Directive from 'directive';
 import Controller from './ek-owner-info.controller';
 import template from './ek-owner-info.html';
 
-class OwnerInfoDirective {
+class OwnerInfoDirective extends Directive {
     constructor() {
-        this.restrict = 'E';
-        this.scope = {};
+        super({ Controller, template });
+
         this.bindToController = {
             shareable: '='
         };
-        this.controllerAs = 'ctrl';
-        this.controller = Controller;
-        this.template = template;
     }
 
     compile(tElement) {

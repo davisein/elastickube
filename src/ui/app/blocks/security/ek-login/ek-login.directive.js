@@ -1,11 +1,10 @@
 import './ek-login.less';
+import Directive from 'directive';
 import template from './ek-login.html';
 
-class LoginDirective {
+class LoginDirective extends Directive {
     constructor() {
-        this.restrict = 'E';
-        this.scope = {};
-        this.template = template;
+        super({ template });
     }
 
     compile(tElement) {

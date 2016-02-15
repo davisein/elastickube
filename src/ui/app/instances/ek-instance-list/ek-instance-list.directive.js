@@ -1,17 +1,15 @@
 import './ek-instance-list.less';
+import Directive from 'directive';
 import Controller from './ek-instance-list.controller';
 import template from './ek-instance-list.html';
 
-class InstanceListDirective {
+class InstanceListDirective extends Directive {
     constructor() {
-        this.restrict = 'E';
-        this.scope = {};
+        super({ Controller, template });
+
         this.bindToController = {
             instances: '=?'
         };
-        this.controllerAs = 'ctrl';
-        this.controller = Controller;
-        this.template = template;
     }
 
     compile(tElement) {

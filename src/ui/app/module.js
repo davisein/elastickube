@@ -19,5 +19,5 @@ angular
         /* Feature areas */
         adminModule,
         instancesModule,
-        //templatesModule
+        templatesModule
     ]);

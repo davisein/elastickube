@@ -2,16 +2,15 @@ import coreModule from 'core/module';
 import layoutModule from 'layout/module';
 import widgetsModule from 'widgets/module';
 
-//import './routes';
-
-//import './ek-template-card/ek-template-card.directive';
-//import './ek-template-filters/ek-template-filters.directive';
-//import './ek-template-grid/ek-template-grid.directive';
-//import './ek-template-list/ek-template-list.directive';
-//import './ek-template-name/ek-template-name.directive';
-//import './ek-template-type-selector/ek-template-type-selector.directive';
-//import './ek-templates/ek-templates.directive';
-//import './ek-templates-sorter/ek-templates-sorter.directive';
+import templatesRoutes from './templates-routes';
+import TemplateCardDirective from './ek-template-card/ek-template-card.directive';
+import TemplateFiltersDirective from './ek-template-filters/ek-template-filters.directive';
+import TemplateGridDirective from './ek-template-grid/ek-template-grid.directive';
+import TemplateListDirective from './ek-template-list/ek-template-list.directive';
+import TemplateNameDirective from './ek-template-name/ek-template-name.directive';
+import TemplateTypeSelectorDirective from './ek-template-type-selector/ek-template-type-selector.directive';
+import TemplatesDirective from './ek-templates/ek-templates.directive';
+import TemplatesSorterDirective from './ek-templates-sorter/ek-templates-sorter.directive';
 
 const moduleName = 'app.templates';
 
@@ -20,6 +19,15 @@ angular
         coreModule,
         layoutModule,
         widgetsModule
-    ]);
+    ])
+    .config(templatesRoutes)
+    .directive('ekTemplateCard', () => new TemplateCardDirective())
+    .directive('ekTemplateFilters', () => new TemplateFiltersDirective())
+    .directive('ekTemplateGrid', () => new TemplateGridDirective())
+    .directive('ekTemplateList', () => new TemplateListDirective())
+    .directive('ekTemplateName', () => new TemplateNameDirective())
+    .directive('ekTemplateTypeSelector', () => new TemplateTypeSelectorDirective())
+    .directive('ekTemplates', () => new TemplatesDirective())
+    .directive('ekTemplatesSorter', () => new TemplatesSorterDirective());
 
 export default moduleName;

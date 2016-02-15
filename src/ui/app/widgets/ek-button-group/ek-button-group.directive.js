@@ -1,11 +1,13 @@
 import './ek-button-group.less';
+import Directive from 'directive';
 import template from './ek-button-group.html';
 
-class ButtonGroupDirective {
+class ButtonGroupDirective extends Directive {
     constructor() {
-        this.restrict = 'E';
+        super({ template });
+
+        this.scope = false;
         this.transclude = true;
-        this.template = template;
     }
 
     compile(tElement) {

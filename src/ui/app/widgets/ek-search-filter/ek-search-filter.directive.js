@@ -1,20 +1,18 @@
 import './ek-search-filter.less';
-import constants from '../constants';
+import Directive from 'directive';
 import Controller from './ek-search-filter.controller';
+import constants from '../constants';
 import template from './ek-search-filter.html';
 
-class SearchFilterDirective {
+class SearchFilterDirective extends Directive {
     constructor() {
-        this.restrict = 'E';
-        this.scope = {};
+        super({ Controller, template });
+
         this.bindToController = {
             collectionToBeFiltered: '=',
             filteredCollection: '=',
             searchField: '@'
         };
-        this.controllerAs = 'ctrl';
-        this.controller = Controller;
-        this.template = template;
     }
 
     compile(tElement) {

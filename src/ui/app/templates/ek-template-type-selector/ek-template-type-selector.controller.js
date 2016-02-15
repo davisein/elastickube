@@ -1,5 +1,3 @@
-EKTemplateTypeSelectorController.$inject = ['$scope'];
-
 const types = [
     'all',
     'resource list',
@@ -13,17 +11,18 @@ const types = [
     'pod autoscaling'
 ];
 
-function EKTemplateTypeSelectorController($scope) {
-    const self = this;
+class TemplateTypeSelectorController {
+    constructor($scope) {
+        'ngInject';
 
-    self.types = types;
-    self.selectedType = _.first(self.types);
-    self.selectType = selectType;
+        this.types = types;
+        this.selectedType = _.first(this.types);
 
-    $scope.$watchCollection('ctrl.templates', (x) => self.typeValues = countTypes(x));
+        $scope.$watchCollection('ctrl.templates', (x) => this.typeValues = countTypes(x));
+    }
 
-    function selectType(state) {
-        self.selectedType = state;
+    selectType(state) {
+        this.selectedType = state;
     }
 }
 
@@ -34,4 +33,4 @@ function countTypes(templates) {
         .value();
 }
 
-export default EKTemplateTypeSelectorController;
+export default TemplateTypeSelectorController;

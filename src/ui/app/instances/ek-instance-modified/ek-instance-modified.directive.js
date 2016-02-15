@@ -1,17 +1,15 @@
 import './ek-instance-modified.less';
+import Directive from 'directive';
 import Controller from './ek-instance-modified.controller';
 import template from './ek-instance-modified.html';
 
-class InstanceModifiedDirective {
+class InstanceModifiedDirective extends Directive {
     constructor() {
-        this.restrict = 'E';
-        this.scope = {};
+        super({ Controller, template });
+
         this.bindToController = {
             instance: '='
         };
-        this.controllerAs = 'ctrl';
-        this.controller = Controller;
-        this.template = template;
     }
 
     compile(tElement) {
