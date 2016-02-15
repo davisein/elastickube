@@ -1,5 +1,4 @@
 <ek-header-layout title="instances">
-
     <div transclude-to="header" layout="row" layout-align="start center">
         <ek-search-filter collection-to-be-filtered="ctrl.instancesFilteredByOwnerAndStatus"
                           filtered-collection="ctrl.instancesFilteredBySearch"></ek-search-filter>
@@ -24,7 +23,7 @@
     <div transclude-to="body">
         <ek-sidenav-layout>
             <div transclude-to="sidenav">
-                <button class="ek-instances__new mb20">New</button>
+                <button class="ek-instances__new">New</button>
                 <ek-instance-filters instances-to-filter="ctrl.instances"
                                      filtered-instances="ctrl.instancesFilteredByOwnerAndStatus"></ek-instance-filters>
             </div>
@@ -43,5 +42,4 @@
             </div>
         </ek-sidenav-layout>
     </div>
-
 </ek-header-layout>
