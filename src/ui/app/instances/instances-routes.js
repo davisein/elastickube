@@ -1,7 +1,3 @@
-angular
-    .module('app.instances')
-    .config(instancesRoutes);
-
 const states = [{
     state: 'private.instances',
     config: {
@@ -16,10 +12,11 @@ const states = [{
     }
 }];
 
-instancesRoutes.$inject = ['routerHelperProvider'];
-
-function instancesRoutes(routerHelper) {
+function instancesRoutes(routerHelperProvider) {
+    'ngInject';
     const defaultNamespace = 'engineering';
 
-    routerHelper.configureStates(states, `${defaultNamespace}/instances`);
+    routerHelperProvider.configureStates(states, `${defaultNamespace}/instances`);
 }
+
+export default instancesRoutes;

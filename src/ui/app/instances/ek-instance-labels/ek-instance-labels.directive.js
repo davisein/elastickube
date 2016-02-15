@@ -2,20 +2,20 @@ import './ek-instance-labels.less';
 import constants from '../constants';
 import template from './ek-instance-labels.html';
 
-angular
-    .module('app.instances')
-    .directive('ekInstanceLabels', () => ({
-        restrict: 'E',
-        scope: {
+class InstanceLabelsDirective {
+    constructor() {
+        this.restrict = 'E';
+        this.scope = {
             instance: '='
-        },
-        controllerAs: 'ctrl',
-        compile,
-        template
-    }));
+        };
+        this.template = template;
+    }
 
-function compile(tElement) {
-    tElement.addClass('ek-instance-labels');
+    compile(tElement) {
+        tElement.addClass('ek-instance-labels');
 
-    return ($scope) => _.extend($scope, constants);
+        return ($scope) => _.extend($scope, constants);
+    }
 }
+
+export default InstanceLabelsDirective;

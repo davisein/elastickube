@@ -1,18 +1,18 @@
 import './ek-instance-name.less';
 import template from './ek-instance-name.html';
 
-angular
-    .module('app.instances')
-    .directive('ekInstanceName', () => ({
-        restrict: 'E',
-        scope: {
+class InstanceNameDirective {
+    constructor() {
+        this.restrict = 'E';
+        this.scope = {
             instance: '='
-        },
-        controllerAs: 'ctrl',
-        compile,
-        template
-    }));
+        };
+        this.template = template;
+    }
 
-function compile(tElement) {
-    tElement.addClass('ek-instance-name');
+    compile(tElement) {
+        tElement.addClass('ek-instance-name');
+    }
 }
+
+export default InstanceNameDirective;

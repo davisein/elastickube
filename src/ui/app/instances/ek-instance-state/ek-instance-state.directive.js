@@ -1,18 +1,18 @@
 import './ek-instance-state.less';
 import template from './ek-instance-state.html';
 
-angular
-    .module('app.instances')
-    .directive('ekInstanceState', () => ({
-        restrict: 'E',
-        scope: {
+class InstanceStateDirective {
+    constructor() {
+        this.restrict = 'E';
+        this.scope = {
             instance: '='
-        },
-        controllerAs: 'ctrl',
-        compile,
-        template
-    }));
+        };
+        this.template = template;
+    }
 
-function compile(tElement) {
-    tElement.addClass('ek-instance-state');
+    compile(tElement) {
+        tElement.addClass('ek-instance-state');
+    }
 }
+
+export default InstanceStateDirective;

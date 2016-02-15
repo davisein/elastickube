@@ -1,24 +1,25 @@
 import './ek-instance-filters.less';
-import controller from './ek-instance-filters.controller';
+import Controller from './ek-instance-filters.controller';
 import template from './ek-instance-filters.html';
 
-angular
-    .module('app.instances')
-    .directive('ekInstanceFilters', () => ({
-        restrict: 'E',
-        scope: {},
-        bindToController: {
+class InstanceFiltersDirective {
+    constructor() {
+        this.restrict = 'E';
+        this.scope = {};
+        this.bindToController = {
             instancesToFilter: '=',
             filteredInstances: '='
-        },
-        controllerAs: 'ctrl',
-        controller,
-        compile,
-        template
-    }));
+        };
+        this.controllerAs = 'ctrl';
+        this.controller = Controller;
+        this.template = template;
+    }
 
-function compile(tElement) {
-    tElement
-        .addClass('ek-instance-filters')
-        .attr('layout', 'column');
+    compile(tElement) {
+        tElement
+            .addClass('ek-instance-filters')
+            .attr('layout', 'column');
+    }
 }
+
+export default InstanceFiltersDirective;

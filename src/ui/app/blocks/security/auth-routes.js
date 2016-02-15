@@ -1,9 +1,5 @@
 import profiles from './profiles';
 
-angular
-    .module('blocks.security')
-    .config(authRoutes);
-
 const states = [{
     state: 'anonymous',
     config: {
@@ -30,8 +26,10 @@ const states = [{
     }
 }];
 
-authRoutes.$inject = ['routerHelperProvider'];
+function authRoutes(routerHelperProvider) {
+    'ngInject';
 
-function authRoutes(routerHelper) {
-    routerHelper.configureStates(states);
+    routerHelperProvider.configureStates(states);
 }
+
+export default authRoutes;

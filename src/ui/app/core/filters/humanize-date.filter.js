@@ -1,10 +1,6 @@
 import moment from 'moment';
 
-angular
-    .module('app.core')
-    .filter('ekHumanizeDate', () => ekHumanizeDateFilter);
-
-function ekHumanizeDateFilter(input) {
+function humanizeDateFilter(input) {
     let formattedDuration;
 
     if (input) {
@@ -17,3 +13,5 @@ function ekHumanizeDateFilter(input) {
 
     return formattedDuration;
 }
+
+export default humanizeDateFilter;

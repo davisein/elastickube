@@ -1,16 +1,15 @@
-EKInstanceStateSelectorController.$inject = ['$scope'];
+class InstanceStateSelectorController {
+    constructor($scope) {
+        'ngInject';
 
-function EKInstanceStateSelectorController($scope) {
-    const self = this;
+        this.states = ['all', 'online', 'unavailable', 'processing', 'terminated'];
+        this.selectedState = _.first(this.states);
 
-    self.states = ['all', 'online', 'unavailable', 'processing', 'terminated'];
-    self.selectedState = _.first(self.states);
-    self.selectState = selectState;
+        $scope.$watchCollection('ctrl.instances', (x) => this.stateValues = countStates(x));
+    }
 
-    $scope.$watchCollection('ctrl.instances', (x) => self.stateValues = countStates(x));
-
-    function selectState(state) {
-        self.selectedState = state;
+    selectState(state) {
+        this.selectedState = state;
     }
 }
 
@@ -21,4 +20,4 @@ function countStates(instances) {
         .value();
 }
 
-export default EKInstanceStateSelectorController;
+export default InstanceStateSelectorController;

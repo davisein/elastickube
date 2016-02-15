@@ -1,25 +1,30 @@
-EKInstanceFiltersController.$inject = ['$scope'];
+class InstanceFiltersController {
+    constructor($scope) {
+        'ngInject';
 
-function EKInstanceFiltersController($scope) {
-    const self = this;
+        this.instancesFilteredByState = [];
+        this.selectedState = 'all';
+        this.selectedOwners = [];
+        this.filteredInstances = [];
 
-    self.instancesFilteredByState = [];
-    self.selectedState = 'all';
-    self.selectedOwners = [];
-    self.filteredInstances = [];
+        $scope.$watch('ctrl.selectedState', () => this.filterInstancesByState());
+        $scope.$watchCollection('ctrl.instancesToFilter', () => this.filterInstancesByState());
 
-    $scope.$watch('ctrl.selectedState', (x) => self.instancesFilteredByState = filterByState(self.instancesToFilter, x));
-    $scope.$watchCollection('ctrl.instancesToFilter', (x) => self.instancesFilteredByState = filterByState(x, self.selectedState));
-    $scope.$watchCollection('ctrl.instancesFilteredByState', (x) => self.filteredInstances = filterByOwner(x, self.selectedOwners));
-    $scope.$watchCollection('ctrl.selectedOwners', (x) => self.filteredInstances = filterByOwner(self.instancesFilteredByState, x));
+        $scope.$watchCollection('ctrl.selectedOwners', () => this.filterInstancesByOwners());
+        $scope.$watchCollection('ctrl.instancesFilteredByState', () => this.filterInstancesByOwners());
+    }
+
+    filterInstancesByState() {
+        this.instancesFilteredByState = _.chain(this.instancesToFilter)
+            .filter((x) => this.selectedState === 'all' || this.selectedState === x.state)
+            .value();
+    }
+
+    filterInstancesByOwners() {
+        this.filteredInstances = _.isEmpty(this.selectedOwners)
+            ? this.instancesFilteredByState
+            : _.filter(this.instancesFilteredByState, (x) => _.includes(this.selectedOwners, x.owner));
+    }
 }
 
-function filterByState(instances, state) {
-    return _.filter(instances, (x) => state === 'all' || state === x.state);
-}
-
-function filterByOwner(instances, selectedOwners) {
-    return _.isEmpty(selectedOwners) ? instances : _.filter(instances, (x) => _.includes(selectedOwners, x.owner));
-}
-
-export default EKInstanceFiltersController;
+export default InstanceFiltersController;

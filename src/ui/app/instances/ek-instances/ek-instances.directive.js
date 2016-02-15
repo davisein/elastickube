@@ -1,23 +1,24 @@
 import './ek-instances.less';
 import constants from '../constants';
-import controller from './ek-instances.controller';
+import Controller from './ek-instances.controller';
 import template from './ek-instances.html';
 
-angular
-    .module('app.instances')
-    .directive('ekInstances', () => ({
-        restrict: 'E',
-        scope: {},
-        controllerAs: 'ctrl',
-        controller,
-        compile,
-        template
-    }));
+class InstancesDirective {
+    constructor() {
+        this.restrict = 'E';
+        this.scope = {};
+        this.controllerAs = 'ctrl';
+        this.controller = Controller;
+        this.template = template;
+    }
 
-function compile(tElement) {
-    tElement
-        .addClass('ek-instances')
-        .attr('layout', 'column');
+    compile(tElement) {
+        tElement
+            .addClass('ek-instances')
+            .attr('layout', 'column');
 
-    return ($scope) => _.extend($scope, constants);
+        return ($scope) => _.extend($scope, constants);
+    }
 }
+
+export default InstancesDirective;

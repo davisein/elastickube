@@ -1,41 +1,32 @@
-angular
-    .module('blocks.router')
-    .provider('routerHelper', routerHelperProvider);
+import RouterHelper from './router-helper';
 
-routerHelperProvider.$inject = ['$stateProvider', '$urlRouterProvider'];
+class RouterHelperProvider {
+    constructor($stateProvider, $urlRouterProvider) {
+        this._hasOtherwise = false;
+        this._$stateProvider = $stateProvider;
+        this._$urlRouterProvider = $urlRouterProvider;
 
-function routerHelperProvider($stateProvider, $urlRouterProvider) {
-    const self = this;
-    let hasOtherwise = false;
+        this.$get = ($state) => {
+            'ngInject';
 
-    self.$get = RouterHelper;
-    self.configureStates = configureStates;
-
-    function configureStates(states, otherwisePath) {
-        states.forEach(function(state) {
-            $stateProvider.state(state.state, state.config);
-        });
-
-        if (otherwisePath && !hasOtherwise) {
-            hasOtherwise = true;
-            $urlRouterProvider.otherwise(otherwisePath);
-        }
+            return new RouterHelper($state);
+        };
     }
 
-    RouterHelper.$inject = ['$state'];
+    configureStates(states, otherwisePath) {
+        states.forEach((x) => this._$stateProvider.state(x.state, x.config));
 
-    function RouterHelper($state) {
-        return {
-            changeToState,
-            getStates
-        };
-
-        function getStates() {
-            return $state.get();
-        }
-
-        function changeToState(state, stateParams, options) {
-            $state.go(state, stateParams, options);
+        if (otherwisePath && !this._hasOtherwise) {
+            this._hasOtherwise = true;
+            this._$urlRouterProvider.otherwise(otherwisePath);
         }
     }
 }
+
+function routerHelperProvider($stateProvider, $urlRouterProvider) {
+    'ngInject';
+
+    return new RouterHelperProvider($stateProvider, $urlRouterProvider);
+}
+
+export default routerHelperProvider;

@@ -1,26 +1,27 @@
 import './ek-search-filter.less';
 import constants from '../constants';
-import controller from './ek-search-filter.controller';
+import Controller from './ek-search-filter.controller';
 import template from './ek-search-filter.html';
 
-angular
-    .module('app.widgets')
-    .directive('ekSearchFilter', () => ({
-        restrict: 'E',
-        scope: {},
-        bindToController: {
+class SearchFilterDirective {
+    constructor() {
+        this.restrict = 'E';
+        this.scope = {};
+        this.bindToController = {
             collectionToBeFiltered: '=',
             filteredCollection: '=',
             searchField: '@'
-        },
-        controllerAs: 'ctrl',
-        controller,
-        compile,
-        template
-    }));
+        };
+        this.controllerAs = 'ctrl';
+        this.controller = Controller;
+        this.template = template;
+    }
 
-function compile(tElement) {
-    tElement.addClass('ek-search-filter');
+    compile(tElement) {
+        tElement.addClass('ek-search-filter');
 
-    return ($scope) => _.extend($scope, constants);
+        return ($scope) => _.extend($scope, constants);
+    }
 }
+
+export default SearchFilterDirective;

@@ -1,23 +1,36 @@
 import mockWorkspaces from 'mocks/workspaces';
 
-EKHeaderController.$inject = ['$rootScope', 'auth', 'routerHelper'];
+class HeaderController {
+    constructor($rootScope, $scope, auth, routerHelper) {
+        'ngInject';
+        const watches = [];
 
-function EKHeaderController($rootScope, auth, routerHelper) {
-    const self = this;
+        this._auth = auth;
+        this._routerHelper = routerHelper;
 
-    self.namespace = 'engineering';
-    self.sections = getSections(auth, routerHelper);
-    self.workspace = _.find(mockWorkspaces, { id: 'alberto' });
-    self.goToSection = goToSection;
-    self.isLoggedIn = auth.isLoggedIn;
-    self.logout = auth.logout;
+        this.namespace = 'engineering';
+        this.sections = getSections(auth, routerHelper);
+        this.workspace = _.find(mockWorkspaces, { id: 'alberto' });
 
-    $rootScope.$on('$stateChangeSuccess', (event, toState) => self.selectedState = toState.name);
+        watches.concat([
+            $rootScope.$on('$stateChangeSuccess', (event, toState) => this.selectedState = toState.name)
+        ]);
 
-    function goToSection(section) {
+        $scope.$on('$destroy', () => watches.forEach((x) => x()));
+    }
+
+    goToSection(section) {
         const defaultNamespace = 'engineering';
 
-        routerHelper.changeToState(section.name, { namespace: defaultNamespace });
+        this._routerHelper.changeToState(section.name, { namespace: defaultNamespace });
+    }
+
+    isLoggedIn() {
+        return this._auth.isLoggedIn();
+    }
+
+    logout() {
+        return this._auth.logout();
     }
 }
 
@@ -28,4 +41,4 @@ function getSections(auth, routerHelper) {
         .value();
 }
 
-export default EKHeaderController;
+export default HeaderController;
