@@ -1,38 +1,38 @@
 import mockWorkspaces from 'mocks/workspaces';
 
-EKTemplatesSorterController.$inject = ['$scope'];
+class TemplatesSorterController {
+    constructor($scope) {
+        'ngInject';
 
-function EKTemplatesSorterController($scope) {
-    const self = this;
+        this.sortTypes = ['name', 'most recent', 'owner'];
+        this.sortType = _.first(this.sortTypes);
 
-    self.sortTypes = ['name', 'most recent', 'owner'];
-    self.sortType = _.first(self.sortTypes);
-
-    $scope.$watch('ctrl.sortType', (x) => self.output = sortByType(self.input, x));
-    $scope.$watchCollection('ctrl.input', (x) => self.output = sortByType(x, self.sortType));
-}
-
-function sortByType(input, type) {
-    switch (type) {
-        case 'name':
-            return sortByName(input);
-        case 'owner':
-            return sortByOwner(input);
-        default:
-            return sortByMostRecent(input);
+        $scope.$watch('ctrl.sortType', (x) => this.sortedCollection = sortByType(this.collectionToSort, x));
+        $scope.$watchCollection('ctrl.collectionToSort', (x) => this.sortedCollection = sortByType(x, this.sortType));
     }
 }
 
-function sortByName(input) {
-    return _.orderBy(input, 'name');
+function sortByType(collectionToSort, sortType) {
+    switch (sortType) {
+        case 'name':
+            return sortByName(collectionToSort);
+        case 'owner':
+            return sortByOwner(collectionToSort);
+        default:
+            return sortByMostRecent(collectionToSort);
+    }
 }
 
-function sortByMostRecent(input) {
-    return _.orderBy(input, 'created');
+function sortByName(collectionToSort) {
+    return _.orderBy(collectionToSort, 'name');
 }
 
-function sortByOwner(input) {
-    return _.sortBy(input, (x) => _.find(mockWorkspaces, { id: x.owner }).name);
+function sortByMostRecent(collectionToSort) {
+    return _.orderBy(collectionToSort, 'created');
 }
 
-export default EKTemplatesSorterController;
+function sortByOwner(collectionToSort) {
+    return _.sortBy(collectionToSort, (x) => _.find(mockWorkspaces, { id: x.owner }).name);
+}
+
+export default TemplatesSorterController;

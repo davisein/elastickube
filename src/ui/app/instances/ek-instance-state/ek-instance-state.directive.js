@@ -1,18 +1,19 @@
 import './ek-instance-state.less';
-
-import { module } from 'instances/instances.module';
+import Directive from 'directive';
 import template from './ek-instance-state.html';
 
-module.directive('ekInstanceState', () => ({
-    restrict: 'E',
-    scope: {
-        instance: '='
-    },
-    controllerAs: 'ctrl',
-    compile,
-    template
-}));
+class InstanceStateDirective extends Directive {
+    constructor() {
+        super({ template });
 
-function compile(tElement) {
-    tElement.addClass('ek-instance-state');
+        this.scope = {
+            instance: '='
+        };
+    }
+
+    compile(tElement) {
+        tElement.addClass('ek-instance-state');
+    }
 }
+
+export default InstanceStateDirective;

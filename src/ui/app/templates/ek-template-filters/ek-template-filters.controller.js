@@ -1,25 +1,30 @@
-EKTemplateFiltersController.$inject = ['$scope'];
+class TemplateFiltersController {
+    constructor($scope) {
+        'ngInject';
 
-function EKTemplateFiltersController($scope) {
-    const self = this;
+        this.templatesFilteredByType = [];
+        this.selectedType = 'all';
+        this.selectedOwners = [];
+        this.filteredTemplates = [];
 
-    self.templatesFilteredByType = [];
-    self.selectedType = 'all';
-    self.owners = [];
-    self.output = [];
+        $scope.$watch('ctrl.selectedType', () => this.filterByType());
+        $scope.$watchCollection('ctrl.templatesToFilter', () => this.filterByType());
 
-    $scope.$watch('ctrl.selectedType', (x) => self.templatesFilteredByType = filterByType(self.input, x));
-    $scope.$watchCollection('ctrl.input', (x) => self.templatesFilteredByType = filterByType(x, self.selectedType));
-    $scope.$watchCollection('ctrl.templatesFilteredByType', (x) => self.output = filterByOwner(x, self.owners));
-    $scope.$watchCollection('ctrl.owners', (x) => self.output = filterByOwner(self.templatesFilteredByType, x));
+        $scope.$watchCollection('ctrl.templatesFilteredByType', () => this.filterByOwner());
+        $scope.$watchCollection('ctrl.selectedOwners', () => this.filterByOwner());
+    }
+
+    filterByType() {
+        this.templatesFilteredByType = _.chain(this.templatesToFilter)
+            .filter((x) => this.selectedType === 'all' || this.selectedType === x.type)
+            .value();
+    }
+
+    filterByOwner() {
+        this.filteredTemplates = _.isEmpty(this.selectedOwners)
+            ? this.templatesFilteredByType
+            : _.filter(this.templatesFilteredByType, (x) => _.includes(this.selectedOwners, x.owner));
+    }
 }
 
-function filterByType(templates, type) {
-    return _.filter(templates, (x) => type === 'all' || type === x.type);
-}
-
-function filterByOwner(templates, owners) {
-    return _.isEmpty(owners) ? templates : _.filter(templates, (x) => _.includes(owners, x.owner));
-}
-
-export default EKTemplateFiltersController;
+export default TemplateFiltersController;

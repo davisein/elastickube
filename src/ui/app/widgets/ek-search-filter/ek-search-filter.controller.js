@@ -1,20 +1,21 @@
-EKSearchFilterController.$inject = ['$scope'];
+class SearchFilterController {
+    constructor($scope) {
+        'ngInject';
 
-function EKSearchFilterController($scope) {
-    const self = this;
+        this.text = '';
 
-    self.text = '';
-    self.search = search;
+        $scope.$watchCollection('ctrl.collectionToBeFiltered', () => this.search());
+    }
 
-    $scope.$watchCollection('ctrl.input', search);
-
-    function search() {
-        self.output = _.size(self.text.trim()) > 0 ? filter(self.input, self.text) : self.input;
+    search() {
+        this.filteredCollection = _.size(this.text.trim()) > 0
+            ? filter(this.collectionToBeFiltered, this.text)
+            : this.collectionToBeFiltered;
     }
 }
 
-function filter(input, text) {
-    return _.filter(input, (x) => x.name.toLowerCase().indexOf(text.toLowerCase()) !== -1);
+function filter(collectionToBeFiltered, text) {
+    return _.filter(collectionToBeFiltered, (x) => x.name.toLowerCase().indexOf(text.toLowerCase()) !== -1);
 }
 
-export default EKSearchFilterController;
+export default SearchFilterController;

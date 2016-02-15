@@ -1,15 +1,5 @@
-import { module } from 'core/core.module';
-
-const serviceName = 'multiTranscludeService';
-
-module.service(serviceName, multiTranscludeService);
-
-function multiTranscludeService() {
-    const self = this;
-
-    self.transclude = transclude;
-
-    function transclude($element, $transcludeFn) {
+class MultiTranscludeService {
+    transclude($element, $transcludeFn) {
         $transcludeFn((clone) => _.chain(clone)
             .filter(x => x.nodeType === 1)
             .each((cloneEl) => {
@@ -39,4 +29,4 @@ function getAttribute(item, attributeName) {
     }
 }
 
-export default serviceName;
+export default MultiTranscludeService;

@@ -1,31 +1,30 @@
 import mockTemplates from 'mocks/templates';
 
-EKTemplatesController.$inject = ['$scope'];
+class TemplatesController {
+    constructor($scope) {
+        'ngInject';
 
-function EKTemplatesController($scope) {
-    const self = this;
+        this.templates = mockTemplates;
+        this.templatesFilteredByOwnerAndType = [];
+        this.templatesFilteredBySearch = [];
+        this.templatesSortedByType = [];
+        this.selectedView = 'list';
+        this.showEmpty = true;
 
-    self.templates = mockTemplates;
-    self.filteredTemplates = [];
-    self.finalTemplates = [];
-    self.sortedTemplates = [];
-    self.selectedView = 'list';
-    self.showEmpty = true;
-    self.selectView = selectView;
-
-    $scope.$watch('ctrl.finalTemplates', checkIsEmpty);
-    $scope.$watch('ctrl.sortedTemplates', checkIsEmpty);
-
-    function checkIsEmpty() {
-        self.showEmpty = self.selectedView === 'list'
-            ? _.isEmpty(self.finalTemplates)
-            : _.isEmpty(self.sortedTemplates);
+        $scope.$watch('ctrl.templatesFilteredBySearch', () => this.checkIsEmpty());
+        $scope.$watch('ctrl.templatesSortedByType', () => this.checkIsEmpty());
     }
 
-    function selectView(name) {
-        self.selectedView = name;
-        checkIsEmpty();
+    checkIsEmpty() {
+        this.showEmpty = this.selectedView === 'list'
+            ? _.isEmpty(this.templatesFilteredBySearch)
+            : _.isEmpty(this.templatesSortedByType);
+    }
+
+    selectView(name) {
+        this.selectedView = name;
+        this.checkIsEmpty();
     }
 }
 
-export default EKTemplatesController;
+export default TemplatesController;

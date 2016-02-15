@@ -1,22 +1,21 @@
 import mockInstances from 'mocks/instances';
 
-EKInstancesController.$inject = ['$scope'];
+class InstancesController {
+    constructor($scope) {
+        'ngInject';
 
-function EKInstancesController($scope) {
-    const self = this;
+        this.instances = mockInstances;
+        this.selectedView = 'list';
+        this.showEmpty = true;
+        this.instancesFilteredByOwnerAndStatus = [];
+        this.instancesFilteredBySearch = [];
 
-    self.instances = mockInstances;
-    self.selectedView = 'list';
-    self.showEmpty = true;
-    self.filteredInstances = [];
-    self.finalInstances = [];
-    self.selectView = selectView;
+        $scope.$watchCollection('ctrl.instancesFilteredBySearch', (x) => this.showEmpty = _.isEmpty(x));
+    }
 
-    $scope.$watchCollection('ctrl.finalInstances', (x) => self.showEmpty = _.isEmpty(x));
-
-    function selectView(name) {
-        self.selectedView = name;
+    selectView(name) {
+        this.selectedView = name;
     }
 }
 
-export default EKInstancesController;
+export default InstancesController;

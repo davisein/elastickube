@@ -1,17 +1,17 @@
 import './ek-admin.less';
-
-import { module } from 'admin/admin.module';
+import Directive from 'directive';
 import template from './ek-admin.html';
 
-module.directive('ekAdmin', () => ({
-    restrict: 'E',
-    scope: {},
-    compile,
-    template
-}));
+class AdminDirective extends Directive {
+    constructor() {
+        super({ template });
+    }
 
-function compile(tElement) {
-    tElement
-        .addClass('ek-admin')
-        .attr('layout', 'column');
+    compile(tElement) {
+        tElement
+            .addClass('ek-admin')
+            .attr('layout', 'column');
+    }
 }
+
+export default AdminDirective;

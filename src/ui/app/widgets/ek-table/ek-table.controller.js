@@ -1,16 +1,14 @@
-function EKTableController() {
+class TableController {
+    clickHeader(header) {
+        if (this.currentSelection === header) {
+            this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+        } else {
+            this.currentSelection = header;
+            this.sortOrder = 'asc';
+        }
+
+        this.headerClickListener(header, this.sortOrder);
+    }
 }
 
-EKTableController.prototype.clickHeader = function(header) {
-    const self = this;
-
-    if (self.currentSelection === header) {
-        self.sortOrder = self.sortOrder === 'asc' ? 'desc' : 'asc';
-    } else {
-        self.currentSelection = header;
-        self.sortOrder = 'asc';
-    }
-    self.headerClickListener(header, self.sortOrder);
-};
-
-export default EKTableController;
+export default TableController;

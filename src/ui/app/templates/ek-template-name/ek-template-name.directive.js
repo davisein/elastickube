@@ -1,18 +1,19 @@
 import './ek-template-name.less';
-
-import { module } from 'templates/templates.module';
+import Directive from 'directive';
 import template from './ek-template-name.html';
 
-module.directive('ekTemplateName', () => ({
-    restrict: 'E',
-    scope: {
-        template: '='
-    },
-    controllerAs: 'ctrl',
-    compile,
-    template
-}));
+class TemplateNameDirective extends Directive {
+    constructor() {
+        super({ template });
 
-function compile(tElement) {
-    tElement.addClass('ek-template-name');
+        this.scope = {
+            template: '='
+        };
+    }
+
+    compile(tElement) {
+        tElement.addClass('ek-template-name');
+    }
 }
+
+export default TemplateNameDirective;

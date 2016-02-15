@@ -46,18 +46,22 @@
             text-transform: capitalize;
             margin-right: 10px;
 
-            .md-select-value {
-                border-bottom: 0;
-                span {
-                    min-height: initial;
-                    height: initial;
-                    color: @white;
-                }
+            &, &:not([disabled]):focus {
+                .md-select-value {
+                    border-bottom: 0;
+                    padding-bottom: 1px;
 
-                .md-select-icon {
-                    font-size: 11px;
-                    height: 13px;
-                    width: 13px;
+                    span {
+                        min-height: initial;
+                        height: initial;
+                        color: @white;
+                    }
+
+                    .md-select-icon {
+                        font-size: 11px;
+                        height: 13px;
+                        width: 13px;
+                    }
                 }
             }
         }

@@ -1,34 +1,31 @@
 import mockWorkspaces from 'mocks/workspaces';
 
-EKOwnersSelectorController.$inject = ['$scope'];
+class OwnersSelectorController {
+    constructor($scope) {
+        'ngInject';
 
-function EKOwnersSelectorController($scope) {
-    const self = this;
+        this.selectedOwners = this.selectedOwners || [];
+        this.open = true;
 
-    self.model = self.model || [];
-    self.open = true;
-    self.toggleOpen = toggleOpen;
-    self.isOwnerSelected = isOwnerSelected;
-    self.toggleSelectedOwner = toggleSelectedOwner;
-
-    $scope.$watchCollection('ctrl.shareables', (x) => {
-        self.owners = getOwners(x);
-        self.model = _.filter(self.model, (y) => !!_.find(self.owners, { id: y }));
-    });
-
-    function toggleOpen() {
-        self.open = !self.open;
+        $scope.$watchCollection('ctrl.shareables', (x) => {
+            this.owners = getOwners(x);
+            this.selectedOwners = _.filter(this.selectedOwners, (y) => !!_.find(this.owners, { id: y }));
+        });
     }
 
-    function isOwnerSelected(owner) {
-        return _.includes(self.model, owner.id);
+    toggleOpen() {
+        this.open = !this.open;
     }
 
-    function toggleSelectedOwner(owner) {
-        if (self.isOwnerSelected(owner)) {
-            self.model = _.without(self.model, owner.id);
+    isOwnerSelected(owner) {
+        return _.includes(this.selectedOwners, owner.id);
+    }
+
+    toggleSelectedOwner(owner) {
+        if (this.isOwnerSelected(owner)) {
+            this.selectedOwners = _.without(this.selectedOwners, owner.id);
         } else {
-            self.model = self.model.concat(owner.id);
+            this.selectedOwners = this.selectedOwners.concat(owner.id);
         }
     }
 }
@@ -41,4 +38,4 @@ function getOwners(shareables) {
         .value();
 }
 
-export default EKOwnersSelectorController;
+export default OwnersSelectorController;

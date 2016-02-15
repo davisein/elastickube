@@ -1,17 +1,19 @@
 import './ek-template-grid.less';
-
-import { module } from 'templates/templates.module';
+import Directive from 'directive';
 import template from './ek-template-grid.html';
 
-module.directive('ekTemplateGrid', () => ({
-    restrict: 'E',
-    scope: {
-        templates: '=?'
-    },
-    compile,
-    template
-}));
+class TemplateGridDirective extends Directive {
+    constructor() {
+        super({ template });
 
-function compile(tElement) {
-    tElement.addClass('ek-template-grid');
+        this.scope = {
+            templates: '=?'
+        };
+    }
+
+    compile(tElement) {
+        tElement.addClass('ek-template-grid');
+    }
 }
+
+export default TemplateGridDirective;

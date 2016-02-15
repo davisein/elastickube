@@ -1,22 +1,21 @@
 import './ek-templates-sorter.less';
-
-import { module } from 'templates/templates.module';
-import controller from './ek-templates-sorter.controller';
+import Directive from 'directive';
+import Controller from './ek-templates-sorter.controller';
 import template from './ek-templates-sorter.html';
 
-module.directive('ekTemplatesSorter', () => ({
-    restrict: 'E',
-    scope: {},
-    bindToController: {
-        input: '=',
-        output: '='
-    },
-    controllerAs: 'ctrl',
-    controller,
-    compile,
-    template
-}));
+class TemplatesSorterDirective extends Directive {
+    constructor() {
+        super({ Controller, template });
 
-function compile(tElement) {
-    tElement.addClass('ek-templates-sorter');
+        this.bindToController = {
+            collectionToSort: '=',
+            sortedCollection: '='
+        };
+    }
+
+    compile(tElement) {
+        tElement.addClass('ek-templates-sorter');
+    }
 }
+
+export default TemplatesSorterDirective;

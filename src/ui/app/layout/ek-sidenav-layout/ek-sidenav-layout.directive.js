@@ -1,22 +1,24 @@
 import './ek-sidenav-layout.less';
-
-import { module } from 'layout/layout.module';
 import template from './ek-sidenav-layout.html';
-import MultiTrascludeServiceName from 'core/services/multi-transclude.service';
 
-module.directive('ekSidenavLayout', [MultiTrascludeServiceName, (MultiTrascludeService) => {
-    return {
-        restrict: 'E',
-        transclude: true,
-        compile,
-        template
-    };
+class SideNavLayoutDirective {
+    constructor(multiTransclude) {
+        'ngInject';
 
-    function compile(tElement) {
+        this._multiTransclude = multiTransclude;
+
+        this.restrict = 'E';
+        this.transclude = true;
+        this.template = template;
+    }
+
+    compile(tElement) {
         tElement.addClass('ek-sidenav-layout');
 
         return ($scope, $element, $attrs, controller, $transcludeFn) => {
-            MultiTrascludeService.transclude($element, $transcludeFn);
+            this._multiTransclude.transclude($element, $transcludeFn);
         };
     }
-}]);
+}
+
+export default SideNavLayoutDirective;

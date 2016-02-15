@@ -1,44 +1,17 @@
-import { module } from 'blocks/router/router.module';
+class RouterHelper {
+    constructor($state) {
+        'ngInject';
 
-const name = 'routerHelper';
+        this._$state = $state;
+    }
 
-module.provider(name, routerHelperProvider);
+    changeToState(state, stateParams, options) {
+        this._$state.go(state, stateParams, options);
+    }
 
-routerHelperProvider.$inject = ['$stateProvider', '$urlRouterProvider'];
-
-function routerHelperProvider($stateProvider, $urlRouterProvider) {
-    this.$get = RouterHelper;
-
-    RouterHelper.$inject = ['$state'];
-
-    function RouterHelper($state) {
-        let hasOtherwise = false;
-
-        return {
-            configureStates,
-            getStates,
-            go
-        };
-
-        function configureStates(states, otherwisePath) {
-            states.forEach(function(state) {
-                $stateProvider.state(state.state, state.config);
-            });
-
-            if (otherwisePath && !hasOtherwise) {
-                hasOtherwise = true;
-                $urlRouterProvider.otherwise(otherwisePath);
-            }
-        }
-
-        function getStates() {
-            return $state.get();
-        }
-
-        function go(state) {
-            $state.go(state);
-        }
+    getStates() {
+        return this._$state.get();
     }
 }
 
-export default name;
+export default RouterHelper;

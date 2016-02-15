@@ -1,24 +1,23 @@
 import './ek-owner-info.less';
-
-import { module } from 'widgets/widgets.module';
-import controller from './ek-owner-info.controller';
+import Directive from 'directive';
+import Controller from './ek-owner-info.controller';
 import template from './ek-owner-info.html';
 
-module.directive('ekOwnerInfo', () => ({
-    restrict: 'E',
-    scope: {},
-    bindToController: {
-        shareable: '='
-    },
-    controllerAs: 'ctrl',
-    controller,
-    compile,
-    template
-}));
+class OwnerInfoDirective extends Directive {
+    constructor() {
+        super({ Controller, template });
 
-function compile(tElement) {
-    tElement
-        .addClass('ek-owner-info')
-        .attr('layout', 'row')
-        .attr('layout-align', 'start center');
+        this.bindToController = {
+            shareable: '='
+        };
+    }
+
+    compile(tElement) {
+        tElement
+            .addClass('ek-owner-info')
+            .attr('layout', 'row')
+            .attr('layout-align', 'start center');
+    }
 }
+
+export default OwnerInfoDirective;

@@ -1,21 +1,26 @@
 import './ek-instance-list.less';
-
-import { module } from 'instances/instances.module';
-import controller from './ek-instance-list.controller';
+import Directive from 'directive';
+import Controller from './ek-instance-list.controller';
 import template from './ek-instance-list.html';
 
-module.directive('ekInstanceList', () => ({
-    restrict: 'E',
-    scope: {},
-    bindToController: {
-        instances: '=?'
-    },
-    controllerAs: 'ctrl',
-    controller,
-    compile,
-    template
-}));
+class InstanceListDirective extends Directive {
+    constructor() {
+        super({ Controller, template });
 
-function compile(tElement) {
-    tElement.addClass('ek-instance-list');
+        this.bindToController = {
+            instances: '=?'
+        };
+    }
+
+    compile(tElement) {
+        tElement.addClass('ek-instance-list');
+
+        return ($scope, $element, $attrs, ctrl) => {
+            const ekTableCtrl = $element.find('.ek-table').controller('ekTable');
+
+            ekTableCtrl.headerClickListener = ctrl.sortByCallback.bind(ctrl);
+        };
+    }
 }
+
+export default InstanceListDirective;
