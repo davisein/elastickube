@@ -1,2 +1,10 @@
+import sessionProvider from './session.provider';
+
+const moduleName = 'blocks.session';
+
 angular
-    .module('blocks.session', []);
+    .module(moduleName, [])
+    .constant('storage', localStorage)
+    .provider('session', sessionProvider);
+
+export default moduleName;

@@ -1,15 +1,16 @@
 import './ek-button-group.less';
 import template from './ek-button-group.html';
 
-angular
-    .module('app.widgets')
-    .directive('ekButtonGroup', () => ({
-        restrict: 'E',
-        transclude: true,
-        compile,
-        template
-    }));
+class ButtonGroupDirective {
+    constructor() {
+        this.restrict = 'E';
+        this.transclude = true;
+        this.template = template;
+    }
 
-function compile(tElement) {
-    tElement.addClass('ek-button-group');
+    compile(tElement) {
+        tElement.addClass('ek-button-group');
+    }
 }
+
+export default ButtonGroupDirective;

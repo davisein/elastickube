@@ -1,46 +1,17 @@
-import profiles from './profiles';
+import AuthService from './auth.service';
 
-angular
-    .module('blocks.security')
-    .provider('auth', authProvider);
+class AuthProvider {
+    constructor() {
+        this.$get = ($cookies, routerHelper, session) => {
+            'ngInject';
 
-const ELASTICKUBE_TOKEN = 'ElasticKube-Token';
+            return new AuthService($cookies, routerHelper, session);
+        };
+    }
+}
 
 function authProvider() {
-    this.$get = Auth;
+    return new AuthProvider();
 }
 
-Auth.$inject = ['$cookies', 'routerHelper', 'session'];
-
-function Auth($cookies, routerHelper, session) {
-    return {
-        authorize,
-        isLoggedIn,
-        isAdmin,
-        logout
-    };
-
-    function isLoggedIn() {
-        return !!$cookies.get(ELASTICKUBE_TOKEN);
-    }
-
-    function logout() {
-        $cookies.remove(ELASTICKUBE_TOKEN);
-        routerHelper.changeToState('anonymous.login');
-    }
-
-    function isAdmin() {
-        return false;
-    }
-
-    function authorize(access) {
-        switch (access) {
-            case profiles.ADMIN:
-                return isAdmin();
-            case profiles.PRIVATE:
-                return isLoggedIn();
-            default:
-                return !isLoggedIn();
-        }
-    }
-}
+export default authProvider;

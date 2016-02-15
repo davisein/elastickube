@@ -1,24 +1,25 @@
 import './ek-header.less';
 import constants from '../constants';
-import controller from './ek-header.controller';
+import Controller from './ek-header.controller';
 import template from './ek-header.html';
 
-angular
-    .module('app.widgets')
-    .directive('ekHeader', () => ({
-        restrict: 'E',
-        scope: true,
-        controllerAs: 'ctrl',
-        controller,
-        compile,
-        template
-    }));
+class HeaderDirective {
+    constructor() {
+        this.restrict = 'E';
+        this.scope = true;
+        this.controllerAs = 'ctrl';
+        this.controller = Controller;
+        this.template = template;
+    }
 
-function compile(tElement) {
-    tElement
-        .addClass('ek-header')
-        .attr('layout', 'row')
-        .attr('layout-align', 'start');
+    compile(tElement) {
+        tElement
+            .addClass('ek-header')
+            .attr('layout', 'row')
+            .attr('layout-align', 'start');
 
-    return ($scope) => _.extend($scope, constants);
+        return ($scope) => _.extend($scope, constants);
+    }
 }
+
+export default HeaderDirective;

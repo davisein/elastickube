@@ -1,25 +1,26 @@
 import './ek-owners-selector.less';
 import constants from '../constants';
-import controller from './ek-owners-selector.controller';
+import Controller from './ek-owners-selector.controller';
 import template from './ek-owners-selector.html';
 
-angular
-    .module('app.widgets')
-    .directive('ekOwnersSelector', () => ({
-        restrict: 'E',
-        scope: {},
-        bindToController: {
+class OwnersSelectorDirective {
+    constructor() {
+        this.restrict = 'E';
+        this.scope = {};
+        this.bindToController = {
             shareables: '=',
             selectedOwners: '='
-        },
-        controllerAs: 'ctrl',
-        controller,
-        compile,
-        template
-    }));
+        };
+        this.controllerAs = 'ctrl';
+        this.controller = Controller;
+        this.template = template;
+    }
 
-function compile(tElement) {
-    tElement.addClass('ek-owners-selector');
+    compile(tElement) {
+        tElement.addClass('ek-owners-selector');
 
-    return ($scope) => _.extend($scope, constants);
+        return ($scope) => _.extend($scope, constants);
+    }
 }
+
+export default OwnersSelectorDirective;

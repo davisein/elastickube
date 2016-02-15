@@ -9,13 +9,14 @@ const isProduction = process.env.NODE_ENV === 'production';
 const webpackConfig = {
 
     entry: {
-        elastickube: path.resolve(__dirname, 'app/loader.js'),
+        elastickube: path.resolve(__dirname, 'app/module.js'),
         vendor: [
             'jquery',
             'angular',
             'angular-animate',
             'angular-aria',
             'angular-material',
+            'angular-cookies',
             'ui-router',
             'lodash',
             'moment',
@@ -34,7 +35,7 @@ const webpackConfig = {
     module: {
         loaders: [
             { test: require.resolve('jquery'), loader: 'expose?jQuery' },
-            { test: /\.js$/, exclude: /\/(node_modules)\//, loader: 'babel?presets[]=es2015!eslint' },
+            { test: /\.js$/, exclude: /\/(node_modules)\//, loader: 'ng-annotate!babel?presets[]=es2015!eslint' },
             { test: /\.css/, loader: ExtractTextPlugin.extract('style', 'css') },
             { test: /\.less/, loader: ExtractTextPlugin.extract('style', 'css!postcss!less') },
             { test: /\.html/, exclude: /\/(components)\//, loader: 'html', include: /\/(app)\// },
@@ -65,6 +66,7 @@ const webpackConfig = {
 
     plugins: [
         new webpack.OldWatchingPlugin(),
+        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /uk/),
         new HtmlWebpackPlugin({ template: './index.html', favicon: './favicon.png' }),
         new ExtractTextPlugin(isProduction ? 'assets/css/[name]-[chunkhash].css' : 'assets/css/[name].css'),
         new webpack.optimize.CommonsChunkPlugin('vendor',

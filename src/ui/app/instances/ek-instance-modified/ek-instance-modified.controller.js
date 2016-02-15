@@ -1,9 +1,9 @@
 import mockWorkspaces from 'mocks/workspaces';
 
-function EKInstanceModifiedController() {
-    const self = this;
-
-    self.owner = _.find(mockWorkspaces, { id: self.instance.owner });
+class InstanceModifiedController {
+    constructor() {
+        this.owner = _.find(mockWorkspaces, { id: this.instance.owner });
+    }
 }
 
-export default EKInstanceModifiedController;
+export default InstanceModifiedController;

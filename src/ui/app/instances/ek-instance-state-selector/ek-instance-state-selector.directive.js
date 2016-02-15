@@ -1,24 +1,25 @@
 import './ek-instance-state-selector.less';
-import controller from './ek-instance-state-selector.controller';
+import Controller from './ek-instance-state-selector.controller';
 import template from './ek-instance-state-selector.html';
 
-angular
-    .module('app.instances')
-    .directive('ekInstanceStateSelector', () => ({
-        restrict: 'E',
-        scope: {},
-        bindToController: {
+class InstanceStateSelectorDirective {
+    constructor() {
+        this.restrict = 'E';
+        this.scope = {};
+        this.bindToController = {
             instances: '=',
             selectedState: '='
-        },
-        controllerAs: 'ctrl',
-        controller,
-        compile,
-        template
-    }));
+        };
+        this.controllerAs = 'ctrl';
+        this.controller = Controller;
+        this.template = template;
+    }
 
-function compile(tElement) {
-    tElement
-        .addClass('ek-instance-state-selector')
-        .attr('layout', 'column');
+    compile(tElement) {
+        tElement
+            .addClass('ek-instance-state-selector')
+            .attr('layout', 'column');
+    }
 }
+
+export default InstanceStateSelectorDirective;

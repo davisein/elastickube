@@ -1,13 +1,7 @@
-angular
-    .module('blocks.security')
-    .run(checkRouteAccess);
-
-checkRouteAccess.$inject = ['$rootScope', 'auth', 'routerHelper'];
-
 function checkRouteAccess($rootScope, auth, routerHelper) {
-    $rootScope.$on('$stateChangeStart', checkAccess);
+    'ngInject';
 
-    function checkAccess(event, toState, toParams, fromState) {
+    $rootScope.$on('$stateChangeStart', (event, toState, toParams, fromState) => {
         if (!auth.authorize(toState.data.access)) {
             event.preventDefault();
 
@@ -21,5 +15,7 @@ function checkRouteAccess($rootScope, auth, routerHelper) {
                 }
             }
         }
-    }
+    });
 }
+
+export default checkRouteAccess;

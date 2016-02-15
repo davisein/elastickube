@@ -1,13 +1,5 @@
-angular
-    .module('app.core')
-    .service('multiTransclude', multiTranscludeService);
-
-function multiTranscludeService() {
-    const self = this;
-
-    self.transclude = transclude;
-
-    function transclude($element, $transcludeFn) {
+class MultiTranscludeService {
+    transclude($element, $transcludeFn) {
         $transcludeFn((clone) => _.chain(clone)
             .filter(x => x.nodeType === 1)
             .each((cloneEl) => {
@@ -36,3 +28,5 @@ function getAttribute(item, attributeName) {
         return attribute.value;
     }
 }
+
+export default MultiTranscludeService;

@@ -1,18 +1,17 @@
 import headers from './ek-instance-list.headers';
 
-EKInstanceListController.$inject = ['$scope'];
+class InstanceListController {
+    constructor($scope) {
+        'ngInject';
 
-function EKInstanceListController($scope) {
-    const self = this;
+        this.headers = headers;
+        this.sortBy = this.headers[0];
 
-    self.headers = headers;
-    self.sortBy = self.headers[0];
-    self.sortByCallback = sortByCallback;
+        $scope.$watchCollection('ctrl.instances', (x) => this.sortedInstances = sortInstances(x, this.sortBy));
+    }
 
-    $scope.$watchCollection('ctrl.instances', (x) => self.sortedInstances = sortInstances(x, self.sortBy));
-
-    function sortByCallback(column, sortOrder) {
-        self.sortedInstances = sortInstances(self.sortedInstances, column, sortOrder);
+    sortByCallback(column, sortOrder) {
+        this.sortedInstances = sortInstances(this.sortedInstances, column, sortOrder);
     }
 }
 
@@ -24,4 +23,4 @@ function sortInstances(instances, column, sortOrder) {
     return instances;
 }
 
-export default EKInstanceListController;
+export default InstanceListController;

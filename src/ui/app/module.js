@@ -1,13 +1,23 @@
+import 'angular';
+
+import coreModule from 'core/module';
+import layoutModule from 'layout/module';
+import widgetsModule from 'widgets/module';
+
+import adminModule from 'admin/module';
+import instancesModule from 'instances/module';
+import templatesModule from 'templates/module';
+
 angular
     .module('app', [
 
         /* Shared modules */
-        'app.core',
-        'app.layout',
-        'app.widgets',
+        coreModule,
+        layoutModule,
+        widgetsModule,
 
         /* Feature areas */
-        'app.admin',
-        'app.instances',
-        'app.templates'
+        adminModule,
+        instancesModule,
+        //templatesModule
     ]);

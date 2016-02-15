@@ -1,9 +1,5 @@
 import profiles from 'blocks/security/profiles';
 
-angular
-    .module('app.admin')
-    .config(adminRoutes);
-
 const states = [{
     state: 'admin',
     config: {
@@ -19,8 +15,10 @@ const states = [{
     }
 }];
 
-adminRoutes.$inject = ['routerHelperProvider'];
+function adminRoutes(routerHelperProvider) {
+    'ngInject';
 
-function adminRoutes(routerHelper) {
-    routerHelper.configureStates(states);
+    routerHelperProvider.configureStates(states);
 }
+
+export default adminRoutes;

@@ -1,17 +1,18 @@
 import './ek-login.less';
 import template from './ek-login.html';
 
-angular
-    .module('blocks.security')
-    .directive('ekLogin', () => ({
-        restrict: 'E',
-        scope: {},
-        compile,
-        template
-    }));
+class LoginDirective {
+    constructor() {
+        this.restrict = 'E';
+        this.scope = {};
+        this.template = template;
+    }
 
-function compile(tElement) {
-    tElement
-        .addClass('ek-login')
-        .attr('layout', 'column');
+    compile(tElement) {
+        tElement
+            .addClass('ek-login')
+            .attr('layout', 'column');
+    }
 }
+
+export default LoginDirective;

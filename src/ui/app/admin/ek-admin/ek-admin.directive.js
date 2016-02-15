@@ -1,17 +1,18 @@
 import './ek-admin.less';
 import template from './ek-admin.html';
 
-angular
-    .module('app.admin')
-    .directive('ekAdmin', () => ({
-        restrict: 'E',
-        scope: {},
-        compile,
-        template
-    }));
+class AdminDirective {
+    constructor() {
+        this.restrict = 'E';
+        this.scope = {};
+        this.template = template;
+    }
 
-function compile(tElement) {
-    tElement
-        .addClass('ek-admin')
-        .attr('layout', 'column');
+    compile(tElement) {
+        tElement
+            .addClass('ek-admin')
+            .attr('layout', 'column');
+    }
 }
+
+export default AdminDirective;
