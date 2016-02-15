@@ -1,19 +1,17 @@
 import './ek-owners-selector.less';
-import constants from '../constants';
+import Directive from 'directive';
 import Controller from './ek-owners-selector.controller';
+import constants from '../constants';
 import template from './ek-owners-selector.html';
 
-class OwnersSelectorDirective {
+class OwnersSelectorDirective extends Directive {
     constructor() {
-        this.restrict = 'E';
-        this.scope = {};
+        super({ Controller, template });
+
         this.bindToController = {
             shareables: '=',
             selectedOwners: '='
         };
-        this.controllerAs = 'ctrl';
-        this.controller = Controller;
-        this.template = template;
     }
 
     compile(tElement) {

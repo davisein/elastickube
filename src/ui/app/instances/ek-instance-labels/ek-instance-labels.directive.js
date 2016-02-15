@@ -1,14 +1,15 @@
 import './ek-instance-labels.less';
+import Directive from 'directive';
 import constants from '../constants';
 import template from './ek-instance-labels.html';
 
-class InstanceLabelsDirective {
+class InstanceLabelsDirective extends Directive {
     constructor() {
-        this.restrict = 'E';
+        super({ template });
+
         this.scope = {
             instance: '='
         };
-        this.template = template;
     }
 
     compile(tElement) {

@@ -1,7 +1,3 @@
-angular
-    .module('app.templates')
-    .config(templatesRoutes);
-
 const states = [{
     state: 'private.templates',
     config: {
@@ -16,8 +12,10 @@ const states = [{
     }
 }];
 
-templatesRoutes.$inject = ['routerHelperProvider'];
+function templatesRoutes(routerHelperProvider) {
+    'ngInject';
 
-function templatesRoutes(routerHelper) {
-    routerHelper.configureStates(states);
+    routerHelperProvider.configureStates(states);
 }
+
+export default templatesRoutes;

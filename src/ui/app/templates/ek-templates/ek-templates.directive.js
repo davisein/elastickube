@@ -1,23 +1,21 @@
 import './ek-templates.less';
+import Directive from 'directive';
 import constants from '../constants';
-import controller from './ek-templates.controller';
+import Controller from './ek-templates.controller';
 import template from './ek-templates.html';
 
-angular
-    .module('app.templates')
-    .directive('ekTemplates', () => ({
-        restrict: 'E',
-        scope: {},
-        controllerAs: 'ctrl',
-        controller,
-        template,
-        compile
-    }));
+class TemplatesDirective extends Directive {
+    constructor() {
+        super({ Controller, template });
+    }
 
-function compile(tElement) {
-    tElement
-        .addClass('ek-templates')
-        .attr('layout', 'column');
+    compile(tElement) {
+        tElement
+            .addClass('ek-templates')
+            .attr('layout', 'column');
 
-    return ($scope) => _.extend($scope, constants);
+        return ($scope) => _.extend($scope, constants);
+    }
 }
+
+export default TemplatesDirective;

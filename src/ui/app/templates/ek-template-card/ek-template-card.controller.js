@@ -1,7 +1,7 @@
-function EKTemplateController() {
-    const self = this;
-
-    self.name = 'Template';
+class TemplateController {
+    constructor() {
+        this.name = 'Template';
+    }
 }
 
-export default EKTemplateController;
+export default TemplateController;

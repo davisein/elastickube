@@ -1,15 +1,12 @@
 import './ek-instances.less';
-import constants from '../constants';
+import Directive from 'directive';
 import Controller from './ek-instances.controller';
+import constants from '../constants';
 import template from './ek-instances.html';
 
-class InstancesDirective {
+class InstancesDirective extends Directive {
     constructor() {
-        this.restrict = 'E';
-        this.scope = {};
-        this.controllerAs = 'ctrl';
-        this.controller = Controller;
-        this.template = template;
+        super({ Controller, template });
     }
 
     compile(tElement) {

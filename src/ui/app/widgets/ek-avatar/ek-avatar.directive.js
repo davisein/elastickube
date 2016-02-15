@@ -1,9 +1,11 @@
 import './ek-avatar.less';
+import Directive from 'directive';
 import DEFAULT_IMAGE from 'images/user-nophoto.svg';
 
-class AvatarDirective {
+class AvatarDirective extends Directive {
     constructor() {
-        this.restrict = 'E';
+        super();
+
         this.scope = {
             workspace: '='
         };

@@ -1,13 +1,14 @@
 import './ek-instance-name.less';
+import Directive from 'directive';
 import template from './ek-instance-name.html';
 
-class InstanceNameDirective {
+class InstanceNameDirective extends Directive {
     constructor() {
-        this.restrict = 'E';
+        super({ template });
+
         this.scope = {
             instance: '='
         };
-        this.template = template;
     }
 
     compile(tElement) {

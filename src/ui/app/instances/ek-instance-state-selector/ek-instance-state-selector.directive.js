@@ -1,18 +1,16 @@
 import './ek-instance-state-selector.less';
+import Directive from 'directive';
 import Controller from './ek-instance-state-selector.controller';
 import template from './ek-instance-state-selector.html';
 
-class InstanceStateSelectorDirective {
+class InstanceStateSelectorDirective extends Directive {
     constructor() {
-        this.restrict = 'E';
-        this.scope = {};
+        super({ Controller, template });
+
         this.bindToController = {
             instances: '=',
             selectedState: '='
         };
-        this.controllerAs = 'ctrl';
-        this.controller = Controller;
-        this.template = template;
     }
 
     compile(tElement) {

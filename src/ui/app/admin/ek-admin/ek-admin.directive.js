@@ -1,11 +1,10 @@
 import './ek-admin.less';
+import Directive from 'directive';
 import template from './ek-admin.html';
 
-class AdminDirective {
+class AdminDirective extends Directive {
     constructor() {
-        this.restrict = 'E';
-        this.scope = {};
-        this.template = template;
+        super({ template });
     }
 
     compile(tElement) {

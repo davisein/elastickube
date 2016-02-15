@@ -1,15 +1,15 @@
 import mockWorkspaces from 'mocks/workspaces';
 
-EKTemplatesSorterController.$inject = ['$scope'];
+class TemplatesSorterController {
+    constructor($scope) {
+        'ngInject';
 
-function EKTemplatesSorterController($scope) {
-    const self = this;
+        this.sortTypes = ['name', 'most recent', 'owner'];
+        this.sortType = _.first(this.sortTypes);
 
-    self.sortTypes = ['name', 'most recent', 'owner'];
-    self.sortType = _.first(self.sortTypes);
-
-    $scope.$watch('ctrl.sortType', (x) => self.sortedCollection = sortByType(self.collectionToSort, x));
-    $scope.$watchCollection('ctrl.collectionToSort', (x) => self.sortedCollection = sortByType(x, self.sortType));
+        $scope.$watch('ctrl.sortType', (x) => this.sortedCollection = sortByType(this.collectionToSort, x));
+        $scope.$watchCollection('ctrl.collectionToSort', (x) => this.sortedCollection = sortByType(x, this.sortType));
+    }
 }
 
 function sortByType(collectionToSort, sortType) {
@@ -35,4 +35,4 @@ function sortByOwner(collectionToSort) {
     return _.sortBy(collectionToSort, (x) => _.find(mockWorkspaces, { id: x.owner }).name);
 }
 
-export default EKTemplatesSorterController;
+export default TemplatesSorterController;

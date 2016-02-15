@@ -1,18 +1,16 @@
 import './ek-instance-filters.less';
+import Directive from 'directive';
 import Controller from './ek-instance-filters.controller';
 import template from './ek-instance-filters.html';
 
-class InstanceFiltersDirective {
+class InstanceFiltersDirective extends Directive {
     constructor() {
-        this.restrict = 'E';
-        this.scope = {};
+        super({ Controller, template });
+
         this.bindToController = {
             instancesToFilter: '=',
             filteredInstances: '='
         };
-        this.controllerAs = 'ctrl';
-        this.controller = Controller;
-        this.template = template;
     }
 
     compile(tElement) {
