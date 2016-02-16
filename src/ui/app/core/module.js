@@ -15,9 +15,11 @@ import NamespacesAPIService from 'blocks/api/namespaces-api';
 
 import InstancesActionCreatorService from 'blocks/actions/instances/instances-action-creator';
 import NamespacesActionCreatorService from 'blocks/actions/namespaces/namespaces-action-creator';
+import SessionActionCreatorService from 'blocks/actions/session/session-action-creator';
 
 import InstancesStoreService from 'blocks/stores/instances/instances-store.service';
 import NamespacesStoreService from 'blocks/stores/namespaces/namespaces-store.service';
+import SessionStoreService from 'blocks/stores/session/session-store.service';
 
 import humanizeDateFilter from './filters/humanize-date.filter';
 import MultiTranscludeService from './services/multi-transclude.service';
@@ -51,8 +53,10 @@ angular
     .service('namespacesAPI', NamespacesAPIService)
     .service('instancesActionCreator', InstancesActionCreatorService)
     .service('namespacesActionCreator', NamespacesActionCreatorService)
+    .service('sessionActionCreator', SessionActionCreatorService)
     .service('instancesStore', InstancesStoreService)
     .service('namespacesStore', NamespacesStoreService)
+    .service('sessionStore', SessionStoreService)
     .service('elasticKubeDispatcher', ElasticKubeDispatcherService);
 
 export default moduleName;
