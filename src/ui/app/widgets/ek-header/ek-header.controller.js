@@ -1,14 +1,16 @@
 import mockWorkspaces from 'mocks/workspaces';
 
+import constants from 'constants';
+
 class HeaderController {
-    constructor($rootScope, $scope, auth, routerHelper) {
+    constructor($rootScope, $scope, auth, routerHelper, session) {
         'ngInject';
         const watches = [];
 
         this._auth = auth;
         this._routerHelper = routerHelper;
+        this._session = session;
 
-        this.namespace = 'engineering';
         this.sections = getSections(auth, routerHelper);
         this.workspace = _.find(mockWorkspaces, { id: 'alberto' });
 
@@ -20,9 +22,9 @@ class HeaderController {
     }
 
     goToSection(section) {
-        const defaultNamespace = 'engineering';
+        const namespace = this._session.getItem(constants.ACTIVE_NAMESPACE);
 
-        this._routerHelper.changeToState(section.name, { namespace: defaultNamespace });
+        this._routerHelper.changeToState(section.name, { namespace });
     }
 
     isLoggedIn() {

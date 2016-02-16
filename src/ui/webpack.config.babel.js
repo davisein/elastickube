@@ -29,8 +29,8 @@ const webpackConfig = {
 
     resolve: {
         root: [
-            path.resolve(__dirname),
-            path.resolve(path.join(__dirname, 'app'))
+            path.resolve(path.join(__dirname, 'app')),
+            path.resolve(__dirname)
         ]
     },
 

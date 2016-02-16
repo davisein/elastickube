@@ -1,9 +1,9 @@
-import instanceActions from './constants';
+import namespaceActions from './constants';
 import { EventEmitter } from 'events';
 
 const CHANGE_EVENT = 'change';
 
-class InstancesStoreService extends EventEmitter {
+class NamespacesStoreService extends EventEmitter {
     constructor($q, elasticKubeDispatcher) {
         'ngInject';
 
@@ -14,13 +14,10 @@ class InstancesStoreService extends EventEmitter {
         this.elasticKubeDispatcher = elasticKubeDispatcher;
         this.dispatchToken = elasticKubeDispatcher.register((action) => {
             switch (action.type) {
-                case instanceActions.INSTANCES_PRELOADED:
+                case namespaceActions.NAMESPACES_PRELOADED:
                     this._loading.resolve();
-                    this._setInstances(action.instances);
-                    this._emitChange();
-                    break;
-                case instanceActions.INSTANCES_LOADED:
-                    this._setInstances(action.instances);
+                    this._setNamespaces(action.namespaces);
+                    this._activeNamespace = action.namespaces[0];
                     this._emitChange();
                     break;
                 default:
@@ -28,8 +25,8 @@ class InstancesStoreService extends EventEmitter {
         });
     }
 
-    _setInstances(instances) {
-        this._instances = instances;
+    _setNamespaces(namespaces) {
+        this._namespaces = namespaces;
     }
 
     _emitChange() {
@@ -39,12 +36,13 @@ class InstancesStoreService extends EventEmitter {
     loading() {
         return this._loading.promise;
     }
-    get(id) {
-        return _.find(this._instances, { id });
-    }
 
     getAll() {
-        return this._instances;
+        return this._namespaces;
+    }
+
+    getActiveNamespace() {
+        return this._activeNamespace;
     }
 
     addChangeListener(callback) {
@@ -56,4 +54,4 @@ class InstancesStoreService extends EventEmitter {
     }
 }
 
-export default InstancesStoreService;
+export default NamespacesStoreService;
