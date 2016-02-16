@@ -10,12 +10,18 @@ import securityModule from 'blocks/security/module';
 import sessionModule from 'blocks/session/module';
 
 import APICommunicationService from 'blocks/api/api-communication.service';
-import InstancesAPI from 'blocks/api/instances-api';
-import InstancesActionCreator from 'blocks/actions/instances/instances-action-creator';
+import InstancesAPIService from 'blocks/api/instances-api';
+import NamespacesAPIService from 'blocks/api/namespaces-api';
+
+import InstancesActionCreatorService from 'blocks/actions/instances/instances-action-creator';
+import NamespacesActionCreatorService from 'blocks/actions/namespaces/namespaces-action-creator';
+
 import InstancesStoreService from 'blocks/stores/instances/instances-store.service';
+import NamespacesStoreService from 'blocks/stores/namespaces/namespaces-store.service';
+
 import humanizeDateFilter from './filters/humanize-date.filter';
 import MultiTranscludeService from './services/multi-transclude.service';
-import ElasticKubeDispatcher from 'blocks/dispatcher/dispatcher';
+import ElasticKubeDispatcherService from 'blocks/dispatcher/dispatcher';
 
 const moduleName = 'app.core';
 
@@ -28,20 +34,25 @@ angular
         securityModule,
         sessionModule
     ])
-    .run(($injector, instancesActionCreator)=> {
+    .run(($injector, instancesActionCreator, namespacesActionCreator)=> {
         'ngInject';
 
         $injector.get('instancesAPI');
+        $injector.get('namespacesAPI');
 
         // FIXME To be removed when the change namespace feature is developed
-        instancesActionCreator.preload('defaultNamespace');
+        instancesActionCreator.preload();
+        namespacesActionCreator.preload();
     })
     .filter('ekHumanizeDate', () => humanizeDateFilter)
     .service('multiTransclude', MultiTranscludeService)
     .service('apiCommunication', APICommunicationService)
-    .service('instancesAPI', InstancesAPI)
-    .service('instancesActionCreator', InstancesActionCreator)
+    .service('instancesAPI', InstancesAPIService)
+    .service('namespacesAPI', NamespacesAPIService)
+    .service('instancesActionCreator', InstancesActionCreatorService)
+    .service('namespacesActionCreator', NamespacesActionCreatorService)
     .service('instancesStore', InstancesStoreService)
-    .service('elasticKubeDispatcher', ElasticKubeDispatcher);
+    .service('namespacesStore', NamespacesStoreService)
+    .service('elasticKubeDispatcher', ElasticKubeDispatcherService);
 
 export default moduleName;

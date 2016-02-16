@@ -15,9 +15,7 @@ class InstancesController {
 
         $scope.$watchCollection('ctrl.instancesFilteredBySearch', (x) => this.showEmpty = _.isEmpty(x));
 
-        $scope.$on('$destroy', () => {
-            this._instancesStoreService.removeChangeListener(onChange);
-        });
+        $scope.$on('$destroy', () => this._instancesStoreService.removeChangeListener(onChange));
     }
 
     selectView(name) {
