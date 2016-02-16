@@ -1,39 +1,41 @@
 /* eslint max-params: 0 */
-import constants from 'constants';
-
 class NamespacesSelectorController {
 
     // FIXME Remove injected services when responsibilites are separated
-    constructor($scope, $state, routerHelper, session, namespacesStore, instancesActionCreator) {
+    constructor($scope, sessionStore, sessionActionCreator, namespacesStore, instancesActionCreator) {
         'ngInject';
 
         const onChange = () => {
             this._loadState();
         };
 
-        this._$state = $state;
-        this._routerHelper = routerHelper;
+        const onNamepaceChange = () => {
+            this.namespace = this._sessionStoreService.getActiveNamespace();
+        };
+
         this._namespacesStoreService = namespacesStore;
         this._instancesActionCreator = instancesActionCreator;
-        this._session = session;
+        this._sessionStoreService = sessionStore;
+        this._sessionActionCreator = sessionActionCreator;
+        this._sessionStoreService.addNamespaceChangeListener(onNamepaceChange);
         this._namespacesStoreService.addChangeListener(onChange);
 
         this._loadState();
 
-        $scope.$on('$destroy', () => this._namespacesStoreService.removeChangeListener(onChange));
+        $scope.$on('$destroy', () => {
+            this._namespacesStoreService.removeChangeListener(onChange);
+            this._sessionStoreService.removeNamespaceChangeListener(onNamepaceChange);
+        });
     }
 
     _loadState() {
         this.namespaces = this._namespacesStoreService.getAll();
-        this.namespace = this._namespacesStoreService.getActiveNamespace();
-        this._session.setItem(constants.ACTIVE_NAMESPACE, this.namespace);
+        this.namespace = this._sessionStoreService.getActiveNamespace();
     }
 
     namespaceSelected() {
+        this._sessionActionCreator.changeActiveNamespace(this.namespace);
         this._instancesActionCreator.loadInstancesForNamespace(this.namespace);
-        this._session.setItem(constants.ACTIVE_NAMESPACE, this.namespace);
-
-        this._routerHelper.changeToState(this._$state.current.name, { namespace: this.namespace });
     }
 }
 

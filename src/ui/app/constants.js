@@ -1,5 +1,5 @@
 const constants = {
-    ACTIVE_NAMESPACE: 'ACTIVE_NAMESPACE'
+    NAVIGATE_TO: 'NAVIGATE_TO'
 };
 
 export default constants;
