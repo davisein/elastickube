@@ -17,6 +17,7 @@ const webpackConfig = {
             'angular-aria',
             'angular-material',
             'angular-cookies',
+            'angular-password',
             'flux',
             'ui-router',
             'lodash',

@@ -10,12 +10,6 @@ const states = [{
         }
     }
 }, {
-    state: 'anonymous.login',
-    config: {
-        template: '<ek-login></ek-login>',
-        url: '/login'
-    }
-}, {
     state: 'private',
     config: {
         abstract: true,
