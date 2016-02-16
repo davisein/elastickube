@@ -1,4 +1,4 @@
-function checkRouteAccess($rootScope, auth, routerHelper) {
+function checkRouteAccess($rootScope, auth) {
     'ngInject';
 
     $rootScope.$on('$stateChangeStart', (event, toState, toParams, fromState) => {
@@ -7,11 +7,9 @@ function checkRouteAccess($rootScope, auth, routerHelper) {
 
             if (fromState.url === '^') {
                 if (auth.isLoggedIn()) {
-                    const defaultNamespace = 'engineering';
-
-                    routerHelper.changeToState('private.instances', { namespace: defaultNamespace });
+                    auth.unauthorizedNotLoggedStateChange();
                 } else {
-                    routerHelper.changeToState('anonymous.login');
+                    auth.unauthorizedLoggedStateChange();
                 }
             }
         }
