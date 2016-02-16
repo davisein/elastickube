@@ -109,4 +109,3 @@ class SecureRequestHandler(RequestHandler):
             raise HTTPError(401, "Invalid token.")
 
 
-

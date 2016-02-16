@@ -3,7 +3,7 @@ from pymongo.errors import ConnectionFailure
 
 from api.v1.auth import PasswordHandler, GoogleOAuth2LoginHandler
 from api.v1.namespaces import NamespacesHandler
-from api.v1.instances import InstancesHandler
+from api.v1.users import UsersHandler
 
 
 class MainHandler(RequestHandler):
@@ -23,5 +23,6 @@ ApiHandlers = [
     (r"/api/v1/login", PasswordHandler),
     (r"/api/v1/auth/google", GoogleOAuth2LoginHandler),
     (r"/api/v1/namespaces", NamespacesHandler),
-    (r"/api/v1/namespaces/(.*)/instances", InstancesHandler)
+    (r"/api/v1/users/?", UsersHandler),
+    (r"/api/v1/users/(.*)/?", UsersHandler)
 ]

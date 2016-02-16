@@ -1,24 +1,26 @@
 import json
-import logging
 
 from tornado.gen import coroutine, Return
 from tornado.httpclient import AsyncHTTPClient, HTTPError, HTTPRequest
 from tornado.httputil import url_concat
 
-from api.kube_client import exceptions
-from api.kube_client.events import Events
-from api.kube_client.namespaces import Namespaces
-from api.kube_client.pods import Pods
-from api.kube_client.replication_controllers import ReplicationControllers
-from api.kube_client.services import Services
+from api.kube.exceptions import KubernetesException, WatchDisconnectedException, NotFoundException
+from api.kube.events import Events
+from api.kube.namespaces import Namespaces
+from api.kube.pods import Pods
+from api.kube.replication_controllers import ReplicationControllers
+from api.kube.services import Services
+
+AsyncHTTPClient.configure("tornado.curl_httpclient.CurlAsyncHTTPClient")
 
 
 class HTTPClient(object):
 
-    def __init__(self, server, username, password, version='v1'):
+    def __init__(self, server, username, password, token, version='v1'):
         self.server = server
         self.username = username
         self.password = password
+        self.token = token
         self.version = version
 
         self._client = self.build_client()
@@ -26,7 +28,10 @@ class HTTPClient(object):
 
     def build_client(self):
         defaults = dict(validate_cert=False)
-        if self.username and self.password:
+
+        if self.token:
+            defaults['headers'] = {'Authorization': 'Bearer {0}'.format(self.token)}
+        elif self.username and self.password:
             defaults['auth_username'] = self.username
             defaults['auth_password'] = self.password
 
@@ -118,15 +123,16 @@ class HTTPClient(object):
     def watch(self, url_path, on_data, **kwargs):
         params = self.build_params(url_path, **kwargs)
         url = url_concat(self.build_url(url_path, **kwargs), params)
-        request = HTTPRequest(url=url, method='GET', streaming_callback=on_data)
+
+        request = HTTPRequest(url=url, method='GET', request_timeout=3600, streaming_callback=on_data)
         yield self._client.fetch(request)
 
 
-class Client(object):
+class KubeClient(object):
 
-    def __init__(self, endpoint, username=None, password=None, version='v1'):
+    def __init__(self, endpoint, username=None, password=None, token=None, version='v1'):
         self.version = version
-        self.http_client = HTTPClient(endpoint, username, password)
+        self.http_client = HTTPClient(endpoint, username, password, token)
 
         self.events = Events(self)
         self.namespaces = Namespaces(self)
@@ -135,33 +141,31 @@ class Client(object):
         self.services = Services(self)
 
     def format_error(self, error):
-        error_message = error.response.body
-        error_method = error.response.request.method
-        error_url = error.response.effective_url
+        if error.code != 599:
+            error_message = error.response.body
+            error_method = error.response.request.method
+            error_url = error.response.effective_url
 
-        if error_message:
-            return "{0} {1} returned {2}: {3}".format(error_method, error_url, error.code, error_message)
+            if error_message:
+                return "{0} {1} returned {2}: {3}".format(error_method, error_url, error.code, error_message)
+            else:
+                return "{0} {1} returned {2}".format(error_method, error_url, error.code)
         else:
-            return "{0} {1} returned {2}".format(error_method, error_url, error.code)
+            return 'Watch error'
 
     @coroutine
     def get(self, url_path, **kwargs):
         try:
             response = yield self.http_client.get(url_path, **kwargs)
         except HTTPError as e:
-            logging.exception(e)
             message = self.format_error(e)
 
             if e.code == 404:
-                raise exceptions.NotFoundException(message)
+                raise NotFoundException(message)
             else:
-                raise exceptions.KubernetesException(message, e.code)
+                raise KubernetesException(message, e.code)
 
-        data = json.loads(response.body)
-        if isinstance(data, dict) and 'items' in data:
-            raise Return(data.get('items', []))
-        else:
-            raise Return(data)
+        raise Return(json.loads(response.body))
 
     @coroutine
     def put(self, url_path, **kwargs):
@@ -171,26 +175,20 @@ class Client(object):
             message = self.format_error(e)
 
             if e.code == 404:
-                raise exceptions.NotFoundException(message)
+                raise NotFoundException(message)
             else:
-                raise exceptions.KubernetesException(message, e.code)
+                raise KubernetesException(message, e.code)
 
-        data = json.loads(response.body)
-        raise Return(data)
+        raise Return(json.loads(response.body))
 
     @coroutine
     def post(self, url_path, **kwargs):
         try:
             response = yield self.http_client.post(url_path, **kwargs)
         except HTTPError as e:
-            raise exceptions.KubernetesException(self.format_error(e), e.code)
+            raise KubernetesException(self.format_error(e), e.code)
 
-        data = json.loads(response.body)
-
-        if isinstance(data, dict) and 'items' in data:
-            raise Return(data.get('items', []))
-        else:
-            raise Return(data)
+        raise Return(json.loads(response.body))
 
     @coroutine
     def delete(self, url_path, **kwargs):
@@ -200,12 +198,11 @@ class Client(object):
             message = self.format_error(e)
 
             if e.code == 404:
-                raise exceptions.NotFoundException(message)
+                raise NotFoundException(message)
             else:
-                raise exceptions.KubernetesException(message, e.code)
+                raise KubernetesException(message, e.code)
 
-        data = json.loads(response.body)
-        raise Return(data)
+        raise Return(json.loads(response.body))
 
     @coroutine
     def patch(self, url_path, **kwargs):
@@ -215,12 +212,11 @@ class Client(object):
             message = self.format_error(e)
 
             if e.code == 404:
-                raise exceptions.NotFoundException(message)
+                raise NotFoundException(message)
             else:
-                raise exceptions.KubernetesException(message, e.code)
+                raise KubernetesException(message, e.code)
 
-        data = json.loads(response.body)
-        raise Return(data)
+        raise Return(json.loads(response.body))
 
     @coroutine
     def watch(self, url_path, on_data, **kwargs):
@@ -230,8 +226,8 @@ class Client(object):
             message = self.format_error(e)
 
             if e.code == 404:
-                raise exceptions.NotFoundException(message)
+                raise NotFoundException(message)
             elif e.code == 599:
-                raise exceptions.WatchDisconnectedException(message)
+                raise WatchDisconnectedException(message)
             else:
-                raise exceptions.KubernetesException(message, e.code)
+                raise KubernetesException(message, e.code)

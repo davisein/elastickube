@@ -1,3 +1,15 @@
+"""
+ElasticBox Confidential
+Copyright (c) 2016 All Right Reserved, ElasticBox Inc.
+
+NOTICE:  All information contained herein is, and remains the property
+of ElasticBox. The intellectual and technical concepts contained herein are
+proprietary and may be covered by U.S. and Foreign Patents, patents in process,
+and are protected by trade secret or copyright law. Dissemination of this
+information or reproduction of this material is strictly forbidden unless prior
+written permission is obtained from ElasticBox
+"""
+
 import json
 
 from tornado.gen import coroutine, Return
@@ -65,10 +77,17 @@ class Resources(object):
         raise Return(result)
 
     @coroutine
-    def watch(self, name=None, namespace='default', on_data=None):
-        url_path = '/watch' + self.base_url_path
+    def watch(self, name=None, namespace='default', on_data=None, resource_version=None):
         params = dict(namespace=namespace)
 
+        if resource_version:
+            params['resourceVersion'] = resource_version
+        else:
+            response = yield self.get(name=name, namespace=namespace)
+            on_data(response)
+            params['resourceVersion'] = response['metadata']['resourceVersion']
+
+        url_path = '/watch' + self.base_url_path
         if name:
             url_path += '/{name}'
             params['name'] = name

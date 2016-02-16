@@ -5,6 +5,6 @@ ENV PYTHONPATH          /opt/elastickube/src
 
 WORKDIR ${ELASTICKUBE_PATH}
 
-RUN pip install --no-compile tornado motor PyJWT
+RUN pip install --no-compile tornado motor PyJWT pycurl
 
 CMD python ${ELASTICKUBE_PATH}/src/api/server.py
