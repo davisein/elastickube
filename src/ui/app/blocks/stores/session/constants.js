@@ -1,5 +1,5 @@
 const sessionActions = {
-    SET_ACTIVE_NAMESPACE: 'SET_ACTIVE_NAMESPACE'
+    UPDATE_NAMESPACE: 'UPDATE_NAMESPACE'
 };
 
 export default sessionActions;

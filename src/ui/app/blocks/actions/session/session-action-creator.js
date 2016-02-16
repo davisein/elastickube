@@ -7,9 +7,9 @@ class SessionActionCreatorService {
         this._elasticKubeDispatcher = elasticKubeDispatcher;
     }
 
-    changeActiveNamespace(namespace) {
+    updateNamespace(namespace) {
         this._elasticKubeDispatcher.dispatch({
-            type: sessionActions.SET_ACTIVE_NAMESPACE,
+            type: sessionActions.UPDATE_NAMESPACE,
             namespace
         });
     }

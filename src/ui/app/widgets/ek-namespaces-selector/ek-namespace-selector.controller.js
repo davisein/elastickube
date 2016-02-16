@@ -34,7 +34,7 @@ class NamespacesSelectorController {
     }
 
     namespaceSelected() {
-        this._sessionActionCreator.changeActiveNamespace(this.namespace);
+        this._sessionActionCreator.updateNamespace(this.namespace);
         this._instancesActionCreator.loadInstancesForNamespace(this.namespace);
     }
 }

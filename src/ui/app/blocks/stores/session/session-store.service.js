@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 import sessionActions from './constants';
 
-const NAMESPACE_CHANGE_EVENT = 'namespace.change';
+const NAMESPACE_UPDATED_EVENT = 'namespace.change';
 
 const sessionKeys = {
     ACTIVE_NAMESPACE: 'ACTIVE_NAMESPACE'
@@ -18,7 +18,7 @@ class NamespacesStoreService extends EventEmitter {
         this.elasticKubeDispatcher = elasticKubeDispatcher;
         this.dispatchToken = elasticKubeDispatcher.register((action) => {
             switch (action.type) {
-                case sessionActions.SET_ACTIVE_NAMESPACE:
+                case sessionActions.UPDATE_NAMESPACE:
                     session.setItem(sessionKeys.ACTIVE_NAMESPACE, action.namespace);
                     this._emitNamespaceChange();
                     break;
@@ -28,7 +28,7 @@ class NamespacesStoreService extends EventEmitter {
     }
 
     _emitNamespaceChange() {
-        this.emit(NAMESPACE_CHANGE_EVENT);
+        this.emit(NAMESPACE_UPDATED_EVENT);
     }
 
     getActiveNamespace() {
@@ -36,11 +36,11 @@ class NamespacesStoreService extends EventEmitter {
     }
 
     addNamespaceChangeListener(callback) {
-        this.on(NAMESPACE_CHANGE_EVENT, callback);
+        this.on(NAMESPACE_UPDATED_EVENT, callback);
     }
 
     removeNamespaceChangeListener(callback) {
-        this.removeListener(NAMESPACE_CHANGE_EVENT, callback);
+        this.removeListener(NAMESPACE_UPDATED_EVENT, callback);
     }
 }
 
