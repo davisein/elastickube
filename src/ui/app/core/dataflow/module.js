@@ -1,10 +1,10 @@
 import actions from './actions';
-import DispatcherService from './dispatcher.service';
-import InstancesActionCreatorService from './instances-action-creator.service';
-import InstancesStoreService from './instances-store.service';
-import NamespacesActionCreatorService from './namespaces-action-creator.service';
-import NamespacesStoreService from './namespaces-store.service';
-import SessionStoreService from './session-store.service';
+import DispatcherService from './dispatcher.service.js';
+import InstancesActionCreatorService from './instances-action-creator.service.js';
+import InstancesStoreService from './instances-store.service.js';
+import NamespacesActionCreatorService from './namespaces-action-creator.service.js';
+import NamespacesStoreService from './namespaces-store.service.js';
+import SessionStoreService from './session-store.service.js';
 import UIActionCreatorService from './ui-action-creator';
 
 const moduleName = 'blocks.dataflow';

@@ -1,5 +1,3 @@
-import dataflowModule from 'blocks/dataflow/module';
-
 import InstancesAPIService from './instances-api.service';
 import NamespacesAPIService from './namespaces-api.service';
 import WebsocketClientService from './websocket-client.service';
@@ -7,9 +5,7 @@ import WebsocketClientService from './websocket-client.service';
 const moduleName = 'blocks.api';
 
 angular
-    .module(moduleName, [
-        dataflowModule
-    ])
+    .module(moduleName, [])
     .run(($injector, instancesActionCreator, namespacesActionCreator)=> {
         'ngInject';
 
