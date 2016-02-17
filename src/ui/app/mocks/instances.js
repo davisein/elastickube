@@ -5,7 +5,25 @@ import MY_SQL_ICON from './images/mysql.png';
 import NODEJS_ICON from './images/nodejs.png';
 import NGINX_ICON from './images/nginx.png';
 
-const instances = [{
+const instancesDefault = [{
+    name: 'default-blog-prod-us-a',
+    state: 'online',
+    serviceId: 'ek-106hk',
+    labels: ['blog', 'prod', 'usa'],
+    owner: 'matt',
+    updated: new Date('2-1-2016'),
+    icon: WORDPRESS_ICON
+}, {
+    name: 'default-kibana-prod',
+    state: 'unavailable',
+    serviceId: 'ek-dv66d',
+    labels: ['kibana', 'prod'],
+    owner: 'alberto',
+    updated: new Date('2-3-2016'),
+    icon: KIBANA_ICON
+}];
+
+const instancesEngineering = [{
     name: 'blog-prod-us-a',
     state: 'online',
     serviceId: 'ek-106hk',
@@ -55,8 +73,17 @@ const instances = [{
     icon: HAPROXY_ICON
 }];
 
-export default _.map(instances, (x, i) => {
-    x.id = `${x.id}-${i}`;
+const instances = {
+    default: addInstanceIds(instancesDefault),
+    engineering: addInstanceIds(instancesEngineering)
+};
 
-    return x;
-});
+function addInstanceIds(ss) {
+    return _.map(ss, (x, i) => {
+        x.id = `${x.id}-${i}`;
+
+        return x;
+    });
+}
+
+export default instances;

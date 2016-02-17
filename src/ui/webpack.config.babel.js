@@ -17,6 +17,7 @@ const webpackConfig = {
             'angular-aria',
             'angular-material',
             'angular-cookies',
+            'angular-password',
             'flux',
             'ui-router',
             'lodash',
@@ -28,8 +29,8 @@ const webpackConfig = {
 
     resolve: {
         root: [
-            path.resolve(__dirname),
-            path.resolve(path.join(__dirname, 'app'))
+            path.resolve(path.join(__dirname, 'app')),
+            path.resolve(__dirname)
         ]
     },
 

@@ -8,10 +8,23 @@ class InstancesActionCreatorService {
         this._elasticKubeDispatcher = elasticKubeDispatcher;
     }
 
-    preload(namespace) {
+    preload() {
         this._elasticKubeDispatcher.dispatch({
-            type: instanceActions.PRELOAD_INSTANCES,
+            type: instanceActions.PRELOAD_INSTANCES
+        });
+    }
+
+    loadInstancesForNamespace(namespace) {
+        this._elasticKubeDispatcher.dispatch({
+            type: instanceActions.LOAD_INSTANCES_FOR_NAMESPACE,
             namespace
+        });
+    }
+
+    instancesLoaded(instances) {
+        this._elasticKubeDispatcher.dispatch({
+            type: instanceActions.INSTANCES_LOADED,
+            instances
         });
     }
 

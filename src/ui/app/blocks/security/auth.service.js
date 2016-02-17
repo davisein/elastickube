@@ -30,6 +30,22 @@ class AuthService {
         }
     }
 
+    get unauthorizedLoggedStateChange() {
+        return this._unauthorizedLoggedStateChange || (() => {});
+    }
+
+    set unauthorizedLoggedStateChange(action) {
+        this._unauthorizedLoggedStateChange = action;
+    }
+
+    get unauthorizedNotLoggedStateChange() {
+        return this._unauthorizedNotLoggedStateChange || (() => {});
+    }
+
+    set unauthorizedNotLoggedStateChange(action) {
+        this._unauthorizedNotLoggedStateChange = action;
+    }
+
     isLoggedIn() {
         return this._loggedIn;
     }

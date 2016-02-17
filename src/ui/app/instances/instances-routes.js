@@ -8,9 +8,11 @@ function instancesRoutes(routerHelperProvider) {
         config: {
             template: '<ek-instances></ek-instances>',
             resolve: {
-                loading: ['instancesStore', (instancesStore) => {
-                    return instancesStore.loading();
-                }]
+                loading: ($q, instancesStore, namespacesStore) => {
+                    'ngInject';
+
+                    return $q.all([instancesStore.loading(), namespacesStore.loading()]);
+                }
             },
             url: '/:namespace/instances',
             data: {

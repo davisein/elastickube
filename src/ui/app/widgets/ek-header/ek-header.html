@@ -14,9 +14,7 @@
     </div>
 
     <div class="ek-header__location" layout="row" layout-align="end center">
-        <md-select class="ek-header__location__namespace" ng-model="ctrl.namespace" aria-label="namespace">
-            <md-option value="engineering">engineering</md-option>
-        </md-select>
+        <ek-namespace-selector></ek-namespace-selector>
 
         <md-button class="ek-header__location__help md-icon-button" aria-label="Help">
             <md-icon class="ek-header__location__help__icon" md-svg-src="{{:: icons.IC_HELP_48PX }}"></md-icon>
