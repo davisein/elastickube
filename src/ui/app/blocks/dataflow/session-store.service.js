@@ -1,5 +1,4 @@
 import { EventEmitter } from 'events';
-import sessionActions from './constants';
 
 const NAMESPACE_UPDATED_EVENT = 'namespace.change';
 
@@ -7,28 +6,27 @@ const sessionKeys = {
     ACTIVE_NAMESPACE: 'ACTIVE_NAMESPACE'
 };
 
-class NamespacesStoreService extends EventEmitter {
-    constructor($q, session, elasticKubeDispatcher) {
+class SessionStoreService extends EventEmitter {
+    constructor($q, actions, dispatcher, session) {
         'ngInject';
 
         super();
+
         this._$q = $q;
+        this._actions = actions.session;
         this._session = session;
 
-        this.elasticKubeDispatcher = elasticKubeDispatcher;
-        this.dispatchToken = elasticKubeDispatcher.register((action) => {
+        this.dispatchToken = dispatcher.register((action) => {
             switch (action.type) {
-                case sessionActions.UPDATE_NAMESPACE:
+
+                case this._actions.UPDATE_NAMESPACE:
                     session.setItem(sessionKeys.ACTIVE_NAMESPACE, action.namespace);
-                    this._emitNamespaceChange();
+                    this.emit(NAMESPACE_UPDATED_EVENT);
                     break;
+
                 default:
             }
         });
-    }
-
-    _emitNamespaceChange() {
-        this.emit(NAMESPACE_UPDATED_EVENT);
     }
 
     getActiveNamespace() {
@@ -44,4 +42,4 @@ class NamespacesStoreService extends EventEmitter {
     }
 }
 
-export default NamespacesStoreService;
+export default SessionStoreService;

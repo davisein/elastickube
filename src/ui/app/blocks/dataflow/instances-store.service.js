@@ -1,28 +1,31 @@
-import instanceActions from './constants';
 import { EventEmitter } from 'events';
 
 const CHANGE_EVENT = 'change';
 
 class InstancesStoreService extends EventEmitter {
-    constructor($q, elasticKubeDispatcher) {
+    constructor($q, actions, dispatcher) {
         'ngInject';
 
         super();
+
         this._$q = $q;
+        this._actions = actions.instances;
         this._loading = this._$q.defer();
 
-        this.elasticKubeDispatcher = elasticKubeDispatcher;
-        this.dispatchToken = elasticKubeDispatcher.register((action) => {
+        this.dispatchToken = dispatcher.register((action) => {
             switch (action.type) {
-                case instanceActions.INSTANCES_PRELOADED:
+
+                case this._actions.INSTANCES_PRELOADED:
                     this._loading.resolve();
                     this._setInstances(action.instances);
-                    this._emitChange();
+                    this.emit(CHANGE_EVENT);
                     break;
-                case instanceActions.INSTANCES_LOADED:
+
+                case this._actions.INSTANCES_LOADED:
                     this._setInstances(action.instances);
-                    this._emitChange();
+                    this.emit(CHANGE_EVENT);
                     break;
+
                 default:
             }
         });
@@ -32,13 +35,10 @@ class InstancesStoreService extends EventEmitter {
         this._instances = instances;
     }
 
-    _emitChange() {
-        this.emit(CHANGE_EVENT);
-    }
-
     loading() {
         return this._loading.promise;
     }
+
     get(id) {
         return _.find(this._instances, { id });
     }

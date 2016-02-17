@@ -5,26 +5,21 @@ class NamespacesSelectorController {
     constructor($scope, sessionStore, sessionActionCreator, namespacesStore, instancesActionCreator) {
         'ngInject';
 
-        const onChange = () => {
-            this._loadState();
-        };
-
-        const onNamepaceChange = () => {
-            this.namespace = this._sessionStoreService.getActiveNamespace();
-        };
+        const onChange = () => this._loadState();
+        const onNamespaceChange = () => this.namespace = this._sessionStoreService.getActiveNamespace();
 
         this._namespacesStoreService = namespacesStore;
         this._instancesActionCreator = instancesActionCreator;
         this._sessionStoreService = sessionStore;
         this._sessionActionCreator = sessionActionCreator;
-        this._sessionStoreService.addNamespaceChangeListener(onNamepaceChange);
+        this._sessionStoreService.addNamespaceChangeListener(onNamespaceChange);
         this._namespacesStoreService.addChangeListener(onChange);
 
         this._loadState();
 
         $scope.$on('$destroy', () => {
             this._namespacesStoreService.removeChangeListener(onChange);
-            this._sessionStoreService.removeNamespaceChangeListener(onNamepaceChange);
+            this._sessionStoreService.removeNamespaceChangeListener(onNamespaceChange);
         });
     }
 

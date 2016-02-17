@@ -5,6 +5,7 @@ class WebsocketClientService {
         'ngInject';
 
         this._$q = $q;
+
         this.$rootScope = $rootScope;
         this.connectionAttempts = 1;
         this.eventMessageListeners = [];
