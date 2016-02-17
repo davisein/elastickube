@@ -4,8 +4,8 @@ import InstancesActionCreatorService from './instances-action-creator.service';
 import InstancesStoreService from './instances-store.service';
 import NamespacesActionCreatorService from './namespaces-action-creator.service';
 import NamespacesStoreService from './namespaces-store.service';
-import SessionActionCreatorService from './session-action-creator.service';
 import SessionStoreService from './session-store.service';
+import UIActionCreatorService from './ui-action-creator';
 
 const moduleName = 'blocks.dataflow';
 
@@ -17,7 +17,7 @@ angular
     .service('instancesStore', InstancesStoreService)
     .service('namespacesActionCreator', NamespacesActionCreatorService)
     .service('namespacesStore', NamespacesStoreService)
-    .service('sessionActionCreator', SessionActionCreatorService)
-    .service('sessionStore', SessionStoreService);
+    .service('sessionStore', SessionStoreService)
+    .service('uiActionCreator', UIActionCreatorService);
 
 export default moduleName;

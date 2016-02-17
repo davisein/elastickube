@@ -9,19 +9,19 @@ class InstancesStoreService extends EventEmitter {
         super();
 
         this._$q = $q;
-        this._actions = actions.instances;
+        this._actions = actions;
         this._loading = this._$q.defer();
 
         this.dispatchToken = dispatcher.register((action) => {
             switch (action.type) {
 
-                case this._actions.INSTANCES_PRELOADED:
+                case this._actions.api.INSTANCES_PRELOADED:
                     this._loading.resolve();
                     this._setInstances(action.instances);
                     this.emit(CHANGE_EVENT);
                     break;
 
-                case this._actions.INSTANCES_LOADED:
+                case this._actions.api.INSTANCES_LOADED:
                     this._setInstances(action.instances);
                     this.emit(CHANGE_EVENT);
                     break;

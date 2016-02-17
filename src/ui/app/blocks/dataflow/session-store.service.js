@@ -13,13 +13,13 @@ class SessionStoreService extends EventEmitter {
         super();
 
         this._$q = $q;
-        this._actions = actions.session;
+        this._actions = actions;
         this._session = session;
 
         this.dispatchToken = dispatcher.register((action) => {
             switch (action.type) {
 
-                case this._actions.UPDATE_NAMESPACE:
+                case this._actions.ui.NAMESPACE_SELECTED:
                     session.setItem(sessionKeys.ACTIVE_NAMESPACE, action.namespace);
                     this.emit(NAMESPACE_UPDATED_EVENT);
                     break;

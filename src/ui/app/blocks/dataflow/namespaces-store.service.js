@@ -9,13 +9,13 @@ class NamespacesStoreService extends EventEmitter {
         super();
 
         this._$q = $q;
-        this._actions = actions.namespaces;
+        this._actions = actions;
         this._loading = this._$q.defer();
 
         this.dispatchToken = dispatcher.register((action) => {
             switch (action.type) {
 
-                case this._actions.NAMESPACES_PRELOADED:
+                case this._actions.api.NAMESPACES_PRELOADED:
                     this._loading.resolve();
                     this._setNamespaces(action.namespaces);
                     this._activeNamespace = action.namespaces[0];

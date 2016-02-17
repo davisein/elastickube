@@ -3,20 +3,13 @@ class InstancesActionCreatorService {
         'ngInject';
 
         this._$q = $q;
-        this._actions = actions.instances;
+        this._actions = actions.api;
         this._dispatcher = dispatcher;
     }
 
     preload() {
         this._dispatcher.dispatch({
             type: this._actions.PRELOAD_INSTANCES
-        });
-    }
-
-    loadInstancesForNamespace(namespace) {
-        this._dispatcher.dispatch({
-            type: this._actions.LOAD_INSTANCES_FOR_NAMESPACE,
-            namespace
         });
     }
 
