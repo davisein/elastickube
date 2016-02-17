@@ -7,4 +7,4 @@ WORKDIR ${ELASTICKUBE_PATH}
 
 RUN pip install --no-compile tornado motor PyJWT pycurl
 
-CMD python ${ELASTICKUBE_PATH}/src/api/server.py
+CMD while true; do (python ${ELASTICKUBE_PATH}/src/api/server.py; sleep 5) done
