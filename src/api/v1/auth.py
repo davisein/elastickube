@@ -21,6 +21,8 @@ class AuthHandler(RequestHandler):
             username=user["username"],
             firstname=user["firstname"],
             lastname=user["lastname"],
+            email=user["email"],
+            role=user["role"],
             created=datetime.utcnow().isoformat(),
             expires=(datetime.utcnow() + timedelta(30)).isoformat()
         )
@@ -29,10 +31,7 @@ class AuthHandler(RequestHandler):
         yield self.settings["database"].Users.update({"_id": user["_id"]}, user)
 
         token = jwt.encode(token, self.settings['secret'], algorithm='HS256')
-        self.set_cookie(
-            ELASTICKUBE_TOKEN_HEADER,
-                token
-        )
+        self.set_cookie(ELASTICKUBE_TOKEN_HEADER, token)
 
         logging.info("User '%s' authenticated." % user["username"])
         raise Return(token)
