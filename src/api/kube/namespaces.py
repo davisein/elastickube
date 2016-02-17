@@ -1,4 +1,4 @@
-from api.kube_client.resources import Resources
+from api.kube.resources import Resources
 
 
 class Namespaces(Resources):
