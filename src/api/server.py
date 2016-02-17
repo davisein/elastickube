@@ -2,14 +2,15 @@ import os
 import sys
 import logging
 
-from tornado.web import Application
+from motor.motor_tornado import MotorClient
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 from tornado.netutil import bind_unix_socket
-from motor.motor_tornado import MotorClient
+from tornado.web import Application
 
 from api.kube import client
 from api.v1 import ApiHandlers
+from db import initialize as db_initialize
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
@@ -19,6 +20,7 @@ if __name__ == "__main__":
         os.getenv('ELASTICKUBE_MONGO_SERVICE_PORT', 27017)
     )
 
+    db_initialize(mongo_url)
     service_token = None
     if os.path.exists('/var/run/secrets/kubernetes.io/serviceaccount/token'):
         with open('/var/run/secrets/kubernetes.io/serviceaccount/token') as token:
@@ -28,7 +30,7 @@ if __name__ == "__main__":
         autoreload=True,
         database=MotorClient(mongo_url).elastickube,
         kube=client.KubeClient('10.5.10.6:8080', token=service_token),
-        service_toke=service_token,
+        service_token=service_token,
         secret="ElasticKube",
         google_oauth=dict(
             key="726336950247-p6172q2aojfuntnp8e0rocg45c19ss4b.apps.googleusercontent.com",

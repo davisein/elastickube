@@ -24,5 +24,6 @@ ApiHandlers = [
     (r"/api/v1/auth/google", GoogleOAuth2LoginHandler),
     (r"/api/v1/namespaces", NamespacesHandler),
     (r"/api/v1/users/?", UsersHandler),
-    (r"/api/v1/users/(.*)/?", UsersHandler)
+    (r"/api/v1/users/(.*)/?", UsersHandler),
+    (r"/api/v1/settings/", UsersHandler),
 ]
