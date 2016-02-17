@@ -1,7 +1,9 @@
 import logging
 
-from api.db import watch
 from tornado.gen import coroutine, Return
+
+from api.db import watch
+
 
 class UsersWatcher(object):
 

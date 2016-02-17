@@ -13,6 +13,7 @@ ELASTICKUBE_TOKEN_HEADER = "ElasticKube-Token"
 
 
 class SecureWebSocketHandler(WebSocketHandler):
+
     def __init__(self, application, request, **kwargs):
         super(SecureWebSocketHandler, self).__init__(application, request, **kwargs)
 
@@ -75,35 +76,3 @@ class SecureWebSocketHandler(WebSocketHandler):
 
     def data_received(self, _origin):
         return True
-
-
-class SecureRequestHandler(RequestHandler):
-
-    def __init__(self, application, request, **kwargs):
-        super(SecureRequestHandler, self).__init__(application, request, **kwargs)
-
-        self.user = None
-
-    @coroutine
-    def prepare(self):
-        try:
-            # Try the header if not the cookie
-            encoded_token = self.request.headers.get(ELASTICKUBE_TOKEN_HEADER)
-            if encoded_token is None:
-                encoded_token = self.get_cookie(ELASTICKUBE_TOKEN_HEADER)
-
-            if encoded_token is None:
-                raise HTTPError(401, "Invalid token.")
-
-            token = jwt.decode(encoded_token, self.settings['secret'], algorithm='HS256')
-            self.user = yield self.settings["database"].Users.find_one({"username": token["username"]})
-
-            if self.user is None:
-                logging.debug("User not found.")
-                raise HTTPError(401, "Invalid token.")
-
-        except jwt.DecodeError as e:
-            logging.exception(e)
-            logging.debug("The token could not decoded.")
-            raise HTTPError(401, "Invalid token.")
-

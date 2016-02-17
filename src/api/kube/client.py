@@ -123,6 +123,7 @@ class HTTPClient(object):
     @coroutine
     def watch(self, url_path, on_data, **kwargs):
         class WatchFuture(Future):
+
             def cancel(self):
                 # close client connection
                 pass
@@ -138,8 +139,6 @@ class HTTPClient(object):
         chain_future(self._client.fetch(request), future)
 
         yield future
-
-
 
 
 class KubeClient(object):

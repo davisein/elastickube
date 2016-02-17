@@ -1,15 +1,14 @@
 import json
 import logging
 
-from tornado.gen import coroutine, sleep
+from tornado.gen import coroutine
+
 from api.v1 import SecureWebSocketHandler
 from api.v1.watchers.namespaces import NamespacesWatcher
 from api.v1.watchers.instances import InstancesWatcher
 from api.v1.watchers.users import UsersWatcher
 
-actions_lookup = dict(
-
-)
+actions_lookup = dict()
 
 watch_lookup = dict(
     nasmespaces=NamespacesWatcher,
@@ -17,10 +16,11 @@ watch_lookup = dict(
     users=UsersWatcher
 )
 
-class MainWebsocketHandler(SecureWebSocketHandler):
+
+class MainWebSocketHandler(SecureWebSocketHandler):
 
     def __init__(self, application, request, **kwargs):
-        super(MainWebsocketHandler, self).__init__(application, request, **kwargs)
+        super(MainWebSocketHandler, self).__init__(application, request, **kwargs)
 
         self.connected = False
         self.global_watchers = []
@@ -31,7 +31,7 @@ class MainWebsocketHandler(SecureWebSocketHandler):
         logging.info("Initializing NamespacesHandler")
 
         try:
-            #yield super(MainWebsocketHandler, self).open()
+            yield super(MainWebSocketHandler, self).open()
 
             ns_watcher = NamespacesWatcher(None, self.settings, self.write_message)
             self.global_watchers.append(ns_watcher)
@@ -44,17 +44,17 @@ class MainWebsocketHandler(SecureWebSocketHandler):
     def on_message(self, message):
         msg = json.loads(message)
 
-        if 'action' in msg:
+        if "action" in msg:
             pass
-        elif 'watch' in msg:
+        elif "watch" in msg:
             if self.current_watcher:
                 self.current_watcher.close()
 
-            watcher_cls = watch_lookup.get(msg['watch'], None)
-
+            watcher_cls = watch_lookup.get(msg["watch"], None)
             if watcher_cls:
                 self.current_watcher = watcher_cls(msg, self.settings, self.write_message)
             else:
+                logging.warning("Watcher not supported, %s", message)
                 self.write_message({"error": {"message": "Watcher not supported."}})
 
         if "close" in message:
@@ -70,4 +70,4 @@ class MainWebsocketHandler(SecureWebSocketHandler):
         if self.current_watcher:
             self.current_watcher.close()
 
-        yield super(MainWebsocketHandler, self).on_close()
+        yield super(MainWebSocketHandler, self).on_close()

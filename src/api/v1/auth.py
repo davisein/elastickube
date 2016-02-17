@@ -1,15 +1,15 @@
 import json
 import logging
-import jwt
-
 from datetime import datetime, timedelta
-from db.query import Query
+
+import jwt
 from tornado.auth import GoogleOAuth2Mixin, OAuth2Mixin
 from tornado.gen import coroutine, Return
-from tornado.web import RequestHandler, HTTPError, asynchronous
+from tornado.web import RequestHandler, HTTPError
+
+from api.db.query import Query
 from api.v1 import ELASTICKUBE_TOKEN_HEADER
 
-PASSWORD_REGEX = "^(([a-zA-Z]+\d+)|(\d+[a-zA-Z]+))[a-zA-Z0-9]*$"
 
 class AuthHandler(RequestHandler):
 
@@ -51,18 +51,18 @@ class AuthProvidersHandler(RequestHandler):
         else:
             settings = yield Query(self.settings["database"], "Settings").find_one()
 
-            if settings["authentication"]["google_oauth"]["enabled"]:
+            if "google_oauth" in settings["authentication"]:
                 providers['google'] = dict(
                     auth_url="/api/v1/auth/google"
                 )
 
-            if settings["authentication"]["password"]["enabled"]:
+            if "password" in settings["authentication"]:
                 providers['password'] = dict(
-                    regex=PASSWORD_REGEX
+                    regex=settings["authentication"]["password"]["regex"]
                 )
 
-
             self.write(providers)
+
 
 class SignupHandler(AuthHandler):
 
@@ -70,32 +70,35 @@ class SignupHandler(AuthHandler):
     def post(self):
         # Signup can be used only the first time
         if (yield Query(self.settings["database"], "Users").find_one()) is not None:
-            raise HTTPError(403, reason="Onboarding already completed.")
+            raise HTTPError(403, message="Onboarding already completed.")
 
         else:
             data = json.loads(self.request.body)
-            if 'email' not in data:
-                raise HTTPError(400, reason="Email is required.")
+            if "email" not in data:
+                raise HTTPError(400, message="Email is required.")
 
-            if 'password' not in data:
-                raise HTTPError(400, reason="Password is required.")
+            if "password" not in data:
+                raise HTTPError(400, message="Password is required.")
 
-            if 'firstname' not in data:
-                raise HTTPError(400, reason="First name is required.")
+            if "firstname" not in data:
+                raise HTTPError(400, message="First name is required.")
 
-            if 'lastname' not in data:
-                raise HTTPError(400, reason="Last name is required.")
+            if "lastname" not in data:
+                raise HTTPError(400, message="Last name is required.")
 
             user = dict(
-                email=data['email'],
-                password=data['password'],
-                firstname=data['firstname'],
-                lastname=data['lastname'],
-                role='administrator'
+                email=data["email"],
+                username=data["email"],
+                password=data["password"],
+                firstname=data["firstname"],
+                lastname=data["lastname"],
+                role="administrator",
+                schema="http://elasticbox.net/schemas/user",
+                email_validated_at=datetime.utcnow().isoformat()
             )
 
-            yield Query(self.settings["database"], "Users").insert(user)
-            yield self.authenticate_user(user)
+            signup_user = yield Query(self.settings["database"], "Users").insert(user)
+            yield self.authenticate_user(signup_user)
 
 
 class PasswordHandler(AuthHandler):

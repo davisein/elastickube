@@ -12,6 +12,36 @@
       "minLength": 1,
       "maxLength": 36
     },
+    "authentication": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "google_oauth": {
+          "type": "object",
+          "additionalProperties": false,
+          "password": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "regex": {
+                "type": "string"
+              }
+            }
+          },
+          "properties": {
+            "key": {
+              "type": "string"
+            },
+            "redirect_uri": {
+              "type": "string"
+            },
+            "secret": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "created": {
       "type": "string"
     },
@@ -29,45 +59,6 @@
     },
     "updated": {
       "type": "string"
-    },
-    "authentication": {
-      "type": "object",
-      "required": [
-        "google_oauth",
-        "password"
-      ],
-      "additionalProperties": false,
-      "properties": {
-        "google_oauth": {
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "default": false
-            },
-            "key": {
-              "type": "string"
-            },
-            "secret": {
-              "type": "string"
-            },
-            "redirect_uri": {
-              "type": "string"
-            }
-          },
-          "password": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "enabled": {
-                "type": "boolean",
-                "default": true
-              }
-            }
-          }
-        }
-      }
     }
   },
   "type:": "object"

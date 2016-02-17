@@ -3,31 +3,34 @@ from datetime import datetime
 
 from pymongo import MongoClient
 
+PASSWORD_REGEX = "^(([a-zA-Z]+\d+)|(\d+[a-zA-Z]+))[a-zA-Z0-9]*$"
+SCHEMA_VERSION = 1
 
-def initialize(mongo_url):
-    logging.debug("Initialize DB")
+
+def init(mongo_url):
+    logging.info("Initializing database...")
 
     database = MongoClient(mongo_url).elastickube
-    current_settings = database.Settings.find_one({"deleted": None})
-    if current_settings:
-        logging.debug("Found existing Settings document: %s", current_settings)
-    else:
-        current_date = datetime.utcnow().isoformat()
+    settings = database.Settings.find_one({"deleted": None})
+    if not settings:
         result = database.Settings.insert({
-            "created": current_date,
+            "created": datetime.utcnow().isoformat(),
             "deleted": None,
             "schema": "http://elasticbox.net/schemas/settings",
-            "updated": current_date,
+            "updated": datetime.utcnow().isoformat(),
             "authentication": {
                 "password": {
-                    "enabled": True
-                },
-                "google_oauth": {
-                    "enabled": False
+                    "regex": PASSWORD_REGEX
                 }
-            }
+            },
+            "schema_version": SCHEMA_VERSION
         })
 
-        logging.debug("Did not find existing Settings, created it: %s", result)
+        logging.debug("Initial Settings document created, %s", result)
+    else:
+        if settings["schema_version"] != SCHEMA_VERSION:
+            migrate(settings["schema_version"])
 
-    logging.debug("DB Initialized")
+
+def migrate(previous_version):
+    logging.debug("Migrating DB from version %d to %d", previous_version, SCHEMA_VERSION)

@@ -11,6 +11,7 @@ CONTENT_TYPE_JSON = "application/json"
 
 TOKEN = {}
 
+
 class ApiAsyncTestCase(AsyncTestCase):
 
     _multiprocess_can_split_ = True
@@ -31,7 +32,7 @@ class ApiAsyncTestCase(AsyncTestCase):
 
         response = yield self.http_client.fetch(url, method="GET", headers={ELASTICKUBE_TOKEN_HEADER: token})
         if (CONTENT_TYPE_HEADER in response.headers.keys() and
-            response.headers[CONTENT_TYPE_HEADER] == CONTENT_TYPE_JSON):
+                response.headers[CONTENT_TYPE_HEADER] == CONTENT_TYPE_JSON):
             raise Return(json.loads(response.body))
         else:
             raise Return(response.body)
