@@ -84,8 +84,10 @@ class Resources(object):
             params['resourceVersion'] = resource_version
         else:
             response = yield self.get(name=name, namespace=namespace)
-            on_data(response)
-            params['resourceVersion'] = response['metadata']['resourceVersion']
+
+            for item in response.get('items', []):
+                on_data(item)
+                params['resourceVersion'] = response['metadata']['resourceVersion']
 
         url_path = '/watch' + self.base_url_path
         if name:

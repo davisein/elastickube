@@ -1,6 +1,8 @@
 import json
+import logging
 
 from tornado.gen import coroutine, Return
+from tornado.concurrent import Future, chain_future
 from tornado.httpclient import AsyncHTTPClient, HTTPError, HTTPRequest
 from tornado.httputil import url_concat
 
@@ -24,7 +26,7 @@ class HTTPClient(object):
         self.version = version
 
         self._client = self.build_client()
-        self._base_url = 'http://{0}/api/{1}'.format(self.server, self.version)
+        self._base_url = 'http://10.5.10.6:8080/api/{1}'.format(self.server, self.version)
 
     def build_client(self):
         defaults = dict(validate_cert=False)
@@ -35,8 +37,7 @@ class HTTPClient(object):
             defaults['auth_username'] = self.username
             defaults['auth_password'] = self.password
 
-        return AsyncHTTPClient(force_instance=True,
-                               defaults=defaults)
+        return AsyncHTTPClient(force_instance=False, defaults=defaults)
 
     def build_url(self, url_path, **kwargs):
         if url_path.startswith('/'):
@@ -121,11 +122,24 @@ class HTTPClient(object):
 
     @coroutine
     def watch(self, url_path, on_data, **kwargs):
+        class WatchFuture(Future):
+            def cancel(self):
+                # close client connection
+                pass
+
+        def data_callback(data):
+            on_data(json.loads(data))
+
         params = self.build_params(url_path, **kwargs)
         url = url_concat(self.build_url(url_path, **kwargs), params)
 
-        request = HTTPRequest(url=url, method='GET', request_timeout=3600, streaming_callback=on_data)
-        yield self._client.fetch(request)
+        request = HTTPRequest(url=url, method='GET', request_timeout=3600, streaming_callback=data_callback)
+        future = WatchFuture()
+        chain_future(self._client.fetch(request), future)
+
+        yield future
+
+
 
 
 class KubeClient(object):
@@ -159,7 +173,7 @@ class KubeClient(object):
             response = yield self.http_client.get(url_path, **kwargs)
         except HTTPError as e:
             message = self.format_error(e)
-
+            logging.exception(e)
             if e.code == 404:
                 raise NotFoundException(message)
             else:

@@ -1,14 +1,15 @@
 import json
 import logging
-from datetime import datetime, timedelta
-
 import jwt
+
+from datetime import datetime, timedelta
+from db.query import Query
 from tornado.auth import GoogleOAuth2Mixin, OAuth2Mixin
 from tornado.gen import coroutine, Return
 from tornado.web import RequestHandler, HTTPError, asynchronous
+from api.v1 import ELASTICKUBE_TOKEN_HEADER
 
-from api.v1.secure import ELASTICKUBE_TOKEN_HEADER
-
+PASSWORD_REGEX = "^(([a-zA-Z]+\d+)|(\d+[a-zA-Z]+))[a-zA-Z0-9]*$"
 
 class AuthHandler(RequestHandler):
 
@@ -32,9 +33,69 @@ class AuthHandler(RequestHandler):
 
         token = jwt.encode(token, self.settings['secret'], algorithm='HS256')
         self.set_cookie(ELASTICKUBE_TOKEN_HEADER, token)
+        self.redirect('/')
 
         logging.info("User '%s' authenticated." % user["username"])
         raise Return(token)
+
+
+class AuthProvidersHandler(RequestHandler):
+
+    @coroutine
+    def get(self):
+        providers = dict()
+
+        # If there are no users created then we need to return an empty list of providers to enable the signup flow
+        if (yield Query(self.settings["database"], "Users").find_one()) is None:
+            self.write({})
+        else:
+            settings = yield Query(self.settings["database"], "Settings").find_one()
+
+            if settings["authentication"]["google_oauth"]["enabled"]:
+                providers['google'] = dict(
+                    auth_url="/api/v1/auth/google"
+                )
+
+            if settings["authentication"]["password"]["enabled"]:
+                providers['password'] = dict(
+                    regex=PASSWORD_REGEX
+                )
+
+
+            self.write(providers)
+
+class SignupHandler(AuthHandler):
+
+    @coroutine
+    def post(self):
+        # Signup can be used only the first time
+        if (yield Query(self.settings["database"], "Users").find_one()) is not None:
+            raise HTTPError(403, reason="Onboarding already completed.")
+
+        else:
+            data = json.loads(self.request.body)
+            if 'email' not in data:
+                raise HTTPError(400, reason="Email is required.")
+
+            if 'password' not in data:
+                raise HTTPError(400, reason="Password is required.")
+
+            if 'firstname' not in data:
+                raise HTTPError(400, reason="First name is required.")
+
+            if 'lastname' not in data:
+                raise HTTPError(400, reason="Last name is required.")
+
+            user = dict(
+                email=data['email'],
+                password=data['password'],
+                firstname=data['firstname'],
+                lastname=data['lastname'],
+                role='administrator'
+            )
+
+            yield Query(self.settings["database"], "Users").insert(user)
+            yield self.authenticate_user(user)
 
 
 class PasswordHandler(AuthHandler):
@@ -92,8 +153,7 @@ class GoogleOAuth2LoginHandler(AuthHandler, GoogleOAuth2Mixin):
                 user = yield self.settings["database"].Users.find_one({"email": auth_user["email"]})
 
                 if user:
-                    self.authenticate_user(user)
-                    self.redirect('/')
+                    yield self.authenticate_user(user)
                 else:
                     logging.debug("User '%s' not found" % auth_user["email"])
                     raise HTTPError(400, "Invalid authentication request.")

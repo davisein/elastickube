@@ -9,7 +9,10 @@ from tornado.netutil import bind_unix_socket
 from tornado.web import Application
 
 from api.kube import client
-from api.v1 import ApiHandlers
+from api.v1.main import MainWebsocketHandler
+from api.v1.auth import AuthProvidersHandler, SignupHandler, PasswordHandler, GoogleOAuth2LoginHandler
+
+from db import watch
 from db import initialize as db_initialize
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
@@ -26,10 +29,11 @@ if __name__ == "__main__":
         with open('/var/run/secrets/kubernetes.io/serviceaccount/token') as token:
             service_token = token.read()
 
+    motor_client = MotorClient(mongo_url)
     settings = dict(
         autoreload=True,
-        database=MotorClient(mongo_url).elastickube,
-        kube=client.KubeClient('10.5.10.6:8080', token=service_token),
+        database=motor_client.elastickube,
+        kube=client.KubeClient(os.getenv('KUBERNETES_SERVICE_HOST'), token=service_token),
         service_token=service_token,
         secret="ElasticKube",
         google_oauth=dict(
@@ -39,10 +43,19 @@ if __name__ == "__main__":
         )
     )
 
-    application = Application(ApiHandlers, **settings)
+    handlers = [
+        (r"/api/v1/auth/providers", AuthProvidersHandler),
+        (r"/api/v1/auth/signup", SignupHandler),
+        (r"/api/v1/auth/login", PasswordHandler),
+        (r"/api/v1/auth/google", GoogleOAuth2LoginHandler),
+        (r"/api/v1/ws", MainWebsocketHandler)
+    ]
+
+    application = Application(handlers, **settings)
 
     server = HTTPServer(application)
     socket = bind_unix_socket("/var/run/elastickube-api.sock", mode=0777)
     server.add_socket(socket)
 
-    IOLoop.instance().start()
+    watch.start_monitor(motor_client)
+    IOLoop.current().start()
