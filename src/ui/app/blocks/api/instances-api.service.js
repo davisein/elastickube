@@ -5,7 +5,7 @@ class InstancesAPIService {
     constructor(instancesActionCreator, actions, dispatcher) {
         'ngInject';
 
-        this._actions = actions.instances;
+        this._actions = actions;
         this._dispatcher = dispatcher;
         this._instancesActionCreator = instancesActionCreator;
 
@@ -15,13 +15,15 @@ class InstancesAPIService {
     _apiDispatcher(action) {
         switch (action.type) {
 
-            case this._actions.PRELOAD_INSTANCES:
+            case this._actions.api.PRELOAD_INSTANCES:
 
                 // FIXME SIMULATED CALLBACK
                 setTimeout(() => this._instancesActionCreator.instancesPreloaded(mockInstances.default), 0);
                 break;
 
-            case this._actions.LOAD_INSTANCES_FOR_NAMESPACE:
+            case this._actions.ui.NAMESPACE_SELECTED:
+
+                // FIXME SIMULATED CALLBACK
                 setTimeout(() => this._instancesActionCreator.instancesLoaded(mockInstances[action.namespace]), 0);
                 break;
 

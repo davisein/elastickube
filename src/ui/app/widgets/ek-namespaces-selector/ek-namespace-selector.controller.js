@@ -1,17 +1,14 @@
-/* eslint max-params: 0 */
 class NamespacesSelectorController {
 
-    // FIXME Remove injected services when responsibilites are separated
-    constructor($scope, sessionStore, sessionActionCreator, namespacesStore, instancesActionCreator) {
+    constructor($scope, sessionStore, namespacesStore, uiActionCreator) {
         'ngInject';
 
         const onChange = () => this._loadState();
         const onNamespaceChange = () => this.namespace = this._sessionStoreService.getActiveNamespace();
 
         this._namespacesStoreService = namespacesStore;
-        this._instancesActionCreator = instancesActionCreator;
         this._sessionStoreService = sessionStore;
-        this._sessionActionCreator = sessionActionCreator;
+        this._uiActionCreatorService = uiActionCreator;
         this._sessionStoreService.addNamespaceChangeListener(onNamespaceChange);
         this._namespacesStoreService.addChangeListener(onChange);
 
@@ -29,8 +26,7 @@ class NamespacesSelectorController {
     }
 
     namespaceSelected() {
-        this._sessionActionCreator.updateNamespace(this.namespace);
-        this._instancesActionCreator.loadInstancesForNamespace(this.namespace);
+        this._uiActionCreatorService.namespaceSelected(this.namespace);
     }
 }
 

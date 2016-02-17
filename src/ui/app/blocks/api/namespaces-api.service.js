@@ -5,7 +5,7 @@ class InstancesAPIService {
     constructor(namespacesActionCreator, actions, dispatcher) {
         'ngInject';
 
-        this._actions = actions.namespaces;
+        this._actions = actions;
         this._dispatcher = dispatcher;
         this._namespacesActionCreator = namespacesActionCreator;
 
@@ -14,7 +14,7 @@ class InstancesAPIService {
 
     _apiDispatcher(action) {
         switch (action.type) {
-            case this._actions.PRELOAD_NAMESPACES:
+            case this._actions.api.PRELOAD_NAMESPACES:
 
                 /* FIXME SIMULATED CALLBACK */
                 setTimeout(() => this._namespacesActionCreator.namespacesPreloaded(mockNamespaces), 0);

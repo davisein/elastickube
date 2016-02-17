@@ -3,7 +3,7 @@ class NamespacesActionCreatorService {
         'ngInject';
 
         this._$q = $q;
-        this._actions = actions.namespaces;
+        this._actions = actions.api;
         this._dispatcher = dispatcher;
     }
 
