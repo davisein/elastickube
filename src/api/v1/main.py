@@ -1,14 +1,16 @@
-import json
 import logging
-
-from tornado.gen import coroutine
 
 from api.v1 import SecureWebSocketHandler
 from api.v1.watchers.namespaces import NamespacesWatcher
 from api.v1.watchers.instances import InstancesWatcher
 from api.v1.watchers.users import UsersWatcher
+from api.v1.actions.user import UserActions
+from bson.json_util import loads
+from tornado.gen import coroutine, sleep
 
-actions_lookup = dict()
+action_lookup = dict(
+    users=UserActions
+)
 
 watch_lookup = dict(
     nasmespaces=NamespacesWatcher,
@@ -41,18 +43,34 @@ class MainWebSocketHandler(SecureWebSocketHandler):
             if self.connected:
                 self.write_message({"error": {"message": "Failed to connect to event source."}})
 
+    @coroutine
     def on_message(self, message):
-        msg = json.loads(message)
+        document = loads(message)
 
-        if "action" in msg:
-            pass
-        elif "watch" in msg:
+        if 'action' in document:
+            action_cls = action_lookup.get(document['action'], None)
+            if action_cls:
+                action = action_cls(document, self.settings)
+                if 'operation' in document:
+                    if document['operation'] == 'create':
+                        document['result'] = yield action.create(document['body'])
+                    elif document['operation'] == 'update':
+                        document['result'] = yield action.update(document['body'])
+                    elif document['operation'] == 'delete':
+                        document['result'] = yield action.delete(document['body'])
+
+                del document['body']
+                self.write_message(document)
+            else:
+                self.write_message({"error": {"message": "Action not supported."}})
+
+        elif "watch" in document:
             if self.current_watcher:
                 self.current_watcher.close()
 
-            watcher_cls = watch_lookup.get(msg["watch"], None)
+            watcher_cls = watch_lookup.get(document["watch"], None)
             if watcher_cls:
-                self.current_watcher = watcher_cls(msg, self.settings, self.write_message)
+                self.current_watcher = watcher_cls(document, self.settings, self.write_message)
             else:
                 logging.warning("Watcher not supported, %s", message)
                 self.write_message({"error": {"message": "Watcher not supported."}})

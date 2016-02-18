@@ -14,9 +14,9 @@ class UsersWatcher(object):
         watch.watch_users(self.data_callback)
 
     @coroutine
-    def data_callback(self, data):
+    def data_callback(self, document):
         logging.info("Data")
-        self.callback(data)
+        self.callback(document)
 
         raise Return()
 

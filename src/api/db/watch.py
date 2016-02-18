@@ -10,11 +10,9 @@ information or reproduction of this material is strictly forbidden unless prior
 written permission is obtained from ElasticBox
 """
 
-import json
 import pymongo
 import logging
 
-from bson import json_util
 from tornado.gen import coroutine, Return
 
 
@@ -24,15 +22,14 @@ WATCHABLE_COLLECTIONS = [
     "elastickube.Namespaces"
 ]
 
-_callbacks = {}
+_callbacks = dict(
+    users=[]
+)
 
 
 @coroutine
 def watch_users(coroutine_callback):
     logging.info("Adding users callback")
-
-    if 'users' not in _callbacks:
-        _callbacks['users'] = []
 
     _callbacks['users'].append(coroutine_callback)
 
@@ -43,6 +40,7 @@ def watch_users(coroutine_callback):
 def remove_callback(coroutine_callback):
     if coroutine_callback in _callbacks['users']:
         logging.info("Removing users callback")
+
         _callbacks['users'].remove(coroutine_callback)
 
     raise Return()
@@ -55,7 +53,7 @@ def start_monitor(client):
     try:
         oplog = client["local"]["oplog.rs"]
 
-        cursor = oplog.find().sort('ts', pymongo.DESCENDING).limit(-1)
+        cursor = oplog.find().sort('ts', pymongo.ASCENDING).limit(-1)
         if (yield cursor.fetch_next):
             document = cursor.next_object()
 
@@ -78,6 +76,7 @@ def start_monitor(client):
             if (yield cursor.fetch_next):
                 document = cursor.next_object()
                 last_timestamp = document['ts']
+
                 yield [
                     _dispatch_users_documents(document['o'])
                 ]
@@ -90,17 +89,17 @@ def start_monitor(client):
 def _dispatch_users_documents(document):
     try:
         if 'username' in document:
-            serialized = json.dumps(document, default=json_util.default)
-
-            # Call all the callback in parallel and wait
+            logging.debug("Invoking %s callbacks for user: %s", len( _callbacks['users']), document['username'])
             results = yield dict(
-                [(callback, callback(document, serialized)) for callback in _callbacks['users']]
+                [(callback, callback(document)) for callback in _callbacks['users']]
             )
 
             # Remove all failed callbacks
             for callback, result in results.iteritems():
                 if result and result.exception():
+                    logging.debug("Removing callback: %s", result.exception().message)
                     yield remove_callback(callback)
 
     except Exception as e:
         logging.exception(e)
+
