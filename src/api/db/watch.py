@@ -50,7 +50,7 @@ def remove_callback(coroutine_callback):
 
 @coroutine
 def start_monitor(client):
-    logging.info("Initializing watcher.")
+    logging.info("Initializing watcher...")
 
     try:
         oplog = client["local"]["oplog.rs"]

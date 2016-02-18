@@ -1,7 +1,4 @@
-import json
 import logging
-
-from tornado.gen import coroutine, sleep
 
 from api.kube.exceptions import WatchDisconnectedException
 
@@ -24,7 +21,8 @@ class NamespacesWatcher(object):
                 logging.exception(error)
 
             if self.connected and isinstance(future.exception(), WatchDisconnectedException):
-                self.watcher = settings["kube"].namespaces.watch(on_data=self.data_callback, resource_version=self.version)
+                self.watcher = settings["kube"].namespaces.watch(
+                    on_data=self.data_callback, resource_version=self.version)
                 self.watcher.add_done_callback(done_callback)
 
         try:
@@ -35,7 +33,6 @@ class NamespacesWatcher(object):
             logging.exception(e)
             if self.connected:
                 self.callback({"error": {"message": "Failed to connect to event source."}})
-
 
     def data_callback(self, data):
         self.version = data['metadata']['resourceVersion']
